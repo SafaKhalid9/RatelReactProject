@@ -17,4 +17,4 @@ After cloning the repo, open the terminal and run:
 - [ ] Install dependencies: `npm install`
 - [ ] Run the project locally: `npm run dev`
 - [ ] Open the link in browser: `http://localhost:5173/`
-- [ ] Verify that the page shows **React + Vite**
+
