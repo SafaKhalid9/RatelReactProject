@@ -1,12 +1,16 @@
+
+import React from "react";
+import Header from "./components/Header";
+import HomeIndex from "./pages/Home/HomeIndex";
+import Footer from "./components/Footer";
 import './styles/variables.css'
 
-function App() {
-
+export default function App() {
   return (
     <>
-    <h1>Safa</h1>
+      <Header />
+      <HomeIndex />
+      <Footer />
     </>
-  )
+  );
 }
-
-export default App
