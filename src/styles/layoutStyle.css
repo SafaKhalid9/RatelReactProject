@@ -67,7 +67,7 @@
 .sidebar-text {
   padding-top: 0.3125rem;
   margin-top: 0.9375rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
   width: 7.25rem;
   color: var(--primary);
@@ -211,8 +211,8 @@ hr {
     width: 180px;
   }
   .sidebar .logo img {
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 5rem;
+    height: 5rem;
     margin-left: 0.25rem;
   }
 
@@ -232,7 +232,7 @@ hr {
   .sidebar-text {
     padding-top: 0.2rem;
     margin-top: 0.7rem;
-    font-size: 0.8rem;
+    /* font-size: 0.8rem; */
     width: 7rem;
   }
 
@@ -263,7 +263,9 @@ hr {
     height: auto;
     width: 100%;
   }
-
+  .main{
+    margin-top: 70px;
+  }
   .mobile-sidebar {
     display: flex;
     justify-content: space-between;
@@ -299,7 +301,7 @@ hr {
   }
 
   .user-name {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     font-weight: bold;
     color: #6b705c;
     margin-bottom: 20px;

@@ -11,6 +11,7 @@ html{
   top: 0;
   z-index: 1000;
   background: transparent;
+  background-color: #FFE8D6;
 }
 
 .centered-container {
