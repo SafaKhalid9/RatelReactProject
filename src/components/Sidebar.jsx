@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 
 import "../styles/variables.css";
-import "../styles/layoutStyle.css";
+import "../styles/layoutStyle.css"
+
 import barChart from "../assets/icons/bar-chart.png";
 import koranGreen from "../assets/icons/koran-green.png";
 import users from "../assets/icons/users.png";

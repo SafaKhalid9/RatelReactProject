@@ -2,7 +2,7 @@ import userIcon from "../assets/icons/user-icon.png";
 import "../styles/variables.css";
 import "../styles/layoutStyle.css";
 
-const Header = () => {
+const DashboardHeader = () => {
   return (
     <div className="header">
       <div className="left-side">
@@ -15,4 +15,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default DashboardHeader;
