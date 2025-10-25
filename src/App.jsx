@@ -4,6 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DashboardLayout from './layouts/DashboardLayout';
 import DashboardHome from './pages/Dashboard/DashboardHome';
 import ManahgesIndex from './pages/Dashboard/ManahgesIndex';
+import ManhajDetails from './pages/Dashboard/manahj/ManhajDetails';
+import ManhajDelete from './pages/Dashboard/manahj/ManhajDelete';
+import MemorizationPathCreate from './pages/Dashboard/Paths/MemorizationPathCreate';
+import MemorizationPathEdit from './pages/Dashboard/Paths/MemorizationPathEdit';
 
 import PublicLayout from './layouts/PublicLayout';
 import HomeIndex from './pages/Home/HomeIndex';
@@ -24,6 +28,10 @@ export default function App() {
           <Route index element={<DashboardHome />} />
           <Route path="ManahgesIndex" element={<ManahgesIndex />} />
           {/* <Route path="settings" element={<Settings />} /> */}
+          <Route path="/manhajs/:id" element={<ManhajDetails />} />
+          <Route path="/manhajs/:id/delete" element={<ManhajDelete />} />
+          <Route path="/paths/create" element={<MemorizationPathCreate />} />
+          <Route path="paths/:id/edit" element={<MemorizationPathEdit />} />
         </Route>
       </Routes>
     </Router>
