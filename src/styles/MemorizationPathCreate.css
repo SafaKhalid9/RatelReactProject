@@ -1,0 +1,103 @@
+
+.S-container {
+  width: 80%;
+  margin: 0 auto;
+  background-color: var(--white-color);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.5rem;
+  position: relative; 
+}
+
+.top-frame {
+  position: absolute; 
+  top: -6px;
+  left: 0;
+  width: 100%;       
+  height: 6px;
+  border: 2px solid var(--secondary);
+  border-radius: 16px 16px 0 0;
+  background: var(--secondary);
+}
+
+.title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--font-title-label-color);
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+}
+
+.form-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+    margin-bottom: 25px;
+}
+
+.form-columns > div {
+    flex: 1 1 100%;
+}
+
+input {
+    width: 95%;
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-input-color);
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    margin-bottom: 1.2rem;
+}
+
+input:focus {
+    border-color: var(--font-title-label-color);
+    outline: none;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+    color: var(--font-title-label-color);
+}
+/* -------------------Tablet------------------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .top-frame {
+    width: 100%; 
+    height: 5px;
+    border-radius: 12px 12px 0 0;
+  }
+  .details-container {
+    width: 90%;
+    padding: 24px;
+    border-radius: 0 0 12px 12px;
+  }
+}
+
+/* -------------------Mobile------------------- */
+@media (max-width: 767px) {
+  .S-container{
+    margin-top: 10px;
+  }
+  .top-frame {
+    width: 100%; 
+    height: 5px;
+    border-radius: 10px 10px 0 0;
+  }
+  .details-container {
+    width: 95%;
+    padding: 18px;
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
