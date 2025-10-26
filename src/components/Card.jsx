@@ -1,33 +1,96 @@
+import CardButton from './CardButton';
+import '../styles/Card.css';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
-export default function Card(){
-    return(
-        <div class="col halaqa-card">
-            <div class="h-card">
-                <div class="row g-0">
-                    <div class="h-card-img">
-                        {/* @{
-                            var imgSrc = string.IsNullOrWhiteSpace(manhaj.Picture)
-                            ? Url.Content("~/images/ManahjPic.jpg")
-                            : Url.Content(manhaj.Picture);
-                        } */}
-                        <img src="@imgSrc" class="img-fluid" alt="صورة المنهج" />
+export default function Card({ image, title, fields }) {
+    return (
+        <div className="col card">
+            <div className="c-card">
+                <div className="row">
+                    <div className="card-content">
+                        <div className="card-img">
+                            <img className="img-fluid" src={image} alt="صورة" />
+                        </div>
+                        <div className="card-content">
+                            <div className="card-body">
+                                <h5 className="card-title">{title}</h5>
 
-                    </div>
-                    <div class="h-card-content">
-                        <div class="card-body">
-                            <h5 class="card-title">@manhaj.Name</h5>
-                            <p class="card-text"><strong>المؤلف:</strong> @manhaj.AuthorName</p>
-                            <p class="card-text"><strong>الفئة:</strong> @manhaj.TargetAudionce</p>
-                            <div class="buttons">
-                                <a asp-action="Details" asp-route-id="@manhaj.ManhajId" class="btn-sm btn-my-1"><i class="bi bi-eye"></i></a>
-                                <a asp-action="Edit" asp-route-id="@manhaj.ManhajId" class="btn-sm btn-my-1"><i class="bi bi-pencil"></i></a>
-                                <a asp-action="Delete" asp-route-id="@manhaj.ManhajId" class="btn-sm btn-my-2" onclick="return confirm('هل أنت متأكد؟')"><i class="bi bi-trash3-fill"></i></a>
+                                {fields.map((field, index) => (
+                                    <p key={index} className="card-text">
+                                        <strong>{field.label}:</strong>{' '}
+                                        {field.value || '—'}
+                                    </p>
+                                ))}
+
+                                <div className="buttons">
+                                    <CardButton
+                                        icon={
+                                            <VisibilityIcon
+                                                sx={{
+                                                    width: {
+                                                        xs: '0.9rem', // للجوال
+                                                        sm: '1.2rem',
+                                                        md: '1.5rem',
+                                                    },
+                                                    height: {
+                                                        xs: '0.9rem',
+                                                        sm: '1.2rem',
+                                                        md: '1.5rem',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        classname="success btn"
+                                        to=""
+                                    />
+                                    <CardButton
+                                        icon={
+                                            <EditIcon
+                                                sx={{
+                                                    width: {
+                                                        xs: '0.9rem', // للجوال
+                                                        sm: '1.2rem',
+                                                        md: '1.5rem',
+                                                    },
+                                                    height: {
+                                                        xs: '0.9rem',
+                                                        sm: '1.2rem',
+                                                        md: '1.5rem',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        classname="btn success"
+                                        to=""
+                                    />
+                                    <CardButton
+                                        icon={
+                                            <DeleteIcon
+                                                sx={{
+                                                    width: {
+                                                        xs: '0.9rem', // للجوال
+                                                        sm: '1.2rem',
+                                                        md: '1.5rem',
+                                                    },
+                                                    height: {
+                                                        xs: '0.9rem',
+                                                        sm: '1.2rem',
+                                                        md: '1.5rem',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        classname="btn delete"
+                                        to=""
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
-
