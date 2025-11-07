@@ -1,47 +1,50 @@
 import {ActivitiesImage, BarChardImage, KoranImage, LogoImage, PathImage, StudentsImage, ThreeBookImage, UsersImage} from '@/assets';
 import SidebarItem from './SidebarItem';
-
-interface ISideBarItem {
-  text: string;
-  icon: string;
-}
+import type {ISideBarItem} from '@/Types/ISideBarItem';
 
 const Sidebar = () => {
   const listOfSideBarItem: ISideBarItem[] = [
     {
       text: 'الأحصائيات',
-      icon: BarChardImage
+      icon: BarChardImage,
+      path: ''
     },
     {
       text: 'إدارة الحلقات',
-      icon: KoranImage
+      icon: KoranImage,
+      path: ''
     },
     {
       text: 'إدارة المستخدمين',
-      icon: UsersImage
+      icon: UsersImage,
+      path: 'users'
     },
     {
       text: 'إدارة الطالبات',
-      icon: StudentsImage
+      icon: StudentsImage,
+      path: ''
     },
     {
       text: 'إدارة المسارات',
-      icon: PathImage
+      icon: PathImage,
+      path: ''
     },
     {
       text: 'إدارة المناهج',
-      icon: ThreeBookImage
+      icon: ThreeBookImage,
+      path: ''
     },
     {
       text: 'تحضير المعلمات',
-      icon: ActivitiesImage
+      icon: ActivitiesImage,
+      path: ''
     }
   ];
   return (
-    <aside className='w-60 flex flex-col items-center bg-red-500 h-screen my-4 mx-5 rounded-tr-lg py-2 px-4 '>
-      <img className='w-30 mb-2' src={LogoImage} alt='fff' />
+    <aside className='min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-lg py-2 px-4 '>
+      <img className='w-25 mb-10' src={LogoImage} alt='logo Image' />
       {listOfSideBarItem.map((item, index) => {
-        return <SidebarItem key={index} text={item.text} icon={item.icon} />;
+        return <SidebarItem key={index} item={item} />;
       })}
     </aside>
   );
