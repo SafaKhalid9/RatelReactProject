@@ -15,6 +15,9 @@ import PublicLayout from './layouts/PublicLayout';
 import HomeIndex from './pages/Home/HomeIndex';
 import LoginPage from './pages/Home/LoginPage';
 
+import { ManhajProvider } from './Contexts/ManhajContext';
+import { HalaqatProvider } from './Contexts/HalaqatContext';
+
 import './styles/variables.css';
 
 export default function App() {
