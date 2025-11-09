@@ -29,7 +29,7 @@ export default function App() {
                     <Route path="/login" element={<LoginPage />} />
                 </Route>
 
-        <Route path="dashoard" element={<DashboardLayout />}>
+        <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardHome />} />
           <ManhajProvider>
                  <Route path="ManahgesIndex" element={<ManahgesIndex />} />
