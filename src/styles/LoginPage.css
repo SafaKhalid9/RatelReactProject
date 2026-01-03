@@ -1,109 +1,116 @@
-@import "./variables.css";
+@import './variables.css';
 
 .login-wrapper {
-  background-color: var(--background-page);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  direction: rtl;
-  font-family: "Cairo", sans-serif;
-  /* font-family: "TheSansBold"; */
+    background-color: var(--background-page);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    direction: rtl;
+    font-family: 'Cairo', sans-serif;
+    /* font-family: "TheSansBold"; */
 }
 
 .login-box {
-  background-color: var(--light-green);
-  padding: 2.5rem 3rem;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-  width: 50%;
-  max-width: 90%;
+    background-color: var(--light-green);
+    padding: 2.5rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    width: 50%;
+    max-width: 90%;
 }
 
 .login-title {
-  text-align: center;
-  color: var(--primary);
-  margin-bottom: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-group {
-  position: relative;
-  margin-bottom: 1rem;
+    position: relative;
+    margin-bottom: 1rem;
 }
 
 .input-icon {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  color: var(--primary);
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: var(--primary);
 }
 
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 10px 40px 10px 10px;
-  border: 1px solid var(--light-brown);
-  border-radius: 6px;
-  outline: none;
-  font-size: 15px;
-  background-color: #fff;
+input[type='email'],
+input[type='password'] {
+    width: 100%;
+    /* padding: 10px 40px 10px 10px; */
+    /* border: 1px solid var(--light-brown); */
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    background-color: #fff;
 }
 
 input:focus {
-  border-color: var(--secondary);
+    border-color: var(--secondary);
 }
 
 .remember-me {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  color: rgb(10, 36, 0)
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: rgb(10, 36, 0);
 }
-
+label {
+    display: inline-flex;
+    gap: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+    color: var(--font-title-label-color);
+}
 .login-btn {
-  background-color: var(--primary);
-  color: #fff;
-  border: none;
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .login-btn:hover {
-  background-color: var(--secondary);
+    background-color: var(--secondary);
 }
 
 .forgot-password {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-  color: var(--primary);
-  text-decoration: none;
-  font-size: 14px;
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
 }
 
 .forgot-password:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .MuiFormControl-root {
-  direction: rtl;
-  text-align: right;
+    direction: rtl;
+    text-align: right;
 }
 
 .MuiInputLabel-root {
-  right: 0;
-  left: auto;
+    right: 0;
+    left: auto;
 }
 
 .MuiSelect-select {
-  text-align: right;
+    text-align: right;
 }
