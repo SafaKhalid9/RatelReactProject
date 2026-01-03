@@ -1,15 +1,13 @@
-@font-face{
-    font-family: "TheSansBold";
-    src: url("./assets/fonts/TheSans-Bold.otf")
-    format("opentype");
+@import 'tailwindcss';
+@font-face {
+    font-family: 'TheSansBold';
+    src: url('./assets/fonts/TheSans-Bold.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 body {
-  padding: 0;
-  margin: 0;
-  font-family: "TheSansBold", sans-serif;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'TheSansBold', sans-serif;
+    box-sizing: border-box;
 }
-
-
