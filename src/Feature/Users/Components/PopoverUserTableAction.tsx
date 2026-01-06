@@ -9,7 +9,7 @@ function PopoverUserTableAction() {
         <ArrowDown />
       </PopoverTrigger>
       <PopoverContent align='end' className='flex flex-col gap-y-2'>
-        <Link className='hover:text-gray-500' to={`details/${1}`}>
+        <Link className='hover:text-gray-500' to={`view/${1}`}>
           عرض تفاصيل الطالبة
         </Link>
         <Link className='hover:text-gray-500' to={`edit/${1}`}>

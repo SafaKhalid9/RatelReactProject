@@ -3,44 +3,7 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/C
 import type {IAllUsersTable} from '../Types/IAllUsersTable';
 import PopoverUserTableAction from './PopoverUserTableAction';
 
-const AllUsersTable = () => {
-  const listOfUsers: IAllUsersTable[] = [
-    {
-      userName: 'أحمد سالم',
-      hasLicence: true,
-      role: 'مدير',
-      location: 'عدن',
-      phoneNumber: 777111222
-    },
-    {
-      userName: 'فاطمة باوزير',
-      hasLicence: true,
-      role: 'معلم',
-      location: 'المكلا',
-      phoneNumber: 735445678
-    },
-    {
-      userName: 'عبدالرحمن الشنيني',
-      hasLicence: false,
-      role: 'طالب',
-      location: 'صنعاء',
-      phoneNumber: 713998877
-    },
-    {
-      userName: 'خالد بامهدي',
-      hasLicence: true,
-      role: 'وكيل',
-      location: 'سيئون',
-      phoneNumber: 714224466
-    },
-    {
-      userName: 'سارة بن مخاشن',
-      hasLicence: false,
-      role: 'طالب',
-      location: 'تعز',
-      phoneNumber: 770556677
-    }
-  ];
+const AllUsersTable = ({listOfUsers}: {listOfUsers: IAllUsersTable[]}) => {
   return (
     <Table>
       <TableHeader className='bg-[#CB997E]'>

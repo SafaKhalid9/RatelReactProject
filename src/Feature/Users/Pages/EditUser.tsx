@@ -1,16 +1,13 @@
 import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
 import UserForm from '../Components/UserForm';
-import {BASE_URL} from '@/Constant/route';
 
-const AddNewUser = () => {
-  console.log(BASE_URL);
-
+const EditUser = () => {
   return (
     <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white'>
-      <CustomFormTitle title='إضافة مستخدم جديد' />
+      <CustomFormTitle title='تعديل مستخدم' />
       <UserForm />
     </div>
   );
 };
 
-export default AddNewUser;
+export default EditUser;
