@@ -6,3 +6,4 @@ export {default as StudentsImage} from '/students.png';
 export {default as PathImage} from '/path.png';
 export {default as ThreeBookImage} from '/books-stack-of-three.png';
 export {default as ActivitiesImage} from '/activities.png';
+ 
