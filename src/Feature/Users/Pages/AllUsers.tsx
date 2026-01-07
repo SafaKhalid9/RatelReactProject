@@ -7,6 +7,7 @@ import {useNavigate} from 'react-router';
 import type {IAllUsersTable} from '../Types/IAllUsersTable';
 
 const AllUsers = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {data: users, isLoading, isError, error} = GetAllUsers();
   const route = useNavigate();
   if (isLoading) return <p>loading</p>;
