@@ -33,6 +33,11 @@ import AddAppreciationGrade from '@/Feature/AppreciationGrades/Pages/AddApprecia
 import EditAppreciationGrade from '@/Feature/AppreciationGrades/Pages/EditAppreciationGrade';
 import ViewAppreciationGrade from '@/Feature/AppreciationGrades/Pages/ViewAppreciationGrade';
 
+import MistakeTypesList from '@/Feature/MistakeTypes/Pages/MistakeTypesList';
+import AddMistakeType from '@/Feature/MistakeTypes/Pages/AddMistakeType';
+import EditMistakeType from '@/Feature/MistakeTypes/Pages/EditMistakeType';
+import ViewMistakeType from '@/Feature/MistakeTypes/Pages/ViewMistakeType';
+
 import ClientsPage from '@/Pages/ClientsPage';
 import Dashboard from '@/Pages/Dashboard';
 import {Route, Routes} from 'react-router-dom';
@@ -80,6 +85,12 @@ const AllRoutes = () => {
         <Route path='appreciation-grades/add' element={<AddAppreciationGrade />} />
         <Route path='appreciation-grades/view/:id' element={<ViewAppreciationGrade />} />
         <Route path='appreciation-grades/edit/:id' element={<EditAppreciationGrade />} />
+
+        {/* Mistake Types Routes */}
+        <Route path='mistake-types' element={<MistakeTypesList />} />
+        <Route path='mistake-types/add' element={<AddMistakeType />} />
+        <Route path='mistake-types/view/:id' element={<ViewMistakeType />} />
+        <Route path='mistake-types/edit/:id' element={<EditMistakeType />} />
 
         <Route path='error' element={<DashboardError />} />
       </Route>
