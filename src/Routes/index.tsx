@@ -28,6 +28,11 @@ import AddExam from '@/Feature/Exams/Pages/AddExam';
 import EditExam from '@/Feature/Exams/Pages/EditExam';
 import ViewExam from '@/Feature/Exams/Pages/ViewExam';
 
+import AppreciationGradesList from '@/Feature/AppreciationGrades/Pages/AppreciationGradesList';
+import AddAppreciationGrade from '@/Feature/AppreciationGrades/Pages/AddAppreciationGrade';
+import EditAppreciationGrade from '@/Feature/AppreciationGrades/Pages/EditAppreciationGrade';
+import ViewAppreciationGrade from '@/Feature/AppreciationGrades/Pages/ViewAppreciationGrade';
+
 import ClientsPage from '@/Pages/ClientsPage';
 import Dashboard from '@/Pages/Dashboard';
 import {Route, Routes} from 'react-router-dom';
@@ -69,6 +74,12 @@ const AllRoutes = () => {
         <Route path='exams/add' element={<AddExam />} />
         <Route path='exams/view/:id' element={<ViewExam />} />
         <Route path='exams/edit/:id' element={<EditExam />} />
+
+        {/* Appreciation Grades Routes */}
+        <Route path='appreciation-grades' element={<AppreciationGradesList />} />
+        <Route path='appreciation-grades/add' element={<AddAppreciationGrade />} />
+        <Route path='appreciation-grades/view/:id' element={<ViewAppreciationGrade />} />
+        <Route path='appreciation-grades/edit/:id' element={<EditAppreciationGrade />} />
 
         <Route path='error' element={<DashboardError />} />
       </Route>
