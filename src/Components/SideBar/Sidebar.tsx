@@ -22,7 +22,7 @@ const Sidebar = () => {
     {
       text: 'إدارة الطالبات',
       icon: StudentsImage,
-      path: ''
+      path: 'students'
     },
     {
       text: 'إدارة المسارات',
