@@ -4,7 +4,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@/Components/ShadCn/popover';
-import { MoreHorizontal, Trash2, Edit, Eye } from 'lucide-react';
+import { MoreHorizontal, Trash2, Edit } from 'lucide-react';
 import { Button } from '@/Components/ShadCn/button';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -16,26 +16,26 @@ import {
     DialogFooter,
     DialogClose,
 } from '@/Components/ShadCn/dialog';
-import { useDeleteUser } from '../Services/user.service';
+import { useDeleteManhaj } from '../Services/manhaj.service';
 import { toast } from 'sonner';
 
-interface PopoverUserTableActionProps {
+interface PopoverManhajTableActionProps {
     id: string;
 }
 
-const PopoverUserTableAction: React.FC<PopoverUserTableActionProps> = ({ id }) => {
+const PopoverManhajTableAction: React.FC<PopoverManhajTableActionProps> = ({ id }) => {
     const navigate = useNavigate();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const deleteUserMutation = useDeleteUser();
+    const deleteManhajMutation = useDeleteManhaj();
     const [open, setOpen] = useState(false);
 
     const handleDelete = async () => {
         try {
-            await deleteUserMutation.mutateAsync(id);
-            toast.success('تم حذف المستخدم بنجاح');
+            await deleteManhajMutation.mutateAsync(id);
+            toast.success('تم حذف المنهج بنجاح');
             setIsDeleteModalOpen(false);
         } catch (error) {
-            toast.error('حدث خطأ أثناء حذف المستخدم');
+            toast.error('حدث خطأ أثناء حذف المنهج');
             console.error(error);
         }
     };
@@ -50,23 +50,12 @@ const PopoverUserTableAction: React.FC<PopoverUserTableActionProps> = ({ id }) =
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-40 flex flex-col gap-1 p-1" align="end">
-                     <Button
-                        variant="ghost"
-                        className="w-full justify-start gap-2 px-2 text-sm font-normal"
-                        onClick={() => {
-                            setOpen(false)
-                            navigate(`/users/${id}`)
-                        }}
-                    >
-                        <Eye className="h-4 w-4" />
-                        عرض
-                    </Button>
                     <Button
                         variant="ghost"
                         className="w-full justify-start gap-2 px-2 text-sm font-normal"
                         onClick={() => {
                             setOpen(false)
-                            navigate(`/users/${id}/edit`)
+                            navigate(`/dashboard/manhajs/edit/${id}`)
                         }}
                     >
                         <Edit className="h-4 w-4" />
@@ -91,7 +80,7 @@ const PopoverUserTableAction: React.FC<PopoverUserTableActionProps> = ({ id }) =
                     <DialogHeader>
                         <DialogTitle>هل أنت متأكد؟</DialogTitle>
                         <DialogDescription>
-                            لا يمكن التراجع عن هذا الإجراء. سيتم حذف بيانات المستخدم نهائياً.
+                            لا يمكن التراجع عن هذا الإجراء. سيتم حذف بيانات المنهج نهائياً.
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter className="gap-2 sm:gap-0">
@@ -101,9 +90,9 @@ const PopoverUserTableAction: React.FC<PopoverUserTableActionProps> = ({ id }) =
                         <Button
                             variant="destructive"
                             onClick={handleDelete}
-                            disabled={deleteUserMutation.isPending}
+                            disabled={deleteManhajMutation.isPending}
                         >
-                            {deleteUserMutation.isPending ? 'جاري الحذف...' : 'حذف'}
+                            {deleteManhajMutation.isPending ? 'جاري الحذف...' : 'حذف'}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -112,4 +101,4 @@ const PopoverUserTableAction: React.FC<PopoverUserTableActionProps> = ({ id }) =
     );
 };
 
-export default PopoverUserTableAction;
+export default PopoverManhajTableAction;

@@ -4,6 +4,7 @@ import AllUsers from '@/Feature/Users/Pages/AllUsers';
 import EditUser from '@/Feature/Users/Pages/EditUser';
 import ViewUser from '@/Feature/Users/Pages/ViewUser';
 
+import AllManhajs from '@/Feature/Mnahj/Pages/AllManhajs';
 import AddNewManhaj from '@/Feature/Mnahj/Pages/AddNewManhaj';
 import EditManhaj from '@/Feature/Mnahj/Pages/EditManhaj';
 
@@ -22,6 +23,11 @@ import AddStudent from '@/Feature/Students/Pages/AddStudent';
 import EditStudent from '@/Feature/Students/Pages/EditStudent';
 import ViewStudent from '@/Feature/Students/Pages/ViewStudent';
 
+import ExamsList from '@/Feature/Exams/Pages/ExamsList';
+import AddExam from '@/Feature/Exams/Pages/AddExam';
+import EditExam from '@/Feature/Exams/Pages/EditExam';
+import ViewExam from '@/Feature/Exams/Pages/ViewExam';
+
 import ClientsPage from '@/Pages/ClientsPage';
 import Dashboard from '@/Pages/Dashboard';
 import {Route, Routes} from 'react-router-dom';
@@ -36,6 +42,7 @@ const AllRoutes = () => {
         <Route path='users/view/:id' element={<ViewUser />} />
         <Route path='users/edit/:id' element={<EditUser />} />
 
+        <Route path='manhajs' element={<AllManhajs />} />
         <Route path='manhajs/add-new-manhaj' element={<AddNewManhaj />} />
         <Route path='manhajs/edit/:id' element={<EditManhaj />} />
 
@@ -56,6 +63,12 @@ const AllRoutes = () => {
         <Route path='students/add' element={<AddStudent />} />
         <Route path='students/view/:id' element={<ViewStudent />} />
         <Route path='students/edit/:id' element={<EditStudent />} />
+
+        {/* Exams Routes */}
+        <Route path='exams' element={<ExamsList />} />
+        <Route path='exams/add' element={<AddExam />} />
+        <Route path='exams/view/:id' element={<ViewExam />} />
+        <Route path='exams/edit/:id' element={<EditExam />} />
 
         <Route path='error' element={<DashboardError />} />
       </Route>

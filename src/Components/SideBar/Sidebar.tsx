@@ -35,9 +35,9 @@ const Sidebar = () => {
       path: ''
     },
     {
-      text: 'تحضير المعلمات',
+      text: 'إدارة الاختبارات',
       icon: ActivitiesImage,
-      path: ''
+      path: 'exams'
     }
   ];
   return (

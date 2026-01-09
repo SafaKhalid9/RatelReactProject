@@ -1,60 +1,39 @@
-// import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-// import ManhajForm from '../Components/ManhajForm';
-// import {BASE_URL} from '@/Constant/route';
-
-
-// const AddNewManhaj = () => {
-//   console.log(BASE_URL);
-
-//   return (
-//     <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white pb-5'>
-//       <CustomFormTitle title='إضافة منهج جديد' />
-//       <ManhajForm />
-//       <div className='flex justify-center'>
-//         <CustomButton>إضافة</CustomButton>
-//       </div>
-//     </div>
-//   );
-// };
-
-
+import React from 'react';
 import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
 import ManhajForm from '../Components/ManhajForm';
-import axios from 'axios';
-import {BASE_URL} from '@/Constant/route';
+import { useAddManhaj } from '../Services/manhaj.service';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { ManhajFormData } from '../Types/manhaj.types';
 
 const AddNewManhaj = () => {
+    const addManhajMutation = useAddManhaj();
+    const navigate = useNavigate();
 
-  const handleAddManhaj = async (formData: FormData) => {
-    try {
-      await axios.post(
-        `${BASE_URL}/manhajs`, // تأكدي نفس endpoint في Swagger
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+    const handleSubmit = async (data: ManhajFormData) => {
+        try {
+            await addManhajMutation.mutateAsync(data);
+            toast.success('تم إضافة المنهج بنجاح');
+            // Check where to navigate. Assuming /dashboard/manhajs for now if I create it.
+             navigate('/dashboard/manhajs');
+        } catch (error) {
+            toast.error('حدث خطأ أثناء إضافة المنهج');
+            console.error(error);
         }
-      );
+    };
 
-      alert('تمت إضافة المنهج بنجاح ✅');
-    } catch (error) {
-      console.error(error);
-      alert('حدث خطأ أثناء الإضافة ❌');
-    }
-  };
-
-  return (
-    <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white '>
-      <CustomFormTitle title='إضافة منهج جديد' />
-
-      <ManhajForm
-        submitText="إضافة"
-        mode="add"
-        onSubmit={handleAddManhaj}
-      />
-    </div>
-  );
+    return (
+        <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white shadow-sm'>
+            <CustomFormTitle title='إضافة منهج جديد' />
+            <div className="mt-6">
+                <ManhajForm 
+                    onSubmit={handleSubmit} 
+                    isLoading={addManhajMutation.isPending}
+                    mode="create"
+                />
+            </div>
+        </div>
+    );
 };
 
 export default AddNewManhaj;
