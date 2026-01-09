@@ -27,7 +27,7 @@ const Sidebar = () => {
     {
       text: 'إدارة المسارات',
       icon: PathImage,
-      path: ''
+      path: 'memorization-paths'
     },
     {
       text: 'إدارة المناهج',
