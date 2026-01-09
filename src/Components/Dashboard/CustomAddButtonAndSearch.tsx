@@ -1,7 +1,7 @@
 import {Plus} from 'lucide-react';
 import CustomButton from '../CustomButton';
 import CustomInput from '../CustomInput';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 interface ICustomAddButtonAndSearch {
   path: string;
   textButton: string;

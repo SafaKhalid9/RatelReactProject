@@ -1,5 +1,5 @@
 import type {ISideBarItem} from '@/Types/ISideBarItem';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 const SidebarItem = ({item: {text, icon, path}}: {item: ISideBarItem}) => {
   return (

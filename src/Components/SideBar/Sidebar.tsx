@@ -12,7 +12,7 @@ const Sidebar = () => {
     {
       text: 'إدارة الحلقات',
       icon: KoranImage,
-      path: ''
+      path: 'halaqas'
     },
     {
       text: 'إدارة المستخدمين',

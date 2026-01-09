@@ -6,7 +6,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
 
-      <AllRoutes />;
+      <AllRoutes />
       
     </QueryClientProvider>
   );

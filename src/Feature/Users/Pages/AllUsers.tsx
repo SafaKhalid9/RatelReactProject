@@ -3,21 +3,27 @@ import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
 import AllUsersTable from '../Components/AllUsersTable';
 import CustomPagination from '@/Components/SideBar/CustomPagination';
 import GetAllUsers from '@/Services/GetAllUsers';
-import {useNavigate} from 'react-router';
+import {useNavigate} from 'react-router-dom';
 import type {IAllUsersTable} from '../Types/IAllUsersTable';
+import { useEffect } from 'react';
 
 const AllUsers = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {data: users, isLoading, isError, error} = GetAllUsers();
   console.log(users);
   const route = useNavigate();
+
+  useEffect(() => {
+    if (isError) {
+      console.error('====================================');
+      console.error(error.message);
+      console.log('====================================');
+      route('/dashboard/error');
+    }
+  }, [isError, error, route]);
+
   if (isLoading) return <p>loading</p>;
-  if (isError) {
-    console.error('====================================');
-    console.error(error.message);
-    console.log('====================================');
-    route('/dashboard/error');
-  }
+  
   const listOfUsers: IAllUsersTable[] = [
     {
       userName: 'أحمد سالم',
