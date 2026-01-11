@@ -7,6 +7,11 @@ import ViewUser from '@/Feature/Users/Pages/ViewUser';
 import AddNewManhaj from '@/Feature/Mnahj/Pages/AddNewManhaj';
 import EditManhaj from '@/Feature/Mnahj/Pages/EditManhaj';
 
+import HalaqasList from '@/Feature/Halaqas/Pages/HalaqasList';
+import AddHalaqa from '@/Feature/Halaqas/Pages/AddHalaqa';
+import ViewHalaqa from '@/Feature/Halaqas/Pages/ViewHalaqa';
+import EditHalaqa from '@/Feature/Halaqas/Pages/EditHalaqa';
+
 import ClientsPage from '@/Pages/ClientsPage';
 import Dashboard from '@/Pages/Dashboard';
 import {Route, Routes} from 'react-router';
@@ -23,6 +28,13 @@ const AllRoutes = () => {
 
         <Route path='manhajs/add-new-manhaj' element={<AddNewManhaj />} />
         <Route path='manhajs/edit/:id' element={<EditManhaj />} />
+
+        {/* Halaqas Routes */}
+        <Route path='halaqas' element={<HalaqasList />} />
+        <Route path='halaqas/add' element={<AddHalaqa />} />
+        <Route path='halaqas/view/:id' element={<ViewHalaqa />} />
+        <Route path='halaqas/edit/:id' element={<EditHalaqa />} />
+
         <Route path='error' element={<DashboardError />} />
       </Route>
     </Routes>
