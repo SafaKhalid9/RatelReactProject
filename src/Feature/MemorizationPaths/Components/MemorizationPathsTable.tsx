@@ -6,7 +6,8 @@ import {
     TableHeader,
     TableRow,
   } from '@/Components/ShadCn/table';
-  import { MemorizationPath } from '../Types/memorizationPath.types';
+  import type { MemorizationPath } from '../Types/memorizationPath.types';
+
   import PopoverPathAction from './PopoverPathAction';
   
   const MemorizationPathsTable = ({ listOfPaths }: { listOfPaths: MemorizationPath[] }) => {

@@ -10,7 +10,7 @@ import EditManhaj from '@/Feature/Mnahj/Pages/EditManhaj';
 import AllMemorizationPaths from '@/Feature/MemorizationPaths/Pages/AllMemorizationPaths';
 import AddNewMemorizationPath from '@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath';
 import EditMemorizationPath from '@/Feature/MemorizationPaths/Pages/EditMemorizationPath';
-import ViewMemorizationPath from '@/Feature/MemorizationPaths/Pages/ViewMemorizationPath';
+// import ViewMemorizationPath from '@/Feature/MemorizationPaths/Pages/ViewMemorizationPath';
 
 import ClientsPage from '@/Pages/ClientsPage';
 import Dashboard from '@/Pages/Dashboard';
@@ -33,7 +33,7 @@ const AllRoutes = () => {
         <Route path='memorization-paths' element={<AllMemorizationPaths />} />
         <Route path='memorization-paths/add' element={<AddNewMemorizationPath />} />
         <Route path='memorization-paths/edit/:id' element={<EditMemorizationPath />} />
-        <Route path='memorization-paths/view/:id' element={<ViewMemorizationPath />} />
+        {/* <Route path='memorization-paths/view/:id' element={<ViewMemorizationPath />} /> */}
 
         <Route path='error' element={<DashboardError />} />
       </Route>
