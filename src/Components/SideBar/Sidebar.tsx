@@ -1,51 +1,69 @@
-import {ActivitiesImage, BarChardImage, KoranImage, LogoImage, PathImage, StudentsImage, ThreeBookImage, UsersImage} from '@/assets';
-import SidebarItem from './SidebarItem';
-import type {ISideBarItem} from '@/Types/ISideBarItem';
+import {
+  ActivitiesImage,
+  BarChardImage,
+  KoranImage,
+  LogoImage,
+  PathImage,
+  StudentsImage,
+  ThreeBookImage,
+  UsersImage,
+  home,
+  logoutIcon,
+} from "@/assets";
+
+import SidebarItem from "./SidebarItem";
+import type { ISideBarItem } from "@/Types/ISideBarItem";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/Contexts/AuthContext";
 
 const Sidebar = () => {
-  const listOfSideBarItem: ISideBarItem[] = [
-    {
-      text: 'الأحصائيات',
-      icon: BarChardImage,
-      path: ''
-    },
-    {
-      text: 'إدارة الحلقات',
-      icon: KoranImage,
-      path: ''
-    },
-    {
-      text: 'إدارة المستخدمين',
-      icon: UsersImage,
-      path: 'users'
-    },
-    {
-      text: 'إدارة الطالبات',
-      icon: StudentsImage,
-      path: ''
-    },
-    {
-      text: 'إدارة المسارات',
-      icon: PathImage,
-      path: ''
-    },
-    {
-      text: 'إدارة المناهج',
-      icon: ThreeBookImage,
-      path: ''
-    },
-    {
-      text: 'تحضير المعلمات',
-      icon: ActivitiesImage,
-      path: ''
-    }
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const topMenu: ISideBarItem[] = [
+    { text: "الأحصائيات", icon: BarChardImage, path: "/" },
+    { text: "إدارة الحلقات", icon: KoranImage, path: "/halaqas" },
+    { text: "إدارة المستخدمين", icon: UsersImage, path: "/users" },
+    { text: "إدارة الطالبات", icon: StudentsImage, path: "/students" },
+    { text: "إدارة المسارات", icon: PathImage, path: "/memorization-paths" },
+    { text: "إدارة المناهج", icon: ThreeBookImage, path: "/manhajs" },
+    { text: "إدارة الاختبارات", icon: ActivitiesImage, path: "/exams" },
   ];
+
+  const bottomMenu: ISideBarItem[] = [
+    {
+      text: "الصفحة الرئيسية",
+      icon: home,
+      path: "/home",
+    },
+    {
+      text: "تسجيل الخروج",
+      icon: logoutIcon,
+      path: "/logout",
+      onClick: () => {
+        logout();
+        navigate("/", { replace: true });
+      },
+    },
+  ];
+
   return (
-    <aside className='min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-lg py-2 px-4 '>
-      <img className='w-25 mb-10' src={LogoImage} alt='logo Image' />
-      {listOfSideBarItem.map((item, index) => {
-        return <SidebarItem key={index} item={item} />;
-      })}
+    <aside className="min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-4">
+      <img className="w-28 mx-auto mb-8" src={LogoImage} alt="logo" />
+
+      <div className="flex flex-col gap-y-2 w-full">
+        {topMenu.map((item, index) => (
+          <SidebarItem key={index} item={item} />
+        ))}
+      </div>
+
+      <div className="flex-1" />
+
+      <div className="flex flex-col gap-y-2 w-full">
+        {bottomMenu.map((item, index) => (
+          <SidebarItem key={index} item={item} />
+        ))}
+      </div>
     </aside>
   );
 };

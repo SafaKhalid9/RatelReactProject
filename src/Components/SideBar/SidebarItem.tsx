@@ -1,12 +1,25 @@
-import type {ISideBarItem} from '@/Types/ISideBarItem';
-import {Link} from 'react-router';
+import type { ISideBarItem } from "@/Types/ISideBarItem";
+import { NavLink } from "react-router-dom";
 
-const SidebarItem = ({item: {text, icon, path}}: {item: ISideBarItem}) => {
+const SidebarItem = ({ item }: { item: ISideBarItem }) => {
+  const { text, icon, path, onClick } = item;
+
   return (
-    <Link to={path} className='cursor-pointer select-none w-full rounded-lg hover:bg-primary flex gap-x-2 justify-start items-end ps-3 pb-3 border-b mb-4'>
-      <img className='w-8' src={icon} alt='charImage' />
-      <span className='text-xl font-semibold'>{text}</span>
-    </Link>
+    <NavLink
+      to={path}
+      onClick={onClick}
+      className={({ isActive }) =>
+        `
+    cursor-pointer w-full rounded-lg flex gap-x-2 items-center ps-3 py-3
+    border-b transition-colors duration-300
+    ${isActive ? "bg-primary text-white" : "hover:bg-primary"}
+    `
+      }
+    >
+      <img className="w-6" src={icon} alt="icon" />
+      <span className="text-base font-semibold">{text}</span>
+    </NavLink>
   );
 };
+
 export default SidebarItem;
