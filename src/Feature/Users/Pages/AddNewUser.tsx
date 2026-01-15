@@ -25,8 +25,8 @@
 //         <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white shadow-sm'>
 //             <CustomFormTitle title='إضافة مستخدم جديد' />
 //             <div className="mt-6">
-//                 <UserForm 
-//                     onSubmit={handleSubmit} 
+//                 <UserForm
+//                     onSubmit={handleSubmit}
 //                     isLoading={addUserMutation.isPending}
 //                     mode="create"
 //                 />
@@ -36,3 +36,20 @@
 // };
 
 // export default AddNewUser;
+
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import UserForm from "../Components/UserForm";
+import { BASE_URL } from "@/Constant/route";
+
+const AddNewUser = () => {
+  console.log(BASE_URL);
+
+  return (
+    <div className="border-t-15 border-[#CB997E] rounded-2xl bg-white">
+      <CustomFormTitle title="إضافة مستخدم جديد" />
+      <UserForm />
+    </div>
+  );
+};
+
+export default AddNewUser;

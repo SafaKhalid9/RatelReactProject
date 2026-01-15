@@ -30,9 +30,9 @@
 //         <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white shadow-sm'>
 //             <CustomFormTitle title='تعديل مستخدم' />
 //              <div className="mt-6">
-//                 <UserForm 
-//                     defaultValues={user} 
-//                     onSubmit={handleSubmit} 
+//                 <UserForm
+//                     defaultValues={user}
+//                     onSubmit={handleSubmit}
 //                     isLoading={updateUserMutation.isPending}
 //                     mode="edit"
 //                 />
@@ -42,3 +42,17 @@
 // };
 
 // export default EditUser;
+
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import UserForm from "../Components/UserForm";
+
+const EditUser = () => {
+  return (
+    <div className="border-t-15 border-[#CB997E] rounded-2xl bg-white">
+      <CustomFormTitle title="تعديل مستخدم" />
+      <UserForm />
+    </div>
+  );
+};
+
+export default EditUser;
