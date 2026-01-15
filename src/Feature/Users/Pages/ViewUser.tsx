@@ -14,9 +14,9 @@
 //         <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white shadow-sm'>
 //             <CustomFormTitle title='تفاصيل المستخدم' />
 //             <div className="mt-6">
-//                 <UserForm 
-//                     defaultValues={user} 
-//                     onSubmit={() => {}} 
+//                 <UserForm
+//                     defaultValues={user}
+//                     onSubmit={() => {}}
 //                     isLoading={false}
 //                     mode="view"
 //                 />
@@ -26,3 +26,17 @@
 // };
 
 // export default ViewUser;
+
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import UserForm from "../Components/UserForm";
+
+const ViewUser = () => {
+  return (
+    <div className="border-t-15 border-[#CB997E] rounded-2xl bg-white">
+      <CustomFormTitle title="إضافة مستخدم جديد" />
+      <UserForm />
+    </div>
+  );
+};
+
+export default ViewUser;
