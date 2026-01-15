@@ -1,37 +1,37 @@
 import DashboardError from "@/Components/DashboardError";
-import AddNewUser from "@/Feature/Users/Pages/AddNewUser";
-import AllUsers from "@/Feature/Users/Pages/AllUsers";
-import EditUser from "@/Feature/Users/Pages/EditUser";
-import ViewUser from "@/Feature/Users/Pages/ViewUser";
+// import AddNewUser from "@/Feature/Users/Pages/AddNewUser";
+// import AllUsers from "@/Feature/Users/Pages/AllUsers";
+// import EditUser from "@/Feature/Users/Pages/EditUser";
+// import ViewUser from "@/Feature/Users/Pages/ViewUser";
 
-import AllManhajs from "@/Feature/Mnahj/Pages/AllManhajs";
-import AddNewManhaj from "@/Feature/Mnahj/Pages/AddNewManhaj";
-import EditManhaj from "@/Feature/Mnahj/Pages/EditManhaj";
+// import AllManhajs from "@/Feature/Mnahj/Pages/AllManhajs";
+// import AddNewManhaj from "@/Feature/Mnahj/Pages/AddNewManhaj";
+// import EditManhaj from "@/Feature/Mnahj/Pages/EditManhaj";
 
-import HalaqasList from "@/Feature/Halaqas/Pages/HalaqasList";
-import AddHalaqa from "@/Feature/Halaqas/Pages/AddHalaqa";
-import ViewHalaqa from "@/Feature/Halaqas/Pages/ViewHalaqa";
-import EditHalaqa from "@/Feature/Halaqas/Pages/EditHalaqa";
+// import HalaqasList from "@/Feature/Halaqas/Pages/HalaqasList";
+// import AddHalaqa from "@/Feature/Halaqas/Pages/AddHalaqa";
+// import ViewHalaqa from "@/Feature/Halaqas/Pages/ViewHalaqa";
+// import EditHalaqa from "@/Feature/Halaqas/Pages/EditHalaqa";
 
-import AllMemorizationPaths from "@/Feature/MemorizationPaths/Pages/AllMemorizationPaths";
-import AddNewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
-import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
-import ViewMemorizationPath from "@/Feature/MemorizationPaths/Pages/ViewMemorizationPath";
+// // import AllMemorizationPaths from "@/Feature/MemorizationPaths/Pages/AllMemorizationPaths";
+// import AddNewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
+// import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
+// import ViewMemorizationPath from "@/Feature/MemorizationPaths/Pages/ViewMemorizationPath";
 
-import StudentsList from "@/Feature/Students/Pages/StudentsList";
-import AddStudent from "@/Feature/Students/Pages/AddStudent";
-import EditStudent from "@/Feature/Students/Pages/EditStudent";
-import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
+// import StudentsList from "@/Feature/Students/Pages/StudentsList";
+// import AddStudent from "@/Feature/Students/Pages/AddStudent";
+// import EditStudent from "@/Feature/Students/Pages/EditStudent";
+// import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
 
-import ExamsList from "@/Feature/Exams/Pages/ExamsList";
-import AddExam from "@/Feature/Exams/Pages/AddExam";
-import EditExam from "@/Feature/Exams/Pages/EditExam";
-import ViewExam from "@/Feature/Exams/Pages/ViewExam";
+// import ExamsList from "@/Feature/Exams/Pages/ExamsList";
+// import AddExam from "@/Feature/Exams/Pages/AddExam";
+// import EditExam from "@/Feature/Exams/Pages/EditExam";
+// import ViewExam from "@/Feature/Exams/Pages/ViewExam";
 
-import AppreciationGradesList from "@/Feature/AppreciationGrades/Pages/AppreciationGradesList";
-import AddAppreciationGrade from "@/Feature/AppreciationGrades/Pages/AddAppreciationGrade";
-import EditAppreciationGrade from "@/Feature/AppreciationGrades/Pages/EditAppreciationGrade";
-import ViewAppreciationGrade from "@/Feature/AppreciationGrades/Pages/ViewAppreciationGrade";
+// import AppreciationGradesList from "@/Feature/AppreciationGrades/Pages/AppreciationGradesList";
+// import AddAppreciationGrade from "@/Feature/AppreciationGrades/Pages/AddAppreciationGrade";
+// import EditAppreciationGrade from "@/Feature/AppreciationGrades/Pages/EditAppreciationGrade";
+// import ViewAppreciationGrade from "@/Feature/AppreciationGrades/Pages/ViewAppreciationGrade";
 
 import Dashboard from "@/Pages/Dashboard";
 import LoginPage from "../Pages/LoginPage";
@@ -64,7 +64,7 @@ const AllRoutes = () => {
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>
           <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="users" element={<AllUsers />} />
+            {/* <Route path="users" element={<AllUsers />} />
             <Route path="users/add-new-user" element={<AddNewUser />} />
             <Route path="users/view/:id" element={<ViewUser />} />
             <Route path="users/edit/:id" element={<EditUser />} />
@@ -76,13 +76,13 @@ const AllRoutes = () => {
             <Route path="halaqas" element={<HalaqasList />} />
             <Route path="halaqas/add" element={<AddHalaqa />} />
             <Route path="halaqas/view/:id" element={<ViewHalaqa />} />
-            <Route path="halaqas/edit/:id" element={<EditHalaqa />} />
+            <Route path="halaqas/edit/:id" element={<EditHalaqa />} /> */}
 
-            <Route
+            {/* <Route
               path="memorization-paths"
               element={<AllMemorizationPaths />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="memorization-paths/add"
               element={<AddNewMemorizationPath />}
             />
@@ -103,9 +103,9 @@ const AllRoutes = () => {
             <Route path="exams" element={<ExamsList />} />
             <Route path="exams/add" element={<AddExam />} />
             <Route path="exams/view/:id" element={<ViewExam />} />
-            <Route path="exams/edit/:id" element={<EditExam />} />
+            <Route path="exams/edit/:id" element={<EditExam />} /> */}
 
-            <Route
+            {/* <Route
               path="appreciation-grades"
               element={<AppreciationGradesList />}
             />
@@ -120,7 +120,7 @@ const AllRoutes = () => {
             <Route
               path="appreciation-grades/edit/:id"
               element={<EditAppreciationGrade />}
-            />
+            /> */}
 
             <Route path="error" element={<DashboardError />} />
           </Route>
