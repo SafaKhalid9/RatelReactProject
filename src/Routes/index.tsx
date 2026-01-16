@@ -13,10 +13,10 @@ import DashboardError from "@/Components/DashboardError";
 // import ViewHalaqa from "@/Feature/Halaqas/Pages/ViewHalaqa";
 // import EditHalaqa from "@/Feature/Halaqas/Pages/EditHalaqa";
 
-// // import AllMemorizationPaths from "@/Feature/MemorizationPaths/Pages/AllMemorizationPaths";
-// import AddNewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
-// import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
-// import ViewMemorizationPath from "@/Feature/MemorizationPaths/Pages/ViewMemorizationPath";
+import AllMemorizationPaths from "@/Feature/MemorizationPaths/Pages/AllMemorizationPaths";
+import AddNewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
+import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
+import ViewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
 
 // import StudentsList from "@/Feature/Students/Pages/StudentsList";
 // import AddStudent from "@/Feature/Students/Pages/AddStudent";
@@ -78,11 +78,11 @@ const AllRoutes = () => {
             <Route path="halaqas/view/:id" element={<ViewHalaqa />} />
             <Route path="halaqas/edit/:id" element={<EditHalaqa />} /> */}
 
-            {/* <Route
+            <Route
               path="memorization-paths"
               element={<AllMemorizationPaths />}
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="memorization-paths/add"
               element={<AddNewMemorizationPath />}
             />
@@ -95,7 +95,7 @@ const AllRoutes = () => {
               element={<ViewMemorizationPath />}
             />
 
-            <Route path="students" element={<StudentsList />} />
+            {/* <Route path="students" element={<StudentsList />} />
             <Route path="students/add" element={<AddStudent />} />
             <Route path="students/view/:id" element={<ViewStudent />} />
             <Route path="students/edit/:id" element={<EditStudent />} />

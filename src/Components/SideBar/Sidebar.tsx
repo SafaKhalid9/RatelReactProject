@@ -25,7 +25,11 @@ const Sidebar = () => {
     { text: "إدارة الحلقات", icon: KoranImage, path: "/halaqas" },
     { text: "إدارة المستخدمين", icon: UsersImage, path: "/users" },
     { text: "إدارة الطالبات", icon: StudentsImage, path: "/students" },
-    { text: "إدارة المسارات", icon: PathImage, path: "/memorization-paths" },
+    {
+      text: "إدارة المسارات",
+      icon: PathImage,
+      path: "/dashboard/memorization-paths",
+    },
     { text: "إدارة المناهج", icon: ThreeBookImage, path: "/manhajs" },
     { text: "إدارة الاختبارات", icon: ActivitiesImage, path: "/exams" },
   ];

@@ -20,11 +20,11 @@
 
 //   return (
 //     <div className='flex flex-col gap-5 p-5 bg-background h-full'>
-//       <CustomFormTitle text='إضافة مسار جديد' />
+//       <CustomFormTitle title='إضافة مسار جديد' />
 //       <div className="bg-white p-5 rounded-lg shadow-sm">
-//         <MemorizationPathForm 
-//             mode="add" 
-//             onSubmit={handleSubmit} 
+//         <MemorizationPathForm
+//             mode="add"
+//             onSubmit={handleSubmit}
 //             isLoading={isPending}
 //         />
 //       </div>
@@ -33,7 +33,7 @@
 // };
 
 // export default AddNewMemorizationPath;
-//=============================================================
+// // =============================================================
 
 // import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
@@ -97,49 +97,45 @@
 
 // export default AddNewMemorizationPath;
 
+// ===================
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import MemorizationPathForm from "../Components/MemorizationPathForm";
+import type { MemorizationPathFormData } from "../Types/memorizationPath.types";
+import api from "../../../api/axios";
 
+const AddNewMemorizationPath = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const handleSubmit = async (data: MemorizationPathFormData) => {
+    try {
+      setIsLoading(true);
 
-//===================
-// import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-// import MemorizationPathForm from '../Components/MemorizationPathForm';
-// import type { MemorizationPathFormData } from '../Types/memorizationPath.types';
-// import api from '@/Services/api';
+      // ✅ الطلب بدون توكن (interceptor يتكفل فيه)
+      await api.post("/memorization-paths", data);
 
-// const AddNewMemorizationPath = () => {
-//   const navigate = useNavigate();
-//   const [isLoading, setIsLoading] = useState(false);
+      alert("تمت إضافة المسار بنجاح ✅");
+      navigate("/dashboard/memorization-paths");
+    } catch (error) {
+      console.error(error);
+      alert("حدث خطأ أثناء الإضافة ❌");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-//   const handleSubmit = async (data: MemorizationPathFormData) => {
-//     try {
-//       setIsLoading(true);
+  return (
+    <div className="border-t-15 border-[#CB997E] rounded-2xl bg-white">
+      <CustomFormTitle title="إضافة مسار جديد" />
+      <MemorizationPathForm
+        mode="add"
+        onSubmit={handleSubmit}
+        isLoading={isLoading}
+      />
+    </div>
+  );
+};
 
-//       // ✅ الطلب بدون توكن (interceptor يتكفل فيه)
-//       await api.post('/memorization-paths', data);
-
-//       alert('تمت إضافة المسار بنجاح ✅');
-//       navigate('/dashboard/memorization-paths');
-
-//     } catch (error) {
-//       console.error(error);
-//       alert('حدث خطأ أثناء الإضافة ❌');
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   return (
-//     <div className="border-t-15 border-[#CB997E] rounded-2xl bg-white">
-//       <CustomFormTitle title="إضافة مسار جديد" />
-//       <MemorizationPathForm
-//         mode="add"
-//         onSubmit={handleSubmit}
-//         isLoading={isLoading}
-//       />
-//     </div>
-//   );
-// };
-
-// export default AddNewMemorizationPath;
+export default AddNewMemorizationPath;
