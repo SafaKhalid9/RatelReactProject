@@ -22,7 +22,7 @@ const Sidebar = () => {
 
   const topMenu: ISideBarItem[] = [
     { text: "الأحصائيات", icon: BarChardImage, path: "/" },
-    { text: "إدارة الحلقات", icon: KoranImage, path: "/halaqas" },
+    { text: "إدارة الحلقات", icon: KoranImage, path: "/dashboard/halaqas" },
     { text: "إدارة المستخدمين", icon: UsersImage, path: "/users" },
     { text: "إدارة الطالبات", icon: StudentsImage, path: "/students" },
     { text: "إدارة المسارات", icon: PathImage, path: "/memorization-paths" },

@@ -23,7 +23,7 @@ export interface StudentAttendance {
 export interface HalaqaDetails {
   id: number;
   name: string;
-  status: HalaqaStatus; // Added for Edit
+  status: "مبتدئ" | "متوسط" | "متقدم"; // Added for Edit
   capacity: number; // Added for Edit
   teacherId: number; // Added for Edit
   period: string;
@@ -35,7 +35,7 @@ export interface HalaqaDetails {
 
 export interface HalaqaFormData {
   name: string;
-  status: HalaqaStatus;
+  status: string;
   capacity: number;
   teacherID: number;
   period: string;

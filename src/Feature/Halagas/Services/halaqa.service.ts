@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import api from "../../../api/axios";
+
 import {
   BASE_URL,
   HALAQAS,
@@ -7,13 +8,13 @@ import {
   MEMORIZATION_PATHS,
   MANHAJS,
 } from "@/Constant/route";
-import {
+import type {
   HalaqaListItem,
   HalaqaDetails,
   HalaqaFormData,
   HalaqaReviewParams,
 } from "../Types/halaqa.types";
-import {
+import type {
   MemorizationPath,
   Teacher,
   Manhaj,
@@ -31,22 +32,32 @@ const getHalaqas = async (params: HalaqaReviewParams) => {
   if (params.pageSize)
     queryParams.append("pageSize", params.pageSize.toString());
 
-  const response = await axios.get(`${BASE_URL}/${HALAQAS}`, {
-    params: queryParams,
-  });
-  return response.data; // Assuming server returns { data: [...], total: ... } or similar for pagination
+  const response = await api.get(`/halaqas`, { params: queryParams });
+  return response.data.data;
 };
 
 const getHalaqaDetails = async (id: number): Promise<HalaqaDetails> => {
-  const response = await axios.get(`${BASE_URL}/${HALAQAS}/details/${id}`);
+  const response = await api.get(`/${HALAQAS}/details/${id}`);
   return response.data;
 };
 
 const addHalaqa = async (data: HalaqaFormData) => {
-  const response = await axios.post(`${BASE_URL}/${HALAQAS}`, data);
+  const response = await api.post(`/${HALAQAS}`, {
+    dto: data,
+  });
   return response.data;
 };
 
+// const updateHalaqa = async ({
+//   id,
+//   data,
+// }: {
+//   id: number;
+//   data: HalaqaFormData;
+// }) => {
+//   const response = await api.put(`/${HALAQAS}/${id}`, data);
+//   return response.data;
+// };
 const updateHalaqa = async ({
   id,
   data,
@@ -54,31 +65,32 @@ const updateHalaqa = async ({
   id: number;
   data: HalaqaFormData;
 }) => {
-  const response = await axios.put(`${BASE_URL}/${HALAQAS}/${id}`, data);
+  const response = await api.put(`/${HALAQAS}/${id}`, {
+    dto: data, // <-- نفس شكل الإضافة
+  });
   return response.data;
 };
 
 const deleteHalaqa = async (id: number) => {
-  const response = await axios.delete(`${BASE_URL}/${HALAQAS}/${id}`);
+  const response = await api.delete(`/${HALAQAS}/${id}`);
   return response.data;
 };
 
 // Dropdown Data APIs
 const getTeachers = async (): Promise<Teacher[]> => {
-  const response = await axios.get(`${BASE_URL}/${USERS}?page=1&pageSize=1000`); // Fetch all potentially
+  const response = await api.get(`/${USERS}?page=1&pageSize=1000`);
   const users = response.data?.data?.data || [];
-  // Filter for teachers on client side as per requirement
   return users.filter((u: Teacher) => u.roles.includes("معلم"));
 };
 
 const getMemorizationPaths = async (): Promise<MemorizationPath[]> => {
-  const response = await axios.get(`${BASE_URL}/${MEMORIZATION_PATHS}`);
-  return response.data?.data || response.data; // Accommodate different potential wrapper structures
+  const response = await api.get(`/${MEMORIZATION_PATHS}`);
+  return response.data?.data?.data || [];
 };
 
 const getManhajs = async (): Promise<Manhaj[]> => {
-  const response = await axios.get(`${BASE_URL}/${MANHAJS}`);
-  return response.data?.data || response.data;
+  const response = await api.get(`/${MANHAJS}`);
+  return response.data?.data?.data || [];
 };
 
 // Hooks
@@ -119,11 +131,12 @@ export const useManhajs = () => {
 };
 
 export const useAddHalaqa = () => {
-  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: addHalaqa,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["halaqas"] });
+    mutationFn: async (data: any) => {
+      const res = await api.post("/halaqas", data, {
+        headers: { "Content-Type": "application/json" },
+      });
+      return res.data;
     },
   });
 };

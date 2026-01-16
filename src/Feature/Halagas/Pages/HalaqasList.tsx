@@ -39,7 +39,7 @@ const HalaqasList = () => {
       <div className="flex justify-between items-center">
         <CustomFormTitle
           title="Halaqas Management"
-          subTitle="Manage your study groups"
+          // subTitle="Manage your study groups"
         />
         <Link to="/dashboard/halaqas/add">
           <CustomButton>Add New Halaqa</CustomButton>

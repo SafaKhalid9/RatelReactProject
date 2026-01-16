@@ -1,6 +1,6 @@
 // Types for dropdown data (Shared or Feature specific)
 export interface MemorizationPath {
-  id: number;
+  pathId: number;
   name: string;
 }
 

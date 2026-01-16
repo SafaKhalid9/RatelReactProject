@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ShadCn/table";
-import { HalaqaListItem } from "../Types/halaqa.types";
+import type { HalaqaListItem } from "../Types/halaqa.types";
 import HalaqaActionsPopover from "./HalaqaActionsPopover";
 
 const HalaqasTable = ({ data }: { data: HalaqaListItem[] }) => {

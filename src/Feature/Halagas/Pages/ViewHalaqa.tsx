@@ -28,7 +28,7 @@ const ViewHalaqa = () => {
     <div className="flex flex-col gap-6 p-5">
       <CustomFormTitle
         title="Halaqa Details"
-        subTitle={`View details for ${details.name}`}
+        // subTitle={`View details for ${details.name}`}
       />
 
       {/* Header Info */}
