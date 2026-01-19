@@ -5,13 +5,13 @@ import HalaqasTable from "../Components/HalaqasTable";
 import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
 import CustomButton from "@/Components/CustomButton";
 import { Input } from "@/Components/ShadCn/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/Components/ShadCn/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/Components/ShadCn/select";
 import {
   Pagination,
   PaginationContent,
@@ -20,10 +20,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/Components/ShadCn/pagination";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import CustomAddButtonAndSearch from "@/Components/Dashboard/CustomAddButtonAndSearch";
 
 const HalaqasList = () => {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(7);
   const [nameSearch, setNameSearch] = useState("");
 
   // Debounce logic for search ideally, but simple state for now
@@ -36,45 +38,33 @@ const HalaqasList = () => {
 
   return (
     <div className="flex flex-col gap-6 p-5">
-      <div className="flex justify-between items-center">
-        <CustomFormTitle
-          title="Halaqas Management"
-          // subTitle="Manage your study groups"
-        />
-        <Link to="/dashboard/halaqas/add">
-          <CustomButton>Add New Halaqa</CustomButton>
-        </Link>
+      <div className="flex justify-center items-center">
+        <CustomFormTitle title="إدارة الحلقات" />
       </div>
-
-      <div className="flex gap-4 bg-white p-4 rounded-lg shadow-sm">
-        <div className="w-1/3">
-          <Input
-            placeholder="Search by name..."
-            value={nameSearch}
-            onChange={(e) => {
-              setNameSearch(e.target.value);
-              setPage(1); // Reset to page 1 on search
-            }}
-          />
-        </div>
-
-        {/* Placeholder for Teacher/Year filters if data was available */}
-        <div className="w-1/4">
+      {/* <div className="w-1/4">
           <Select disabled>
-            <SelectTrigger>
-              <SelectValue placeholder="Academic Year (All)" />
+            <SelectTrigger className=" bg-white px-2 py-2">
+              <SelectValue placeholder="السنة الدراسية" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="2024">2024-2025</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-      </div>
+        </div> */}
+      <CustomAddButtonAndSearch
+        path="/dashboard/halaqas/add"
+        textButton="إضافة حلقة"
+        searchValue={nameSearch}
+        onSearchChange={(e) => {
+          setNameSearch(e.target.value);
+          setPage(1);
+        }}
+      />
 
-      {isLoading && <div className="text-center py-10">Loading halaqas...</div>}
+      {isLoading && <div className="text-center py-10">جاري التحميل...</div>}
       {isError && (
         <div className="text-center py-10 text-red-500">
-          Error loading halaqas.
+          خطأ في تحميل الحلقات.
         </div>
       )}
 
@@ -83,31 +73,40 @@ const HalaqasList = () => {
           <HalaqasTable
             data={data?.data || (Array.isArray(data) ? data : [])}
           />
-
+          {/* ----------------------------------------------------------------------------------------------------------------- */}
           {/* Pagination Controls */}
-          <div className="mt-4">
+          <div className="mt-4" dir="rtl">
             <Pagination>
-              <PaginationContent>
+              <PaginationContent className="flex justify-center gap-x-5">
+                {/* السابق */}
                 <PaginationItem>
-                  <PaginationPrevious
+                  <PaginationLink
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
-                    className={
+                    className={`flex items-center gap-1 ${
                       page === 1
                         ? "pointer-events-none opacity-50"
                         : "cursor-pointer"
-                    }
-                  />
+                    }`}
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                    السابق
+                  </PaginationLink>
                 </PaginationItem>
 
+                {/* رقم الصفحة */}
                 <PaginationItem>
-                  <PaginationLink>{page}</PaginationLink>
+                  <PaginationLink isActive>{page}</PaginationLink>
                 </PaginationItem>
 
+                {/* التالي */}
                 <PaginationItem>
-                  <PaginationNext
+                  <PaginationLink
                     onClick={() => setPage((p) => p + 1)}
-                    className="cursor-pointer"
-                  />
+                    className="flex items-center gap-1 cursor-pointer"
+                  >
+                    التالي
+                    <ChevronLeft className="h-4 w-4" />
+                  </PaginationLink>
                 </PaginationItem>
               </PaginationContent>
             </Pagination>

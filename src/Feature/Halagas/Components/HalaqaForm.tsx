@@ -38,9 +38,6 @@ const HalaqaForm = ({
   onSubmit,
   isLoading,
 }: HalaqaFormProps) => {
-  // const [formData, setFormData] = useState<HalaqaFormData>(
-  //   defaultValues || INITIAL_STATE
-  // );
   const [formData, setFormData] = useState<HalaqaFormData>(INITIAL_STATE);
   const [errors, setErrors] = useState<
     Partial<Record<keyof HalaqaFormData, string>>
@@ -50,10 +47,10 @@ const HalaqaForm = ({
   const { data: paths } = useMemorizationPaths();
   const { data: manhajs } = useManhajs();
   useEffect(() => {
-    if (defaultValues && paths && manhajs) {
+    if (defaultValues) {
       setFormData(defaultValues);
     }
-  }, [defaultValues, paths, manhajs]);
+  }, [defaultValues]);
 
   const validate = () => {
     const newErrors: typeof errors = {};

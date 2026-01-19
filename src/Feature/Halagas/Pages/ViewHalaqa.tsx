@@ -26,10 +26,7 @@ const ViewHalaqa = () => {
 
   return (
     <div className="flex flex-col gap-6 p-5">
-      <CustomFormTitle
-        title="Halaqa Details"
-        // subTitle={`View details for ${details.name}`}
-      />
+      <CustomFormTitle title="Halaqa Details" />
 
       {/* Header Info */}
       <div className="bg-white p-6 rounded-lg shadow-sm border">

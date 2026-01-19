@@ -9,6 +9,12 @@ import {
 } from "@/Components/ShadCn/table";
 import type { HalaqaListItem } from "../Types/halaqa.types";
 import HalaqaActionsPopover from "./HalaqaActionsPopover";
+import "../../../index.css";
+const statusVariant: Record<string, string> = {
+  مبتدئ: "outline",
+  متوسط: "default",
+  متقدم: "secondary",
+};
 
 const HalaqasTable = ({ data }: { data: HalaqaListItem[] }) => {
   return (
@@ -16,12 +22,16 @@ const HalaqasTable = ({ data }: { data: HalaqaListItem[] }) => {
       <Table>
         <TableHeader className="bg-[#CB997E]">
           <TableRow>
-            <TableHead className="text-start text-white">Name</TableHead>
-            <TableHead className="text-start text-white">Teacher</TableHead>
-            <TableHead className="text-start text-white">Period</TableHead>
-            <TableHead className="text-start text-white">Status</TableHead>
-            <TableHead className="text-start text-white">Students</TableHead>
-            <TableHead className="text-start text-white">Attend. %</TableHead>
+            <TableHead className="text-center text-white">الأسم</TableHead>
+            <TableHead className="text-center text-white">المعلمة</TableHead>
+            <TableHead className="text-center text-white">الفترة</TableHead>
+            <TableHead className="text-center text-white">الحالة</TableHead>
+            <TableHead className="text-center text-white">
+              عدد الطالبات
+            </TableHead>
+            <TableHead className="text-center text-white">
+              نسبة الحضور
+            </TableHead>
             <TableHead className="w-[50px]"></TableHead>
           </TableRow>
         </TableHeader>
@@ -29,31 +39,37 @@ const HalaqasTable = ({ data }: { data: HalaqaListItem[] }) => {
           {data.length === 0 && (
             <TableRow>
               <TableCell colSpan={7}>
-                <p className="text-center py-4">No Halaqas Found</p>
+                <p className="text-center py-4">لا توجد حلقات</p>
               </TableCell>
             </TableRow>
           )}
           {data.map((item) => (
             <TableRow key={item.halaqaId}>
-              <TableCell className="font-medium">{item.name}</TableCell>
-              <TableCell>{item.teacherName}</TableCell>
-              <TableCell>{item.period}</TableCell>
-              <TableCell>
+              <TableCell className="font-medium text-center">
+                {item.name}
+              </TableCell>
+              <TableCell className="text-center">{item.teacherName}</TableCell>
+              <TableCell className="text-center">{item.period}</TableCell>
+              <TableCell className="text-center">
                 <Badge
+                  className="w-15"
                   variant={
-                    item.status === "Advanced"
-                      ? "default"
-                      : item.status === "Intermediate"
-                      ? "secondary"
-                      : "outline"
+                    statusVariant[item.status] as
+                      | "default"
+                      | "secondary"
+                      | "outline"
                   }
                 >
                   {item.status}
                 </Badge>
               </TableCell>
-              <TableCell>{item.numberOfStudents}</TableCell>
-              <TableCell>{item.averageAttendancePercentage}%</TableCell>
-              <TableCell>
+              <TableCell className="text-center">
+                {item.numberOfStudents}
+              </TableCell>
+              <TableCell className="text-center">
+                {item.averageAttendancePercentage}%
+              </TableCell>
+              <TableCell className="text-center">
                 <HalaqaActionsPopover id={item.halaqaId} />
               </TableCell>
             </TableRow>

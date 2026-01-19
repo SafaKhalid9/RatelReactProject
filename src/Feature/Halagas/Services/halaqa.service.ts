@@ -20,6 +20,22 @@ import type {
   Manhaj,
 } from "../Types/shared-dropdowns.types";
 
+const getTeachers = async (): Promise<Teacher[]> => {
+  const response = await api.get(`/${USERS}?page=1&pageSize=1000`);
+  const users = response.data?.data?.data || [];
+  return users.filter((u: Teacher) => u.roles.includes("معلم"));
+};
+
+const getMemorizationPaths = async (): Promise<MemorizationPath[]> => {
+  const response = await api.get(`/${MEMORIZATION_PATHS}`);
+  return response.data?.data?.data || [];
+};
+
+const getManhajs = async (): Promise<Manhaj[]> => {
+  const response = await api.get(`/${MANHAJS}`);
+  return response.data?.data?.data || [];
+};
+
 // API Functions
 const getHalaqas = async (params: HalaqaReviewParams) => {
   const queryParams = new URLSearchParams();
@@ -40,6 +56,10 @@ const getHalaqaDetails = async (id: number): Promise<HalaqaDetails> => {
   const response = await api.get(`/${HALAQAS}/details/${id}`);
   return response.data;
 };
+const getHalaqa = async (id: number) => {
+  const response = await api.get(`/halaqas/${id}`);
+  return response.data;
+};
 
 const addHalaqa = async (data: HalaqaFormData) => {
   const response = await api.post(`/${HALAQAS}`, {
@@ -48,6 +68,16 @@ const addHalaqa = async (data: HalaqaFormData) => {
   return response.data;
 };
 
+// // const updateHalaqa = async ({
+// //   id,
+// //   data,
+// // }: {
+// //   id: number;
+// //   data: HalaqaFormData;
+// // }) => {
+// //   const response = await api.put(`/${HALAQAS}/${id}`, data);
+// //   return response.data;
+// // };
 // const updateHalaqa = async ({
 //   id,
 //   data,
@@ -55,19 +85,13 @@ const addHalaqa = async (data: HalaqaFormData) => {
 //   id: number;
 //   data: HalaqaFormData;
 // }) => {
-//   const response = await api.put(`/${HALAQAS}/${id}`, data);
+//   const response = await api.put(`/${HALAQAS}/${id}`, {
+//     dto: data, // <-- نفس شكل الإضافة
+//   });
 //   return response.data;
 // };
-const updateHalaqa = async ({
-  id,
-  data,
-}: {
-  id: number;
-  data: HalaqaFormData;
-}) => {
-  const response = await api.put(`/${HALAQAS}/${id}`, {
-    dto: data, // <-- نفس شكل الإضافة
-  });
+const updateHalaqa = async ({ id, data }: { id: number; data: any }) => {
+  const response = await api.put(`/${HALAQAS}/${id}`, data);
   return response.data;
 };
 
@@ -77,21 +101,21 @@ const deleteHalaqa = async (id: number) => {
 };
 
 // Dropdown Data APIs
-const getTeachers = async (): Promise<Teacher[]> => {
-  const response = await api.get(`/${USERS}?page=1&pageSize=1000`);
-  const users = response.data?.data?.data || [];
-  return users.filter((u: Teacher) => u.roles.includes("معلم"));
-};
+// const getTeachers = async (): Promise<Teacher[]> => {
+//   const response = await api.get(`/${USERS}?page=1&pageSize=1000`);
+//   const users = response.data?.data?.data || [];
+//   return users.filter((u: Teacher) => u.roles.includes("معلم"));
+// };
 
-const getMemorizationPaths = async (): Promise<MemorizationPath[]> => {
-  const response = await api.get(`/${MEMORIZATION_PATHS}`);
-  return response.data?.data?.data || [];
-};
+// const getMemorizationPaths = async (): Promise<MemorizationPath[]> => {
+//   const response = await api.get(`/${MEMORIZATION_PATHS}`);
+//   return response.data?.data?.data || [];
+// };
 
-const getManhajs = async (): Promise<Manhaj[]> => {
-  const response = await api.get(`/${MANHAJS}`);
-  return response.data?.data?.data || [];
-};
+// const getManhajs = async (): Promise<Manhaj[]> => {
+//   const response = await api.get(`/${MANHAJS}`);
+//   return response.data?.data?.data || [];
+// };
 
 // Hooks
 export const useHalaqas = (params: HalaqaReviewParams) => {
@@ -108,7 +132,13 @@ export const useHalaqaDetails = (id: number) => {
     enabled: !!id,
   });
 };
-
+export const useHalaqa = (id: number) => {
+  return useQuery({
+    queryKey: ["halaqa", id],
+    queryFn: () => getHalaqa(id),
+    enabled: !!id,
+  });
+};
 export const useTeachers = () => {
   return useQuery({
     queryKey: ["teachers"],

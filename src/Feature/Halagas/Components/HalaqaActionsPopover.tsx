@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowDown } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from "@/Components/ShadCn/dialog";
 import { Button } from "@/Components/ShadCn/button";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 type Props = {
   id: number;
@@ -38,57 +39,85 @@ const HalaqaActionsPopover = ({ id }: Props) => {
     <>
       <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger asChild>
-          <div className="cursor-pointer flex justify-center">
-            <ArrowDown className="h-4 w-4 text-gray-500" />
-          </div>
+          <button className="flex justify-center items-center w-full cursor-pointer p-2">
+            <MoreVertical className="h-5 w-5 text-gray-600" />
+          </button>
         </PopoverTrigger>
-        <PopoverContent align="end" className="w-48 flex flex-col gap-y-2 p-2">
+
+        <PopoverContent
+          align="end"
+          className="bg-white z-50 shadow-lg border rounded-md p-2 w-44"
+        >
           <Link
-            className="text-sm px-2 py-1.5 hover:bg-slate-100 rounded flex items-center gap-2"
             to={`/dashboard/halaqas/view/${id}`}
             onClick={() => setPopoverOpen(false)}
+            className="block text-sm px-2 py-2 rounded hover:bg-gray-100 text-right cursor-pointer p-2"
           >
-            View Details
+            عرض التفاصيل
           </Link>
+
           <Link
-            className="text-sm px-2 py-1.5 hover:bg-slate-100 rounded flex items-center gap-2"
             to={`/dashboard/halaqas/edit/${id}`}
             onClick={() => setPopoverOpen(false)}
+            className="block text-sm px-2 py-2 rounded hover:bg-gray-100 text-right cursor-pointer p-2"
           >
-            Edit Info
+            تعديل البيانات
           </Link>
+
           <button
-            className="text-sm px-2 py-1.5 hover:bg-slate-100 rounded flex items-center gap-2 text-red-600 text-start w-full"
             onClick={() => {
               setPopoverOpen(false);
               setDeleteOpen(true);
             }}
+            className="block w-full text-sm px-2 py-2 rounded hover:bg-red-50 text-right text-red-600 cursor-pointer p-2"
           >
-            Delete Halaqa
+            حذف الحلقة
           </button>
         </PopoverContent>
       </Popover>
-
+      {/* ------------------------------------------------------------------------------------------------------------- */}
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent>
+        <DialogContent
+          dir="rtl"
+          className="
+      bg-white
+      text-[var(--primary)]
+      border-none
+      shadow-xl
+      text-right
+    "
+        >
           <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this Halaqa? This action cannot be
-              undone.
+            <DialogTitle className="text-[var(--primary)] text-lg font-semibold text-right">
+              تأكيد الحذف
+            </DialogTitle>
+
+            <DialogDescription className="text-[var(--primary)] opacity-80 text-right">
+              هل أنت متأكد من حذف هذه الحلقة؟ لا يمكن التراجع عن هذا الإجراء.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex gap-2">
-            <Button variant="outline" onClick={() => setDeleteOpen(false)}>
-              Cancel
-            </Button>
+
+          <DialogFooter className="flex flex-row-reverse gap-2 mt-4 justify-start sm:justify-start">
             <Button
               variant="destructive"
               onClick={handleDelete}
               disabled={isDeleting}
+              className="bg-red-600 w-20 hover:bg-red-700 text-white cursor-pointer p-2 rounded-md"
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              {isDeleting ? "جارٍ الحذف..." : "حذف"}
             </Button>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteOpen(false)}
+              className="border-[var(--primary)] text-[var(--primary)] w-20 cursor-pointer p-2 rounded-md"
+            >
+              إلغاء
+            </Button>
+            <DialogClose asChild>
+              <button className="absolute left-4 top-4 cursor-pointer">
+                ✕
+              </button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
