@@ -35,8 +35,8 @@
 // //         <div className='flex flex-col gap-5 p-5 bg-background h-full'>
 // //             <CustomFormTitle title='قائمة مسارات الحفظ' />
 
-// //             <CustomAddButtonAndSearch 
-// //                 link='/dashboard/memorization-paths/add' 
+// //             <CustomAddButtonAndSearch
+// //                 link='/dashboard/memorization-paths/add'
 // //                 placeholder='بحث باسم المسار...' // Search visual only for now as not connected
 // //             />
 
@@ -47,9 +47,9 @@
 // //                     <MemorizationPathsTable listOfPaths={paths} />
 
 // //                     {/* Reuse CustomPagination if possible, or construct Shadcn pagination */}
-// //                     {/* Checking CustomPagination props: it likely takes setPage or links. 
+// //                     {/* Checking CustomPagination props: it likely takes setPage or links.
 // //                         Let's use the Shadcn one inline or verify CustomPagination */}
-// //                     <CustomPagination 
+// //                     <CustomPagination
 // //                         page={page}
 // //                         setPage={setPage} // Assuming it accepts setPage
 // //                         totalPages={totalPages}
@@ -63,7 +63,6 @@
 // // };
 
 // // export default AllMemorizationPaths;
-
 
 // =================================================
 
@@ -90,8 +89,8 @@
 //     <div className="border-t-15 border-[#CB997E] rounded-2xl bg-white p-5 ">
 //       <CustomFormTitle title="قائمة مسارات الحفظ" />
 
-//       <CustomAddButtonAndSearch 
-//         path="/dashboard/memorization-paths/add" 
+//       <CustomAddButtonAndSearch
+//         path="/dashboard/memorization-paths/add"
 //         textButton="إضافة مسار جديد"
 //       />
 
@@ -101,10 +100,10 @@
 //         <>
 //           <MemorizationPathsTable listOfPaths={paths} />
 
-//           <CustomPagination 
-//             page={page} 
-//             setPage={setPage} 
-//             totalPages={totalPages} 
+//           <CustomPagination
+//             page={page}
+//             setPage={setPage}
+//             totalPages={totalPages}
 //           />
 //         </>
 //       )}
@@ -114,35 +113,33 @@
 
 // export default AllMemorizationPaths;
 
-
-
-
-
-
-
-
-
-
-
-import { useMemorizationPaths } from '../Services/memorizationPath.service';
-import MemorizationPathsTable from '../Components/MemorizationPathsTable';
-import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-import CustomAddButtonAndSearch from '@/Components/Dashboard/CustomAddButtonAndSearch';
+import { useMemorizationPaths } from "../Services/memorizationPath.service";
+import MemorizationPathsTable from "../Components/MemorizationPathsTable";
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import CustomAddButtonAndSearch from "@/Components/Dashboard/CustomAddButtonAndSearch";
 
 const AllMemorizationPaths = () => {
-  const { data: responseData, isLoading, isError } = useMemorizationPaths({ page: 1, pageSize: 1000 }); // فقط نجيب كل البيانات
-  const paths = responseData?.items || []; // تأكدي من اسم الحقل من API
+  const {
+    data: responseData,
+    isLoading,
+    isError,
+  } = useMemorizationPaths({ page: 1, pageSize: 10 }); // فقط نجيب كل البيانات
+  const paths = responseData?.data?.data || []; // تأكدي من اسم الحقل من API
 
   if (isError) {
-    return <div className="text-center text-red-500 py-10">حدث خطأ أثناء تحميل البيانات</div>;
+    return (
+      <div className="text-center text-red-500 py-10">
+        حدث خطأ أثناء تحميل البيانات
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col gap-5 p-5 bg-background h-full">
       <CustomFormTitle title="قائمة مسارات الحفظ" />
 
-      <CustomAddButtonAndSearch 
-        path="/dashboard/memorization-paths/add" 
+      <CustomAddButtonAndSearch
+        path="/dashboard/memorization-paths/add"
         textButton="إضافة مسار جديد"
       />
 
@@ -156,8 +153,6 @@ const AllMemorizationPaths = () => {
 };
 
 export default AllMemorizationPaths;
-
-
 
 // import { useState } from 'react';
 // import { useMemorizationPaths } from '../Services/memorizationPath.service';
@@ -180,8 +175,8 @@ export default AllMemorizationPaths;
 //   return (
 //     <div className="flex flex-col gap-5 p-5 bg-background h-full">
 //       <CustomFormTitle title="قائمة مسارات الحفظ" />
-//       <CustomAddButtonAndSearch 
-//         path="/dashboard/memorization-paths/add" 
+//       <CustomAddButtonAndSearch
+//         path="/dashboard/memorization-paths/add"
 //         textButton="إضافة مسار جديد"
 //       />
 

@@ -17,7 +17,7 @@ interface AuthContextType {
   login: (
     email: string,
     password: string,
-    rememberMe: boolean
+    rememberMe: boolean,
   ) => Promise<boolean>;
   logout: () => void;
 }
@@ -45,23 +45,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (
     email: string,
     password: string,
-    rememberMe: boolean
+    // rememberMe: boolean,
   ): Promise<boolean> => {
     try {
       const res = await api.post(
         "https://ratil.tryasp.net/api/auth/login",
         { email, password },
-        { headers: { "Content-Type": "application/json" } }
+        { headers: { "Content-Type": "application/json" } },
       );
 
       const tokenFromServer: string | undefined = res.data.data?.token;
       if (!tokenFromServer) throw new Error("لم يصدر توكن من السيرفر");
 
-      if (rememberMe) {
-        localStorage.setItem("token", tokenFromServer);
-      } else {
-        sessionStorage.setItem("token", tokenFromServer);
-      }
+      localStorage.setItem("token", tokenFromServer);
+      sessionStorage.setItem("token", tokenFromServer);
       setToken(tokenFromServer);
 
       await fetchUser(tokenFromServer);
