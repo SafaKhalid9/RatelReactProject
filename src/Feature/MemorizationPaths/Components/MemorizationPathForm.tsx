@@ -1,259 +1,142 @@
-// import { useState, FormEvent } from 'react';
-// import CustomButton from '@/Components/CustomButton';
-// import { Input } from '@/Components/ShadCn/input';
-// import { MemorizationPathFormData } from '../Types/memorizationPath.types';
-
-// type MemorizationPathFormProps = {
-//   mode: 'add' | 'edit';
-//   defaultValues?: MemorizationPathFormData;
-//   onSubmit: (data: MemorizationPathFormData) => void;
-//   isLoading?: boolean;
-// };
-
-// const INITIAL_STATE: MemorizationPathFormData = {
-//   name: '',
-//   memorizeFrom: '',
-//   memorizeTo: '',
-// };
-
-// const MemorizationPathForm = ({ mode, defaultValues, onSubmit, isLoading }: MemorizationPathFormProps) => {
-//   const [formData, setFormData] = useState<MemorizationPathFormData>(defaultValues || INITIAL_STATE);
-//   const [errors, setErrors] = useState<Partial<Record<keyof MemorizationPathFormData, string>>>({});
-
-//   const validate = () => {
-//     const newErrors: typeof errors = {};
-//     if (!formData.name.trim()) newErrors.name = 'اسم المسار مطلوب';
-//     if (!formData.memorizeFrom.trim()) newErrors.memorizeFrom = 'بداية الحفظ مطلوبة';
-//     if (!formData.memorizeTo.trim()) newErrors.memorizeTo = 'نهاية الحفظ مطلوبة';
-//     setErrors(newErrors);
-//     return Object.keys(newErrors).length === 0;
-//   };
-
-//   const handleSubmit = (e: FormEvent) => {
-//     e.preventDefault();
-//     if (validate()) {
-//       onSubmit(formData);
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 pb-5 px-10">
-//       <div className="flex justify-between gap-x-10">
-//         <label className="w-full">
-//           <span className="text-xl font-semibold mb-2 block">اسم المسار</span>
-//           <Input 
-//             value={formData.name}
-//             onChange={(e) => setFormData({...formData, name: e.target.value})}
-//             className={errors.name ? 'border-red-500' : ''}
-//             placeholder="مثال: مسار جزء عم"
-//           />
-//           {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
-//         </label>
-//       </div>
-
-//       <div className="flex justify-between gap-x-10">
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">من</span>
-//           <Input 
-//             value={formData.memorizeFrom}
-//             onChange={(e) => setFormData({...formData, memorizeFrom: e.target.value})}
-//             className={errors.memorizeFrom ? 'border-red-500' : ''}
-//             placeholder="مثال: سورة الناس"
-//           />
-//           {errors.memorizeFrom && <span className="text-red-500 text-sm">{errors.memorizeFrom}</span>}
-//         </label>
-
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">إلى</span>
-//           <Input 
-//             value={formData.memorizeTo}
-//             onChange={(e) => setFormData({...formData, memorizeTo: e.target.value})}
-//             className={errors.memorizeTo ? 'border-red-500' : ''}
-//             placeholder="مثال: سورة النبأ"
-//           />
-//           {errors.memorizeTo && <span className="text-red-500 text-sm">{errors.memorizeTo}</span>}
-//         </label>
-//       </div>
-
-//       <div className="flex justify-start mt-5">
-//         <CustomButton 
-//             title={mode === 'add' ? 'إضافة' : 'حفظ التعديلات'}
-//             onClick={() => {}} // Form submit handles this
-//             type="submit"
-//             disabled={isLoading} 
-//             className="w-1/3"
-//         />
-//       </div>
-//     </form>
-//   );
-// };
-
-// export default MemorizationPathForm;
-
-
-
-// import { useState, FormEvent } from 'react';
-// import CustomButton from '@/Components/CustomButton';
-// import { Input } from '@/Components/ShadCn/input';
-// import type { MemorizationPathFormData } from '../Types/memorizationPath.types';
-
-// type MemorizationPathFormProps = {
-//   mode: 'add' | 'edit';
-//   defaultValues?: MemorizationPathFormData;
-//   onSubmit: (data: MemorizationPathFormData) => void;
-//   isLoading?: boolean;
-// };
-
-// const INITIAL_STATE: MemorizationPathFormData = {
-//   name: '',
-//   memorizeFrom: '',
-//   memorizeTo: '',
-// };
-
-// const MemorizationPathForm = ({ mode, defaultValues, onSubmit, isLoading }: MemorizationPathFormProps) => {
-//   const [formData, setFormData] = useState<MemorizationPathFormData>(defaultValues || INITIAL_STATE);
-//   const [errors, setErrors] = useState<Partial<Record<keyof MemorizationPathFormData, string>>>({});
-
-//   const validate = () => {
-//     const newErrors: typeof errors = {};
-//     if (!formData.name.trim()) newErrors.name = 'اسم المسار مطلوب';
-//     if (!formData.memorizeFrom.trim()) newErrors.memorizeFrom = 'بداية الحفظ مطلوبة';
-//     if (!formData.memorizeTo.trim()) newErrors.memorizeTo = 'نهاية الحفظ مطلوبة';
-//     setErrors(newErrors);
-//     return Object.keys(newErrors).length === 0;
-//   };
-
-//   const handleSubmit = (e: FormEvent) => {
-//     e.preventDefault();
-//     if (validate()) {
-//       onSubmit(formData);
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 pb-5 px-10">
-//       {/* باقي الكود بدون تغيير */}
-//     </form>
-//   );
-// };
-
-// export default MemorizationPathForm;
-
-
-//===============================================================
-
-// import { useState } from 'react';
-// import type { FormEvent } from 'react';
-// import CustomButton from '@/Components/CustomButton';
-// import { Input } from '@/Components/ShadCn/input';
-// import type { MemorizationPathFormData } from '../Types/memorizationPath.types';
-
-// type MemorizationPathFormProps = {
-//   mode: 'add' | 'edit';
-//   defaultValues?: MemorizationPathFormData;
-//   onSubmit: (data: MemorizationPathFormData) => void;
-//   isLoading?: boolean;
-// };
-
-// const INITIAL_STATE: MemorizationPathFormData = {
-//   name: '',
-//   memorizeFrom: '',
-//   memorizeTo: '',
-// };
-
-// const MemorizationPathForm = ({
-//   mode,
-//   defaultValues,
-//   onSubmit,
-//   isLoading,
-// }: MemorizationPathFormProps) => {
-//   const [form, setForm] = useState<MemorizationPathFormData>(
-//     defaultValues ?? INITIAL_STATE
-//   );
-
-//   const handleChange = (
-//     key: keyof MemorizationPathFormData,
-//     value: string
-//   ) => {
-//     setForm((prev) => ({ ...prev, [key]: value }));
-//   };
-
-//   const handleSubmit = (e: FormEvent) => {
-//     e.preventDefault();
-//     onSubmit(form);
-//   };
-
-//   return (
-
-//     <form onSubmit={handleSubmit} className="flex flex-col gap-y-6 px-10 pb-6">
-//   {/* اسم المسار */}
-//   <label className="w-full">
-//     <span className="text-xl font-semibold mb-2 block">اسم المسار</span>
-//     <Input
-//       required
-//       value={form.name}
-//       onChange={(e) => handleChange('name', e.target.value)}
-//       placeholder="مثال: المستوى الأول"
-//     />
-//   </label>
-
-//   {/* من */}
-//   <label className="w-full">
-//     <span className="text-xl font-semibold mb-2 block">من</span>
-//     <Input
-//       required
-//       value={form.memorizeFrom}
-//       onChange={(e) => handleChange('memorizeFrom', e.target.value)}
-//       placeholder="مثال: سورة الناس"
-//     />
-//   </label>
-
-//   {/* إلى */}
-//   <label className="w-full">
-//     <span className="text-xl font-semibold mb-2 block">إلى</span>
-//     <Input
-//       required
-//       value={form.memorizeTo}
-//       onChange={(e) => handleChange('memorizeTo', e.target.value)}
-//       placeholder="مثال: سورة النبأ"
-//     />
-//   </label>
-
-//   {/* زر الحفظ */}
-//   <div className="flex justify-center pt-4">
-//     <CustomButton type="submit" disabled={isLoading}>
-//       {mode === 'add' ? 'إضافة' : 'حفظ التعديلات'}
-//     </CustomButton>
-//   </div>
-// </form>
-
-//   );
-// };
-
-// export default MemorizationPathForm;
-
-
-
-
-
-// ===============================================
-import { useState, useEffect } from 'react';
-import type { FormEvent } from 'react';
-import CustomButton from '@/Components/CustomButton';
-import { Input } from '@/Components/ShadCn/input';
-import type { MemorizationPathFormData } from '../Types/memorizationPath.types';
+import { useEffect, useState, type FormEvent } from "react";
+import CustomButton from "@/Components/CustomButton";
+import { Input } from "@/Components/ShadCn/input";
+import type { MemorizationPathFormData } from "../Types/memorizationPath.types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/Components/ShadCn/select";
 
 type MemorizationPathFormProps = {
-  mode: 'add' | 'edit';
+  mode: "add" | "edit";
   defaultValues?: MemorizationPathFormData;
   onSubmit: (data: MemorizationPathFormData) => void;
   isLoading?: boolean;
 };
+export const QURAN_SURAS = [
+  "الفاتحة",
+  "البقرة",
+  "آل عمران",
+  "النساء",
+  "المائدة",
+  "الأنعام",
+  "الأعراف",
+  "الأنفال",
+  "التوبة",
+  "يونس",
+  "هود",
+  "يوسف",
+  "الرعد",
+  "إبراهيم",
+  "الحجر",
+  "النحل",
+  "الإسراء",
+  "الكهف",
+  "مريم",
+  "طه",
+  "الأنبياء",
+  "الحج",
+  "المؤمنون",
+  "النور",
+  "الفرقان",
+  "الشعراء",
+  "النمل",
+  "القصص",
+  "العنكبوت",
+  "الروم",
+  "لقمان",
+  "السجدة",
+  "الأحزاب",
+  "سبأ",
+  "فاطر",
+  "يس",
+  "الصافات",
+  "ص",
+  "الزمر",
+  "غافر",
+  "فصلت",
+  "الشورى",
+  "الزخرف",
+  "الدخان",
+  "الجاثية",
+  "الأحقاف",
+  "محمد",
+  "الفتح",
+  "الحجرات",
+  "ق",
+  "الذاريات",
+  "الطور",
+  "النجم",
+  "القمر",
+  "الرحمن",
+  "الواقعة",
+  "الحديد",
+  "المجادلة",
+  "الحشر",
+  "الممتحنة",
+  "الصف",
+  "الجمعة",
+  "المنافقون",
+  "التغابن",
+  "الطلاق",
+  "التحريم",
+  "الملك",
+  "القلم",
+  "الحاقة",
+  "المعارج",
+  "نوح",
+  "الجن",
+  "المزمل",
+  "المدثر",
+  "القيامة",
+  "الإنسان",
+  "المرسلات",
+  "النبأ",
+  "النازعات",
+  "عبس",
+  "التكوير",
+  "الإنفطار",
+  "المطففين",
+  "الإنشقاق",
+  "البروج",
+  "الطارق",
+  "الأعلى",
+  "الغاشية",
+  "الفجر",
+  "البلد",
+  "الشمس",
+  "الليل",
+  "الضحى",
+  "الشرح",
+  "التين",
+  "العلق",
+  "القدر",
+  "البينة",
+  "الزلزلة",
+  "العاديات",
+  "القارعة",
+  "التكاثر",
+  "العصر",
+  "الهمزة",
+  "الفيل",
+  "قريش",
+  "الماعون",
+  "الكوثر",
+  "الكافرون",
+  "النصر",
+  "المسد",
+  "الإخلاص",
+  "الفلق",
+  "الناس",
+];
 
 const INITIAL_STATE: MemorizationPathFormData = {
-  name: '',
-  memorizeFrom: '',
-  memorizeTo: '',
+  name: "",
+  memorizeFrom: "",
+  memorizeTo: "",
 };
 
 const MemorizationPathForm = ({
@@ -262,66 +145,131 @@ const MemorizationPathForm = ({
   onSubmit,
   isLoading,
 }: MemorizationPathFormProps) => {
-  const [form, setForm] = useState<MemorizationPathFormData>(
-    defaultValues ?? INITIAL_STATE
-  );
+  const [form, setForm] = useState<MemorizationPathFormData>(INITIAL_STATE);
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof MemorizationPathFormData, string>>
+  >({});
 
-  // 🔥 تحديث الفورم لما تتغير defaultValues
   useEffect(() => {
-    if (defaultValues) {
-      setForm(defaultValues);
-    }
+    if (defaultValues) setForm(defaultValues);
   }, [defaultValues]);
 
-  const handleChange = (
-    key: keyof MemorizationPathFormData,
-    value: string
-  ) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  const validate = () => {
+    const newErrors: typeof errors = {};
+    if (!form.name) newErrors.name = "الاسم مطلوب";
+    if (!form.memorizeFrom) newErrors.memorizeFrom = "حقل 'من' مطلوب";
+    if (!form.memorizeTo) newErrors.memorizeTo = "حقل 'إلى' مطلوب";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!validate()) return;
     onSubmit(form);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-y-6 px-10 pb-6">
-      <label className="w-full">
+    <form
+      onSubmit={handleSubmit}
+      dir="rtl"
+      className="flex flex-col gap-y-6 px-6 pb-5"
+    >
+      <label>
         <span className="text-xl font-semibold mb-2 block">اسم المسار</span>
         <Input
           required
           value={form.name}
-          onChange={(e) => handleChange('name', e.target.value)}
-          placeholder="مثال: المستوى الأول"
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className={`bg-white ${errors.name ? "border-red-500" : ""}`}
         />
+        {errors.name && (
+          <span className="text-red-500 text-sm">{errors.name}</span>
+        )}
       </label>
 
-      <label className="w-full">
-        <span className="text-xl font-semibold mb-2 block">من</span>
-        <Input
-          required
-          value={form.memorizeFrom}
-          onChange={(e) => handleChange('memorizeFrom', e.target.value)}
-          placeholder="مثال: سورة الناس"
-        />
-      </label>
+      <div className="flex gap-x-6">
+        {/* من */}
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">من</span>
+          <Select
+            key={form.memorizeFrom}
+            value={form.memorizeFrom}
+            onValueChange={(val) => setForm({ ...form, memorizeFrom: val })}
+          >
+            <SelectTrigger
+              dir="rtl"
+              className=" w-full flex flex-row justify-between items-center text-right bg-white border rounded-md cursor-pointer"
+            >
+              <SelectValue
+                placeholder="اختر السورة"
+                className="text-right flex-1"
+              />
+            </SelectTrigger>
 
-      <label className="w-full">
-        <span className="text-xl font-semibold mb-2 block">إلى</span>
-        <Input
-          required
-          value={form.memorizeTo}
-          onChange={(e) => handleChange('memorizeTo', e.target.value)}
-          placeholder="مثال: سورة النبأ"
-        />
-      </label>
+            <SelectContent
+              dir="rtl"
+              className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto"
+            >
+              {QURAN_SURAS.map((sura) => (
+                <SelectItem
+                  key={sura}
+                  value={sura}
+                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                >
+                  {sura}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-      <div className="flex justify-center pt-4">
-        <CustomButton type="submit" disabled={isLoading}>
-          {mode === 'add' ? 'إضافة' : 'حفظ التعديلات'}
-        </CustomButton>
+          {errors.memorizeFrom && (
+            <span className="text-red-500 text-sm">{errors.memorizeFrom}</span>
+          )}
+        </div>
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">إلى</span>
+          <Select
+            key={form.memorizeTo}
+            value={form.memorizeTo}
+            onValueChange={(val) => setForm({ ...form, memorizeTo: val })}
+          >
+            <SelectTrigger
+              dir="rtl"
+              className="w-full flex flex-row justify-between items-center text-right bg-white border rounded-md cursor-pointer"
+            >
+              <SelectValue placeholder="اختر السورة" />
+            </SelectTrigger>
+
+            <SelectContent
+              dir="rtl"
+              className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto"
+            >
+              {QURAN_SURAS.map((sura) => (
+                <SelectItem
+                  key={sura}
+                  value={sura}
+                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                >
+                  {sura}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {errors.memorizeTo && (
+            <span className="text-red-500 text-sm">{errors.memorizeTo}</span>
+          )}
+        </div>
       </div>
+
+      <CustomButton
+        type="submit"
+        disabled={isLoading}
+        className="w-full py-2 bg-[var(--primary)] text-white rounded-md hover:bg-[var(--light-green)] hover:text-[var(--primary)]"
+      >
+        {mode === "add" ? "إضافة المسار" : "تحديث المسار"}
+      </CustomButton>
     </form>
   );
 };
