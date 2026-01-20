@@ -21,13 +21,25 @@ const Sidebar = () => {
   const { logout } = useAuth();
 
   const topMenu: ISideBarItem[] = [
-    { text: "الأحصائيات", icon: BarChardImage, path: "/" },
-    { text: "إدارة الحلقات", icon: KoranImage, path: "/halaqas" },
-    { text: "إدارة المستخدمين", icon: UsersImage, path: "/users" },
-    { text: "إدارة الطالبات", icon: StudentsImage, path: "/students" },
-    { text: "إدارة المسارات", icon: PathImage, path: "/memorization-paths" },
-    { text: "إدارة المناهج", icon: ThreeBookImage, path: "/manhajs" },
-    { text: "إدارة الاختبارات", icon: ActivitiesImage, path: "/exams" },
+    { text: "الأحصائيات", icon: BarChardImage, path: "/dashboard" },
+    { text: "إدارة الحلقات", icon: KoranImage, path: "/dashboard/halaqas" },
+    { text: "إدارة المستخدمين", icon: UsersImage, path: "/dashboard/users" },
+    {
+      text: "إدارة الطالبات",
+      icon: StudentsImage,
+      path: "/dashboard/students",
+    },
+    {
+      text: "إدارة المسارات",
+      icon: PathImage,
+      path: "/dashboard/memorization-paths",
+    },
+    { text: "إدارة المناهج", icon: ThreeBookImage, path: "/dashboard/manhajs" },
+    {
+      text: "إدارة الاختبارات",
+      icon: ActivitiesImage,
+      path: "/dashboard/exams",
+    },
   ];
 
   const bottomMenu: ISideBarItem[] = [
