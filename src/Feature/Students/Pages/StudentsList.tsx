@@ -76,3 +76,139 @@
 // };
 
 // export default StudentsList;
+
+
+
+
+
+// import { useState } from "react";
+// import { useStudents } from "../Services/student.service";
+// import StudentsTable from "../Components/StudentsTable";
+// import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+// import CustomAddButtonAndSearch from "@/Components/Dashboard/CustomAddButtonAndSearch";
+// import AppPagination from "@/Components/Dashboard/CustomPagination";
+
+// const StudentsList = () => {
+//   const [page, setPage] = useState(1);
+//   const [pageSize] = useState(10);
+//   const [search, setSearch] = useState("");
+
+//   const { data, isLoading, isError } = useStudents({
+//     page,
+//     pageSize,
+//     name: search || undefined,
+//     halaqaId: undefined, // يمكن لاحقاً تضيفي فلتر بالحلقات
+//   });
+
+//   // البيانات الجاهزة للجدول
+//   const students = data?.data || [];
+
+//   // Pagination
+//   const totalPages = data?.pagination?.totalPages || 1;
+//   const disableNext = data?.pagination?.page >= totalPages;
+
+//   if (isError)
+//     return (
+//       <div className="text-center text-red-500 py-10">
+//         حدث خطأ أثناء تحميل البيانات
+//       </div>
+//     );
+
+//   return (
+//     <div className="flex flex-col gap-5 p-5 bg-background h-full">
+//       <CustomFormTitle title="إدارة الطالبات" />
+
+//       <CustomAddButtonAndSearch
+//         path="/dashboard/students/add"
+//         textButton="إضافة طالبة جديدة"
+//         searchValue={search}
+//         onSearchChange={(e) => {
+//           setSearch(e.target.value);
+//           setPage(1); // reset page on search
+//         }}
+//       />
+
+//       {isLoading ? (
+//         <div className="text-center py-10">جاري التحميل...</div>
+//       ) : (
+//         <>
+//           <StudentsTable listOfStudents={students} />
+//           <AppPagination
+//             page={page}
+//             setPage={setPage}
+//             disableNext={disableNext}
+//           />
+//         </>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default StudentsList;
+
+
+
+import { useState } from "react";
+import { useStudents } from "../Services/student.service";
+import StudentsTable from "../Components/StudentsTable";
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import CustomAddButtonAndSearch from "@/Components/Dashboard/CustomAddButtonAndSearch";
+import AppPagination from "@/Components/Dashboard/CustomPagination";
+
+const StudentsList = () => {
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(10);
+  const [search, setSearch] = useState("");
+
+  const { data, isLoading, isError } = useStudents({
+    page,
+    pageSize,
+    name: search || undefined,
+    halaqaId: undefined,
+  });
+
+  // البيانات الجاهزة للجدول
+  const students = data?.data || [];
+
+  // Pagination مع Optional Chaining لتجنب errors
+  const totalPages = data?.pagination?.totalPages || 1;
+  const disableNext = (data?.pagination?.page || 0) >= totalPages;
+
+  if (isError)
+    return (
+      <div className="text-center text-red-500 py-10">
+        حدث خطأ أثناء تحميل البيانات
+      </div>
+    );
+
+  return (
+    <div className="flex flex-col gap-5 p-5 bg-background h-full">
+      <CustomFormTitle title="إدارة الطالبات" />
+
+      <CustomAddButtonAndSearch
+        path="/dashboard/students/add"
+        textButton="إضافة طالبة جديدة"
+        searchValue={search}
+        onSearchChange={(e) => {
+          setSearch(e.target.value);
+          setPage(1); // reset page on search
+        }}
+      />
+
+      {isLoading ? (
+        <div className="text-center py-10">جاري التحميل...</div>
+      ) : (
+        <>
+          <StudentsTable listOfStudents={students} />
+          <AppPagination
+            page={page}
+            setPage={setPage}
+            disableNext={disableNext}
+          />
+        </>
+      )}
+    </div>
+  );
+};
+
+export default StudentsList;

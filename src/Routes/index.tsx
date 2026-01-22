@@ -18,8 +18,8 @@ import DashboardError from "@/Components/DashboardError";
 // import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
 // import ViewMemorizationPath from "@/Feature/MemorizationPaths/Pages/ViewMemorizationPath";
 
-// import StudentsList from "@/Feature/Students/Pages/StudentsList";
-// import AddStudent from "@/Feature/Students/Pages/AddStudent";
+import StudentsList from "@/Feature/Students/Pages/StudentsList";
+import AddStudent from "@/Feature/Students/Pages/AddStudent";
 // import EditStudent from "@/Feature/Students/Pages/EditStudent";
 // import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
 
@@ -93,11 +93,11 @@ const AllRoutes = () => {
             <Route
               path="memorization-paths/view/:id"
               element={<ViewMemorizationPath />}
-            />
+            />*/}
 
             <Route path="students" element={<StudentsList />} />
             <Route path="students/add" element={<AddStudent />} />
-            <Route path="students/view/:id" element={<ViewStudent />} />
+            {/*<Route path="students/view/:id" element={<ViewStudent />} />
             <Route path="students/edit/:id" element={<EditStudent />} />
 
             <Route path="exams" element={<ExamsList />} />
