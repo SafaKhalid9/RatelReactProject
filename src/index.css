@@ -140,3 +140,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+[data-slot="dialog-close"],
+[data-radix-dialog-close] {
+  display: none !important;
+}
