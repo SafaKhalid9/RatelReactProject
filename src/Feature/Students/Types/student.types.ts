@@ -62,29 +62,30 @@ export interface StudentListItem {
   parentName: string;
 }
 
-/* ===================== MANHAJ (LITE) ===================== */
-/* المستخدم في تفاصيل الطالبة فقط (id + name) */
-
-export interface ManhajLite {
-  manhajId: number;
-  name: string;
-}
-
 /* ===================== DETAILS ===================== */
 
 export interface StudentDetails {
-  id: number; // كما هو في endpoint التفاصيل
+  studentId: number;
   name: string;
   birthDate: string;
-  parentName: string;
-  studyPeriod: string;
-  memorizationTrack: string;
-  attendanceRate: number;
-  memorizationAndReviewRating: number;
-  address: string;
   phoneNumber: string;
-  manahjs: ManhajLite[];
+  address: string;
+  currentEducationalLevel: string;
+  educationalQualification: string;
+  halaqaId: number;
+  parentId?: number;
+  halaqaName: string;
+  parentName?: string;
 }
+
+export interface ApiResponse<T> {
+  isSuccess: boolean;
+  statusCode: number;
+  message: string;
+  data: T;
+  errors: Record<string, string> | null;
+}
+
 
 /* ===================== FORM DATA ===================== */
 
@@ -113,3 +114,4 @@ export interface StudentQueryParams {
   name?: string;
   halaqaId?: number;
 }
+

@@ -1,7 +1,7 @@
-// import { useParams, Link } from 'react-router-dom';
+// import { useParams} from 'react-router-dom';
 // import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
 // import { useStudentDetails } from '../Services/student.service';
-// import CustomButton from '@/Components/CustomButton';
+// // import CustomButton from '@/Components/CustomButton';
 // import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ShadCn/card';
 // import { Badge } from '@/Components/ShadCn/badge';
 
@@ -16,7 +16,7 @@
 
 //   return (
 //     <div className='flex flex-col gap-5 p-5 bg-background h-full'>
-//       <CustomFormTitle text='ملف الطالبة' />
+//       <CustomFormTitle title='ملف الطالبة' />
       
 //       <Card>
 //         <CardHeader className="bg-slate-50 dark:bg-slate-900">
@@ -54,27 +54,14 @@
 //                 </div>
 //             </div>
 
-//              <div>
-//                 <h3 className="font-semibold text-gray-500 text-sm mb-2">المناهج المرتبطة</h3>
-//                 <div className="flex gap-2 flex-wrap">
-//                     {student.manahjs && student.manahjs.length > 0 ? (
-//                         student.manahjs.map((m, idx) => (
-//                             <Badge key={idx} className="bg-[#CB997E]">{m}</Badge>
-//                         ))
-//                     ) : (
-//                         <span className="text-gray-400">لا توجد مناهج</span>
-//                     )}
-//                 </div>
-//             </div>
-
-//             <div className="pt-5 flex gap-4 border-t mt-4">
+//             {/* <div className="pt-5 flex gap-4 border-t mt-4">
 //                 <Link to={`/dashboard/students/edit/${studentId}`}>
 //                     <CustomButton title="تعديل البيانات" className="w-32" onClick={() => {}} />
 //                 </Link>
 //                 <Link to="/dashboard/students">
 //                     <CustomButton title="عودة للقائمة" className="w-32 bg-gray-500 hover:bg-gray-600" onClick={() => {}} />
 //                 </Link>
-//             </div>
+//             </div> */}
 //         </CardContent>
 //       </Card>
 //     </div>
@@ -82,3 +69,36 @@
 // };
 
 // export default ViewStudent;
+
+
+
+
+
+import { useParams } from "react-router-dom";
+import { useStudentDetails } from "../Services/student.service";
+
+const StudentInfo = () => {
+  const { id } = useParams<{ id: string }>(); // id من الراوت
+  const studentId = parseInt(id || "0");
+
+  const { data: student, isLoading, error } = useStudentDetails(studentId);
+
+  if (isLoading) return <div>جاري التحميل...</div>;
+  if (error) return <div>حدث خطأ</div>;
+  if (!student) return <div>لا توجد بيانات</div>;
+
+  return (
+    <div className="bg-white p-4 rounded-md shadow-md">
+      <h2 className="text-xl font-bold">{student.name}</h2>
+      <p>تاريخ الميلاد: {new Date(student.birthDate).toLocaleDateString()}</p>
+      <p>الهاتف: {student.phoneNumber}</p>
+      <p>العنوان: {student.address}</p>
+      <p>المرحلة الدراسية: {student.currentEducationalLevel}</p>
+      <p>المؤهل: {student.educationalQualification}</p>
+      <p>الحلقة: {student.halaqaName}</p>
+      <p>ولي الأمر: {student.parentName}</p>
+    </div>
+  );
+};
+
+export default StudentInfo;

@@ -18,10 +18,10 @@ import DashboardError from "@/Components/DashboardError";
 // import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
 // import ViewMemorizationPath from "@/Feature/MemorizationPaths/Pages/ViewMemorizationPath";
 
-import StudentsList from "@/Feature/Students/Pages/StudentsList";
+import AllStudents from "@/Feature/Students/Pages/StudentsList";
 import AddStudent from "@/Feature/Students/Pages/AddStudent";
 // import EditStudent from "@/Feature/Students/Pages/EditStudent";
-// import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
+import StudentInfo  from "@/Feature/Students/Pages/ViewStudent";
 
 // import ExamsList from "@/Feature/Exams/Pages/ExamsList";
 // import AddExam from "@/Feature/Exams/Pages/AddExam";
@@ -63,9 +63,11 @@ const AllRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>
+
           <Route path="/dashboard" element={<Dashboard />}>
-            {/* <Route path="users" element={<AllUsers />} />
-            <Route path="users/add-new-user" element={<AddNewUser />} />
+           {/* <Route path="users/add-new-user" element={<AddNewUser />} /> */}
+             {/*<Route path="users" element={<AllUsers />} />
+            
             <Route path="users/view/:id" element={<ViewUser />} />
             <Route path="users/edit/:id" element={<EditUser />} />
 
@@ -95,10 +97,10 @@ const AllRoutes = () => {
               element={<ViewMemorizationPath />}
             />*/}
 
-            <Route path="students" element={<StudentsList />} />
+            <Route path="students" element={<AllStudents />} />
             <Route path="students/add" element={<AddStudent />} />
-            {/*<Route path="students/view/:id" element={<ViewStudent />} />
-            <Route path="students/edit/:id" element={<EditStudent />} />
+            <Route path="students/view/:id" element={<StudentInfo />} />
+            {/*<Route path="students/edit/:id" element={<EditStudent />} />
 
             <Route path="exams" element={<ExamsList />} />
             <Route path="exams/add" element={<AddExam />} />

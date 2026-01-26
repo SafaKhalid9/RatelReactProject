@@ -60,8 +60,9 @@ const AddStudent = () => {
   };
 
   return (
-    <div className="border-t-[15px] border-[#CB997E] rounded-2xl bg-white mt-[10%] h-[70%]">
-      <div className="mt-[8%]">
+    <div className="bg-white shadow-sm rounded-[15px] border-t-[10px] border-t-[var(--secondary)]">
+    {/* //<div className="bg-white shadow-sm rounded-[15px] border-t-[10px] border-t-[var(--secondary)] w-full max-w-[1200px] mx-auto"> */}
+      <div className="p-6" dir="rtl">
         <CustomFormTitle title="إضافة طالبة جديدة" />
 
         <StudentForm
