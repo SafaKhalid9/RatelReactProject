@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
-import { useHalaqaDetails } from "../Services/halaqa.service";
+import { useHalaqaDetails, useTeachers } from "../Services/halaqa.service";
 import { Badge } from "@/Components/ShadCn/badge";
+
 import {
   Table,
   TableBody,
@@ -14,133 +15,161 @@ import {
 const ViewHalaqa = () => {
   const { id } = useParams();
   const { data: details, isLoading } = useHalaqaDetails(Number(id));
+  const { data: teachers } = useTeachers();
+
+  const teacherName =
+    teachers?.find((t) => t.id === details?.teacherId)?.fullName || "غير محدد";
 
   if (isLoading)
-    return <div className="p-10 text-center">Loading details...</div>;
+    return <div className="p-10 text-center">جاري التحميل ...</div>;
+
   if (!details)
     return (
       <div className="p-10 text-center text-red-500">
-        Halaqa details not found
+        لم يتم العثور على تفاصيل الحلقة
       </div>
     );
 
   return (
-    <div className="flex flex-col gap-6 p-5">
-      <CustomFormTitle title="Halaqa Details" />
+    <div className="min-h-screen bg-(--background-page) p-6 pt-0 flex justify-center">
+      <div className="w-full max-w-5xl bg-(--white-color) rounded-2xl border-t-15 border-secondary p-6 pt-0">
+        <CustomFormTitle title={`حلقة ${details.name}`} />
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 h-[40%] gap-6 items-start">
+          <div className=" md:col-span-1 space-y-3 h-full text-(--font-title-label-color) pt-[10%]">
+            <p className="text-center text-xl">
+              <span className="font-semibold text-xl">المعلم:</span>{" "}
+              {teacherName}
+            </p>
+            <div className="flex justify-evenly gap-8">
+              <p className="text-center text-xl">
+                <span className="font-semibold text-xl">الفترة:</span>{" "}
+                {details.period}
+              </p>
 
-      {/* Header Info */}
-      <div className="bg-white p-6 rounded-lg shadow-sm border">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <span className="font-semibold text-gray-500 text-sm block uppercase tracking-wide">
-              Halaqa Name
-            </span>
-            <span className="text-xl font-medium">{details.name}</span>
-          </div>
-          <div>
-            <span className="font-semibold text-gray-500 text-sm block uppercase tracking-wide">
-              Teacher
-            </span>
-            <span className="text-lg">{details.teacherName}</span>
-          </div>
-          <div>
-            <span className="font-semibold text-gray-500 text-sm block uppercase tracking-wide">
-              Period
-            </span>
-            <span className="text-lg">{details.period}</span>
-          </div>
-          <div>
-            <span className="font-semibold text-gray-500 text-sm block uppercase tracking-wide mb-2">
-              Academic Paths
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {details.paths.map((p) => (
-                <Badge key={p.pathId} variant="outline" className="text-sm">
-                  {p.name}
-                </Badge>
-              ))}
-              {details.paths.length === 0 && (
-                <span className="text-gray-400 italic">No paths assigned</span>
-              )}
+              <p className="text-center text-xl">
+                <span className="font-semibold text-xl">السعة:</span>{" "}
+                {details.capacity}
+              </p>
             </div>
-          </div>
-          <div className="md:col-span-2">
-            <span className="font-semibold text-gray-500 text-sm block uppercase tracking-wide mb-2">
-              Manhajs
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {details.manhajs.map((m) => (
-                <Badge key={m.manhajId} variant="secondary" className="text-sm">
-                  {m.name}
-                </Badge>
-              ))}
-              {details.manhajs.length === 0 && (
-                <span className="text-gray-400 italic">
-                  No manhajs assigned
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Students Table */}
-      <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-        <div className="p-4 border-b bg-gray-50">
-          <h2 className="text-lg font-bold text-gray-800">
-            Enrolled Students & Performance
-          </h2>
-        </div>
-        <Table>
-          <TableHeader className="bg-gray-100">
-            <TableRow>
-              <TableHead className="font-bold">Student Name</TableHead>
-              <TableHead className="font-bold text-center">
-                Sessions Attended
-              </TableHead>
-              <TableHead className="font-bold text-center">
-                Attendance %
-              </TableHead>
-              <TableHead className="font-bold text-center">
-                Memorized Pages
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {details.students.map((s) => (
-              <TableRow key={s.studentId} className="hover:bg-gray-50">
-                <TableCell className="font-medium">{s.name}</TableCell>
-                <TableCell className="text-center">
-                  {s.sessionsAttended}
-                </TableCell>
-                <TableCell className="text-center">
-                  <span
-                    className={`font-semibold ${
-                      s.attendancePercentage >= 80
-                        ? "text-green-600"
-                        : "text-amber-600"
-                    }`}
+            <div>
+              <p className="font-semibold mt-4 mb-1 text-center text-xl">
+                المناهج الدراسية:
+              </p>
+              <div className="flex flex-wrap justify-evenly gap-2">
+                {details.manhajs?.map((m) => (
+                  <Badge
+                    key={m.manhajId}
+                    className="bg-white text-center text-base font-normal"
                   >
-                    {s.attendancePercentage}%
+                    <span className="font-semibold text-xl">-</span> {m.name}
+                  </Badge>
+                ))}
+                {(!details.manhajs || details.manhajs.length === 0) && (
+                  <span className="text-gray-400 text-center  text-xl">
+                    لا توجد مناهج
                   </span>
-                </TableCell>
-                <TableCell className="text-center">
-                  {s.memorizedPages}
-                </TableCell>
-              </TableRow>
-            ))}
-            {details.students.length === 0 && (
+                )}
+              </div>
+            </div>
+            <div>
+              <p className="font-semibold mt-4 mb-1 text-center text-xl ">
+                مسارات الحفظ:
+              </p>
+              <div className="flex flex-wrap justify-evenly gap-2 ">
+                {details.paths?.map((p) => (
+                  <Badge
+                    key={p.pathId}
+                    className="bg-white text-center text-base  font-normal"
+                  >
+                    <span className="font-semibold text-xl">-</span> {p.name}
+                  </Badge>
+                ))}
+                {(!details.paths || details.paths.length === 0) && (
+                  <span className="text-gray-400 text-xl">لا توجد مسارات</span>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center h-full items-center">
+            <img
+              src="../../../../public/quran.jpg"
+              alt="quran"
+              className="rounded-2xl shadow-md h-full max-w-[250px] object-cover"
+            />
+          </div>
+        </div>
+        <h2 className="mt-15 text-secondary text-2xl font-bold text-center">
+          طلاب الحلقة
+        </h2>
+        <div className="bg-white rounded-lg h-45 overflow-hidden">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell
-                  colSpan={4}
-                  className="text-center py-8 text-gray-500"
-                >
-                  No students enrolled in this halaqa yet.
-                </TableCell>
+                <TableHead className="font-bold text-center">
+                  اسم الطالب
+                </TableHead>
+                <TableHead className="font-bold text-center">
+                  عدد الجلسات المحضورة
+                </TableHead>
+                <TableHead className="font-bold text-center">
+                  نسبة الحضور
+                </TableHead>
+                <TableHead className="font-bold text-center">
+                  الصفحات المحفوظة
+                </TableHead>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {details.students?.map((s) => (
+                <TableRow
+                  key={s.studentId}
+                  className="hover:bg-(--background-page)"
+                >
+                  <TableCell className="font-medium text-center">
+                    {s.name}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {s.sessionsAttended}
+                  </TableCell>
+                  <TableCell className="text-center font-semibold">
+                    <span
+                      className={
+                        s.attendancePercentage >= 80
+                          ? "text-(--primary)"
+                          : "text-secondary"
+                      }
+                    >
+                      {s.attendancePercentage}%
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {s.memorizedPages}
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              {(!details.students || details.students.length === 0) && (
+                <TableRow>
+                  <TableCell
+                    colSpan={4}
+                    className="text-center py-15 text-gray-500"
+                  >
+                    لا يوجد طلاب مسجلين
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        {/* زر رجوع */}
+        {/* <div className="mt-8 flex justify-center">
+          <button
+            onClick={() => navigate(-1)}
+            className="px-10 py-2 rounded-md text-white bg-[var(--primary)] hover:opacity-90"
+          >
+            رجوع
+          </button>
+        </div> */}
       </div>
     </div>
   );

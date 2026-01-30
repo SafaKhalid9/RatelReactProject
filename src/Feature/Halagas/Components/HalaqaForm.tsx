@@ -15,7 +15,7 @@ import {
   useTeachers,
 } from "../Services/halaqa.service";
 
-type HalaqaFormProps = {
+type Props = {
   mode: "add" | "edit";
   defaultValues?: HalaqaFormData;
   onSubmit: (data: HalaqaFormData) => void;
@@ -24,20 +24,15 @@ type HalaqaFormProps = {
 
 const INITIAL_STATE: HalaqaFormData = {
   name: "",
-  status: "مبتدئ",
+  status: "",
   capacity: 10,
-  teacherID: 0,
+  teacherId: undefined as any,
   period: "",
-  selectedPathIds: [],
-  selectedManhajIds: [],
+  pathIds: [],
+  manhajIds: [],
 };
 
-const HalaqaForm = ({
-  mode,
-  defaultValues,
-  onSubmit,
-  isLoading,
-}: HalaqaFormProps) => {
+const HalaqaForm = ({ mode, defaultValues, onSubmit, isLoading }: Props) => {
   const [formData, setFormData] = useState<HalaqaFormData>(INITIAL_STATE);
   const [errors, setErrors] = useState<
     Partial<Record<keyof HalaqaFormData, string>>
@@ -47,19 +42,44 @@ const HalaqaForm = ({
   const { data: paths } = useMemorizationPaths();
   const { data: manhajs } = useManhajs();
   useEffect(() => {
-    if (defaultValues) {
-      setFormData(defaultValues);
-    }
+    if (!defaultValues) return;
+
+    setFormData({
+      name: defaultValues.name,
+      status: defaultValues.status,
+      capacity: defaultValues.capacity,
+      teacherId: defaultValues.teacherId,
+      period: defaultValues.period,
+      pathIds: defaultValues.pathIds,
+      manhajIds: defaultValues.manhajIds,
+    });
   }, [defaultValues]);
 
+  // const validate = () => {
+  //   const newErrors: typeof errors = {};
+  //   if (!formData.name) newErrors.name = "الاسم مطلوب";
+  //   if (!formData.period) newErrors.period = "اختر الفترة";
+  //   if (!formData.teacherId) newErrors.teacherId = "اختر معلم";
+  //   if (formData.capacity <= 0)
+  //     newErrors.capacity = "السعة يجب أن تكون أكبر من 0";
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
   const validate = () => {
     const newErrors: typeof errors = {};
-    if (!formData.name) newErrors.name = "الاسم مطلوب";
-    if (!formData.status) newErrors.status = "اختر الحالة";
+
+    if (!formData.name) {
+      newErrors.name = "اسم الحلقة مطلوب";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "اسم الحلقة يجب أن يكون 3 أحرف على الأقل";
+    }
+
     if (!formData.period) newErrors.period = "اختر الفترة";
+    if (!formData.teacherId) newErrors.teacherId = "اختر معلم";
     if (formData.capacity <= 0)
       newErrors.capacity = "السعة يجب أن تكون أكبر من 0";
-    if (!formData.teacherID) newErrors.teacherID = "اختر مدرّس";
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -67,39 +87,37 @@ const HalaqaForm = ({
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-
-    // إرسال الـ FormData مباشرة
-    onSubmit(formData);
+    onSubmit({ ...formData, teacherId: Number(formData.teacherId) });
   };
-
-  const handleMultiSelectChange = (
-    field: "selectedPathIds" | "selectedManhajIds",
-    value: string
-  ) => {
-    const id = parseInt(value);
-    setFormData((prev) => {
-      const current = prev[field];
-      if (current.includes(id))
-        return { ...prev, [field]: current.filter((x) => x !== id) };
-      return { ...prev, [field]: [...current, id] };
-    });
+  const toggleMulti = (key: "pathIds" | "manhajIds", id: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: prev[key].includes(id)
+        ? prev[key].filter((x) => x !== id)
+        : [...prev[key], id],
+    }));
   };
-
   return (
     <form
       onSubmit={handleSubmit}
       dir="rtl"
       className="flex flex-col gap-y-6 pb-5 px-6"
     >
-      {/* الاسم والفترة */}
       <div className="flex justify-between gap-x-6">
         <label className="w-1/2">
           <span className="text-xl font-semibold mb-2 block">اسم الحلقة</span>
           <Input
+            placeholder="اسم الحلقة"
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => {
+              setFormData({ ...formData, name: e.target.value });
+              if (errors.name) {
+                setErrors((prev) => ({ ...prev, name: undefined }));
+              }
+            }}
             className={`w-full bg-white ${errors.name ? "border-red-500" : ""}`}
           />
+
           {errors.name && (
             <span className="text-red-500 text-sm">{errors.name}</span>
           )}
@@ -108,46 +126,84 @@ const HalaqaForm = ({
         <label className="w-1/2">
           <span className="text-xl font-semibold mb-2 block">الفترة</span>
           <Select
+            key={formData.period}
             value={formData.period}
             onValueChange={(val) => setFormData({ ...formData, period: val })}
           >
-            <SelectTrigger className="w-full text-right bg-white">
+            <SelectTrigger
+              dir="rtl"
+              className="
+          w-full
+          flex
+          justify-between
+          items-center
+          text-right
+          bg-white
+          border
+          rounded-md
+          cursor-pointer
+        "
+            >
               <SelectValue placeholder="اختر الفترة" />
             </SelectTrigger>
+
             <SelectContent
               dir="rtl"
               className="text-right bg-white shadow-md rounded-md"
             >
               <SelectItem
                 value="صباحية"
-                className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                className="
+  cursor-pointer
+  transition-colors
+  duration-150
+  data-highlighted:bg-(--light-green)
+"
               >
                 صباحية
               </SelectItem>
               <SelectItem
                 value="مسائية"
-                className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                className="
+  cursor-pointer
+  transition-colors
+  duration-150
+  data-highlighted:bg-(--light-green)
+"
               >
                 مسائية
               </SelectItem>
             </SelectContent>
           </Select>
+
+          {errors.period && (
+            <span className="text-red-500 text-sm">{errors.period}</span>
+          )}
         </label>
       </div>
-
-      {/* الحالة والسعة */}
       <div className="flex justify-between gap-x-6">
         <div className="w-1/2">
           <span className="text-xl font-semibold mb-2 block">الحالة</span>
           <Select
+            key={formData.status}
             value={formData.status}
             onValueChange={(val) =>
               setFormData({ ...formData, status: val as HalaqaStatus })
             }
           >
             <SelectTrigger
-              className="w-full flex flex-row-reverse justify-between items-center text-right bg-white border rounded-md"
               dir="rtl"
+              className="
+          w-full
+          flex
+          justify-between
+          items-center
+          text-right
+          bg-white
+          border
+          rounded-md
+          cursor-pointer
+        "
             >
               <SelectValue placeholder="اختر الحالة" />
             </SelectTrigger>
@@ -156,20 +212,35 @@ const HalaqaForm = ({
               className="text-right bg-white shadow-md rounded-md"
             >
               <SelectItem
-                value="مبتدئ"
-                className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                value="Beginner"
+                className="
+  cursor-pointer
+  transition-colors
+  duration-150
+  data-highlighted:bg-(--light-green)
+"
               >
                 مبتدئ
               </SelectItem>
               <SelectItem
-                value="متوسط"
-                className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                value="Intermediate"
+                className="
+  cursor-pointer
+  transition-colors
+  duration-150
+  data-highlighted:bg-(--light-green)
+"
               >
                 متوسط
               </SelectItem>
               <SelectItem
-                value="متقدم"
-                className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                value="Advanced"
+                className="
+  cursor-pointer
+  transition-colors
+  duration-150
+  data-highlighted:bg-(--light-green)
+"
               >
                 متقدم
               </SelectItem>
@@ -177,7 +248,7 @@ const HalaqaForm = ({
           </Select>
         </div>
 
-        <label className="w-1/2">
+        <div className="w-1/2">
           <span className="text-xl font-semibold mb-2 block">السعة</span>
           <Input
             type="number"
@@ -185,115 +256,114 @@ const HalaqaForm = ({
             onChange={(e) =>
               setFormData({
                 ...formData,
-                capacity: parseInt(e.target.value) || 0,
+                capacity: Number(e.target.value) || 0,
               })
             }
-            className={`w-full bg-white ${
+            className={`cursor-pointer data-highlighted:bg-(--light-green) ${
               errors.capacity ? "border-red-500" : ""
             }`}
           />
-          {errors.capacity && (
-            <span className="text-red-500 text-sm">{errors.capacity}</span>
-          )}
-        </label>
+        </div>
       </div>
-
-      {/* المدرّس */}
       <div className="w-full">
-        <span className="text-xl font-semibold mb-2 block">المدرّس</span>
+        <span className="text-xl font-semibold mb-2 block">المعلم</span>
         <Select
-          value={formData.teacherID ? formData.teacherID.toString() : ""}
+          key={formData.teacherId}
+          value={formData.teacherId ? String(formData.teacherId) : ""}
           onValueChange={(val) =>
-            setFormData({ ...formData, teacherID: parseInt(val) })
+            setFormData({ ...formData, teacherId: Number(val) })
           }
         >
           <SelectTrigger
-            className={`w-full text-right bg-white ${
-              errors.teacherID ? "border-red-500" : ""
+            className={`w-full flex justify-between items-center text-right bg-white border rounded-md cursor-pointer${
+              errors.teacherId ? "border-red-500" : ""
             }`}
+            dir="rtl"
           >
-            <SelectValue placeholder="اختر مدرّس" />
+            <SelectValue placeholder="اختر معلم" />
           </SelectTrigger>
           <SelectContent
-            dir="rtl"
             className="text-right bg-white shadow-md rounded-md"
+            dir="rtl"
           >
-            {Array.isArray(teachers) &&
-              teachers.map((t) => (
-                <SelectItem
-                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
-                  key={t.id}
-                  value={t.id.toString()}
-                >
-                  {t.fullName}
-                </SelectItem>
-              ))}
+            {teachers?.map((t) => (
+              <SelectItem
+                key={t.id}
+                value={String(t.id)}
+                className="
+  cursor-pointer
+  transition-colors
+  duration-150
+  data-highlighted:bg-(--light-green)
+"
+              >
+                {t.fullName}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
-        {errors.teacherID && (
-          <span className="text-red-500 text-sm">{errors.teacherID}</span>
+        {errors.teacherId && (
+          <span className="text-red-500 text-sm">{errors.teacherId}</span>
         )}
       </div>
-
-      {/* المسارات والمناهج */}
       <div className="flex justify-between gap-x-6">
         <div className="w-1/2">
           <span className="text-xl font-semibold mb-2 block">
             المسارات الأكاديمية
           </span>
           <div className="bg-white p-4 rounded-md space-y-2 h-40 overflow-y-auto">
-            {Array.isArray(paths) &&
-              paths.map((path) => (
-                <label key={path.pathId} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={formData.selectedPathIds.includes(path.pathId)}
-                    onChange={() =>
-                      handleMultiSelectChange(
-                        "selectedPathIds",
-                        path.pathId.toString()
-                      )
-                    }
-                  />
-                  <span>{path.name}</span>
-                </label>
-              ))}
+            {paths?.map((p) => (
+              <label key={p.pathId} className="flex items-center gap-2">
+                <input
+                  key={p.pathId}
+                  type="checkbox"
+                  checked={formData.pathIds.includes(p.pathId)}
+                  onChange={() => toggleMulti("pathIds", p.pathId)}
+                />
+                <span>{p.name}</span>
+              </label>
+            ))}
           </div>
         </div>
-
         <div className="w-1/2">
           <span className="text-xl font-semibold mb-2 block">
             المناهج الأكاديمية
           </span>
           <div className="bg-white p-4 rounded-md space-y-2 h-40 overflow-y-auto">
-            {Array.isArray(manhajs) &&
-              manhajs.map((m) => (
-                <label key={m.id} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={formData.selectedManhajIds.includes(m.id)}
-                    onChange={() =>
-                      handleMultiSelectChange(
-                        "selectedManhajIds",
-                        m.id.toString()
-                      )
-                    }
-                  />
-                  <span>{m.name}</span>
-                </label>
-              ))}
+            {manhajs?.map((m, index) => (
+              <label
+                key={m.manhajId ?? index}
+                className="flex items-center gap-2"
+              >
+                <input
+                  type="checkbox"
+                  checked={formData.manhajIds.includes(m.manhajId)}
+                  onChange={() => toggleMulti("manhajIds", m.manhajId)}
+                />
+                <span>{m.name}</span>
+              </label>
+            ))}
           </div>
         </div>
       </div>
-
-      <div className="pt-4">
-        <CustomButton
-          type="submit"
-          className="w-full py-2 bg-[var(--primary)] text-white rounded-md hover:text-[var(--primary)] hover:bg-[var(--light-green)]"
-        >
-          {mode === "add" ? "إضافة الحلقة" : "تحديث الحلقة"}
-        </CustomButton>
-      </div>
+      <CustomButton
+        type="submit"
+        disabled={isLoading}
+        className={`
+    w-full py-2 rounded-md transition-all duration-300
+    ${
+      isLoading
+        ? "bg-gray-300 text-(--primary) cursor-not-allowed"
+        : "bg-(--primary) text-white cursor-pointer hover:bg-(--light-green) hover:text-(--primary) hover:border-2 hover:border-(--primary) hover:shadow-lg hover:scale-[1.02]"
+    }
+  `}
+      >
+        {isLoading
+          ? "جاري الحفظ..."
+          : mode === "add"
+            ? "إضافة الحلقة"
+            : "تحديث الحلقة"}
+      </CustomButton>
     </form>
   );
 };

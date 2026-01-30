@@ -7,16 +7,7 @@ import {
 } from "@/Components/ShadCn/popover";
 import { Link } from "react-router-dom";
 import { useDeleteHalaqa } from "../Services/halaqa.service";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/Components/ShadCn/dialog";
-import { Button } from "@/Components/ShadCn/button";
-import { DialogClose } from "@radix-ui/react-dialog";
+import ConfirmDeleteDialog from "@/Components/Dashboard/CustomConfirmDeleteDialog";
 
 type Props = {
   id: number;
@@ -25,7 +16,7 @@ type Props = {
 const HalaqaActionsPopover = ({ id }: Props) => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const { mutate: deleteHalaqa, isPending: isDeleting } = useDeleteHalaqa();
+  const { mutate: deleteHalaqa, isPending } = useDeleteHalaqa();
 
   const handleDelete = () => {
     deleteHalaqa(id, {
@@ -75,52 +66,14 @@ const HalaqaActionsPopover = ({ id }: Props) => {
           </button>
         </PopoverContent>
       </Popover>
-      {/* ------------------------------------------------------------------------------------------------------------- */}
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent
-          dir="rtl"
-          className="
-      bg-white
-      text-[var(--primary)]
-      border-none
-      shadow-xl
-      text-right
-    "
-        >
-          <DialogHeader>
-            <DialogTitle className="text-[var(--primary)] text-lg font-semibold text-right">
-              تأكيد الحذف
-            </DialogTitle>
-
-            <DialogDescription className="text-[var(--primary)] opacity-80 text-right">
-              هل أنت متأكد من حذف هذه الحلقة؟ لا يمكن التراجع عن هذا الإجراء.
-            </DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter className="flex flex-row-reverse gap-2 mt-4 justify-start sm:justify-start">
-            <Button
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isDeleting}
-              className="bg-red-600 w-20 hover:bg-red-700 text-white cursor-pointer p-2 rounded-md"
-            >
-              {isDeleting ? "جارٍ الحذف..." : "حذف"}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              className="border-[var(--primary)] text-[var(--primary)] w-20 cursor-pointer p-2 rounded-md"
-            >
-              إلغاء
-            </Button>
-            <DialogClose asChild>
-              <button className="absolute left-4 top-4 cursor-pointer">
-                ✕
-              </button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="تأكيد حذف الحلقة"
+        description="هل أنت متأكد من حذف هذا الحلقة؟ لا يمكن التراجع عن هذا الإجراء."
+        onConfirm={handleDelete}
+        isLoading={isPending}
+      />
     </>
   );
 };

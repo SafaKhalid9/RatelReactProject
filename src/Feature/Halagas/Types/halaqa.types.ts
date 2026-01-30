@@ -4,6 +4,7 @@ export interface HalaqaListItem {
   halaqaId: number;
   name: string;
   period: string;
+  teacherId: number;
   teacherName: string;
   status: HalaqaStatus;
   numberOfStudents: number;
@@ -23,24 +24,28 @@ export interface StudentAttendance {
 export interface HalaqaDetails {
   id: number;
   name: string;
-  status: "مبتدئ" | "متوسط" | "متقدم"; // Added for Edit
-  capacity: number; // Added for Edit
-  teacherId: number; // Added for Edit
   period: string;
-  teacherName: string;
+  teacherId: number;
+  capacity: number;
   paths: { pathId: number; name: string }[];
   manhajs: { manhajId: number; name: string }[];
+  averageAttendancePercentage: number;
+  totalMemorizedPages: number;
   students: StudentAttendance[];
+}
+export interface Teacher {
+  id: number;
+  fullName: string;
 }
 
 export interface HalaqaFormData {
   name: string;
   status: string;
   capacity: number;
-  teacherID: number;
+  teacherId: number;
   period: string;
-  selectedPathIds: number[];
-  selectedManhajIds: number[];
+  pathIds: number[];
+  manhajIds: number[];
 }
 
 export interface HalaqaReviewParams {
