@@ -1,104 +1,81 @@
-// import React, { useState } from 'react';
-// import {
-//     Popover,
-//     PopoverContent,
-//     PopoverTrigger,
-// } from '@/Components/ShadCn/popover';
-// import { MoreHorizontal, Trash2, Edit } from 'lucide-react';
-// import { Button } from '@/Components/ShadCn/button';
-// import { useNavigate } from 'react-router-dom';
-// import {
-//     Dialog,
-//     DialogContent,
-//     DialogHeader,
-//     DialogTitle,
-//     DialogDescription,
-//     DialogFooter,
-//     DialogClose,
-// } from '@/Components/ShadCn/dialog';
-// import { useDeleteManhaj } from '../Services/manhaj.service';
-// import { toast } from 'sonner';
+import { useState } from "react";
+import { MoreVertical } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/Components/ShadCn/popover";
+import { Link } from "react-router-dom";
+import { useDeleteManhaj } from "../Services/manhaj.service";
+import ConfirmDeleteDialog from "@/Components/Dashboard/CustomConfirmDeleteDialog";
 
-// interface PopoverManhajTableActionProps {
-//     id: string;
-// }
+type Props = {
+  id: number;
+};
 
-// const PopoverManhajTableAction: React.FC<PopoverManhajTableActionProps> = ({ id }) => {
-//     const navigate = useNavigate();
-//     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-//     const deleteManhajMutation = useDeleteManhaj();
-//     const [open, setOpen] = useState(false);
+const ManhajActionsPopover = ({ id }: Props) => {
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const { mutate: deleteManhaj, isPending } = useDeleteManhaj();
 
-//     const handleDelete = async () => {
-//         try {
-//             await deleteManhajMutation.mutateAsync(id);
-//             toast.success('تم حذف المنهج بنجاح');
-//             setIsDeleteModalOpen(false);
-//         } catch (error) {
-//             toast.error('حدث خطأ أثناء حذف المنهج');
-//             console.error(error);
-//         }
-//     };
+  const handleDelete = () => {
+    deleteManhaj(id, {
+      onSuccess: () => {
+        setDeleteOpen(false);
+      },
+    });
+  };
 
-//     return (
-//         <>
-//             <Popover open={open} onOpenChange={setOpen}>
-//                 <PopoverTrigger asChild>
-//                     <Button variant="ghost" className="h-8 w-8 p-0">
-//                         <span className="sr-only">Open menu</span>
-//                         <MoreHorizontal className="h-4 w-4" />
-//                     </Button>
-//                 </PopoverTrigger>
-//                 <PopoverContent className="w-40 flex flex-col gap-1 p-1" align="end">
-//                     <Button
-//                         variant="ghost"
-//                         className="w-full justify-start gap-2 px-2 text-sm font-normal"
-//                         onClick={() => {
-//                             setOpen(false)
-//                             navigate(`/dashboard/manhajs/edit/${id}`)
-//                         }}
-//                     >
-//                         <Edit className="h-4 w-4" />
-//                         تعديل
-//                     </Button>
-//                     <Button
-//                         variant="ghost"
-//                         className="w-full justify-start gap-2 px-2 text-sm font-normal text-destructive hover:text-destructive"
-//                         onClick={() => {
-//                             setOpen(false);
-//                             setIsDeleteModalOpen(true);
-//                         }}
-//                     >
-//                         <Trash2 className="h-4 w-4" />
-//                         حذف
-//                     </Button>
-//                 </PopoverContent>
-//             </Popover>
+  return (
+    <>
+      <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+        <PopoverTrigger asChild>
+          <button className="flex justify-center items-center w-full cursor-pointer p-2">
+            <MoreVertical className="h-5 w-5 text-gray-600" />
+          </button>
+        </PopoverTrigger>
 
-//             <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-//                 <DialogContent>
-//                     <DialogHeader>
-//                         <DialogTitle>هل أنت متأكد؟</DialogTitle>
-//                         <DialogDescription>
-//                             لا يمكن التراجع عن هذا الإجراء. سيتم حذف بيانات المنهج نهائياً.
-//                         </DialogDescription>
-//                     </DialogHeader>
-//                     <DialogFooter className="gap-2 sm:gap-0">
-//                         <DialogClose asChild>
-//                             <Button variant="outline">إلغاء</Button>
-//                         </DialogClose>
-//                         <Button
-//                             variant="destructive"
-//                             onClick={handleDelete}
-//                             disabled={deleteManhajMutation.isPending}
-//                         >
-//                             {deleteManhajMutation.isPending ? 'جاري الحذف...' : 'حذف'}
-//                         </Button>
-//                     </DialogFooter>
-//                 </DialogContent>
-//             </Dialog>
-//         </>
-//     );
-// };
+        <PopoverContent
+          align="end"
+          className="bg-white z-50 shadow-lg border rounded-md p-2 w-44"
+        >
+          <Link
+            to={`/dashboard/manhajs/view/${id}`}
+            onClick={() => setPopoverOpen(false)}
+            className="block text-sm px-2 py-2 rounded hover:bg-gray-100 text-right cursor-pointer p-2"
+          >
+            عرض التفاصيل
+          </Link>
 
-// export default PopoverManhajTableAction;
+          <Link
+            to={`/dashboard/manhajs/edit/${id}`}
+            onClick={() => setPopoverOpen(false)}
+            className="block text-sm px-2 py-2 rounded hover:bg-gray-100 text-right cursor-pointer p-2"
+          >
+            تعديل البيانات
+          </Link>
+
+          <button
+            onClick={() => {
+              setPopoverOpen(false);
+              setDeleteOpen(true);
+            }}
+            className="block w-full text-sm px-2 py-2 rounded hover:bg-red-50 text-right text-red-600 cursor-pointer p-2"
+          >
+            حذف المنهج
+          </button>
+        </PopoverContent>
+      </Popover>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="تأكيد حذف المنهج"
+        description="هل أنت متأكد من حذف هذا المنهج؟ لا يمكن التراجع عن هذا الإجراء."
+        onConfirm={handleDelete}
+        isLoading={isPending}
+      />
+    </>
+  );
+};
+
+export default ManhajActionsPopover;

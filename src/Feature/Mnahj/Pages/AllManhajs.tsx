@@ -1,50 +1,67 @@
-// import React, { useState } from 'react';
-// import CustomAddButtonAndSearch from '@/Components/Dashboard/CustomAddButtonAndSearch';
-// import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-// import ManhajsTable from '../Components/ManhajsTable';
-// import CustomPagination from '@/Components/SideBar/CustomPagination';
-// import { useManhajs } from '../Services/manhaj.service';
-// import { Button } from '@/Components/ShadCn/button';
+import { useEffect, useState } from "react";
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import CustomAddButtonAndSearch from "@/Components/Dashboard/CustomAddButtonAndSearch";
+import AppPagination from "@/Components/Dashboard/CustomPagination";
+import ManhajsTable from "../Components/ManhajsTable";
+import { useManhajs } from "../Services/manhaj.service";
 
-// const AllManhajs = () => {
-//     const { data: manhajs, isLoading, isError, error } = useManhajs();
-//     const [search, setSearch] = useState('');
+const ManhajsList = () => {
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(7);
+  const [nameSearch, setNameSearch] = useState("");
 
-//     if (isLoading) {
-//         return <div className="p-8 text-center">جاري التحميل...</div>;
-//     }
+  const [debouncedSearch, setDebouncedSearch] = useState(nameSearch);
 
-//     if (isError) {
-//         return (
-//             <div className="p-8 text-center text-red-500">
-//                 حدث خطأ أثناء جلب البيانات: {error?.message}
-//                 <br />
-//                 <Button variant="outline" onClick={() => window.location.reload()} className="mt-4">
-//                     إعادة المحاولة
-//                 </Button>
-//             </div>
-//         );
-//     }
-    
-//     const filteredManhajs = manhajs?.filter(manhaj => 
-//         manhaj.name.toLowerCase().includes(search.toLowerCase()) ||
-//         manhaj.authorName.toLowerCase().includes(search.toLowerCase())
-//     ) || [];
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(nameSearch);
+    }, 300);
 
-//     return (
-//         <div className="flex flex-col gap-6">
-//             <CustomFormTitle title='قائمة المناهج' />
-//             <CustomAddButtonAndSearch 
-//                 path='add-new-manhaj' 
-//                 textButton='إضافة منهج جديد'
-//             />
-            
-//             <ManhajsTable manhajs={filteredManhajs} />
-            
-//             <CustomPagination />
-//         </div>
-//     );
-// };
+    return () => clearTimeout(handler);
+  }, [nameSearch]);
 
-// export default AllManhajs;
- 
+  const { data, isLoading, isError } = useManhajs({
+    page,
+    pageSize,
+    name: debouncedSearch || undefined,
+  });
+
+  return (
+    <div className="flex flex-col gap-6 p-5">
+      <div className="flex justify-center">
+        <CustomFormTitle title="إدارة المناهج" />
+      </div>
+
+      <CustomAddButtonAndSearch
+        path="/dashboard/manhajs/add-new-manhaj"
+        textButton="إضافة منهج"
+        searchValue={nameSearch}
+        onSearchChange={(e) => {
+          setNameSearch(e.target.value);
+          setPage(1);
+        }}
+      />
+
+      {isLoading && <div className="py-10 text-center">جاري التحميل...</div>}
+      {isError && (
+        <div className="py-10 text-center text-red-500">
+          خطأ في تحميل المناهج
+        </div>
+      )}
+
+      {!isLoading && !isError && data && (
+        <>
+          <ManhajsTable list={data.data} />
+
+          <AppPagination
+            page={page}
+            setPage={setPage}
+            disableNext={page >= data.pagination.totalPages}
+          />
+        </>
+      )}
+    </div>
+  );
+};
+
+export default ManhajsList;

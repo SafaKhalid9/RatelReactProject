@@ -1,402 +1,230 @@
-// import React, { useEffect } from 'react';
-// import { useForm, Controller } from 'react-hook-form';
-// import { Input } from '@/Components/ShadCn/input';
-// import { Button } from '@/Components/ShadCn/button';
-// import { ManhajFormData } from '../Types/manhaj.types';
+import { useEffect, useState, type FormEvent } from "react";
+import CustomButton from "@/Components/CustomButton";
+import { Input } from "@/Components/ShadCn/input";
+import type { ManhajFormData, ManhajFormProps } from "../Types/manhaj.types";
+import { Textarea } from "../../../Components/ShadCn/Textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/Components/ShadCn/select";
 
-// interface ManhajFormProps {
-//     defaultValues?: Partial<ManhajFormData>;
-//     onSubmit: (data: ManhajFormData) => void;
-//     isLoading?: boolean;
-//     mode: 'create' | 'edit';
-// }
+const INITIAL_STATE: ManhajFormData = {
+  name: "",
+  authorName: "",
+  targetAudience: "",
+  numberOfLessons: "" as unknown as number,
+  goals: "",
+  imageFile: undefined,
+  pdfFile: undefined,
+};
 
-// const ManhajForm: React.FC<ManhajFormProps> = ({ defaultValues, onSubmit, isLoading = false, mode }) => {
-//     const { control, handleSubmit, register, reset, formState: { errors } } = useForm<ManhajFormData>({
-//         defaultValues: {
-//             name: '',
-//             authorName: '',
-//             targetAudience: '',
-//             numberOfLessons: '',
-//             goals: '',
-//             ...defaultValues
-//         }
-//     });
+const ManhajForm = ({
+  mode,
+  defaultValues,
+  onSubmit,
+  isLoading,
+}: ManhajFormProps) => {
+  const [form, setForm] = useState<ManhajFormData>(INITIAL_STATE);
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof ManhajFormData, string>>
+  >({});
+  useEffect(() => {
+    if (defaultValues)
+      setForm({
+        ...INITIAL_STATE,
+        ...defaultValues,
+        numberOfLessons: Number(defaultValues.numberOfLessons || 0),
+      });
+  }, [defaultValues]);
 
-//     useEffect(() => {
-//         if (defaultValues) {
-//             reset(defaultValues);
-//         }
-//     }, [defaultValues, reset]);
+  const validate = () => {
+    const e: typeof errors = {};
+    if (!form.name) e.name = "اسم المنهج مطلوب";
+    if (!form.authorName) e.authorName = "اسم المؤلف مطلوب";
+    if (!form.targetAudience) e.targetAudience = "الفئة المستهدفة مطلوبة";
+    if (!form.numberOfLessons || form.numberOfLessons <= 0)
+      e.numberOfLessons = "عدد الدروس غير صحيح";
+    if (!form.goals) e.goals = "الأهداف مطلوبة";
 
-//     const handleFormSubmit = (data: any) => {
-//         const processedData: ManhajFormData = { ...data };
-        
-//         if (data.imageFile && data.imageFile.length > 0) {
-//             processedData.imageFile = data.imageFile[0];
-//         } else {
-//             delete processedData.imageFile;
-//         }
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
 
-//         if (data.pdfFile && data.pdfFile.length > 0) {
-//             processedData.pdfFile = data.pdfFile[0];
-//         } else {
-//             delete processedData.pdfFile;
-//         }
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    onSubmit(form);
+  };
+  const TARGET_AUDIENCE_OPTIONS = [
+    { value: "مبتدئ", label: "مبتدئ" },
+    { value: "متوسط", label: "متوسط" },
+    { value: "متقدم", label: "متقدم" },
+    { value: "جميع الفئات", label: "جميع الفئات" },
+  ];
 
-//         onSubmit(processedData);
-//     };
+  return (
+    <form
+      onSubmit={handleSubmit}
+      dir="rtl"
+      className="flex flex-col gap-y-6 px-6 pb-5"
+    >
+      <div className="flex gap-x-6">
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">اسم المنهج</span>
+          <Input
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            className={`bg-white ${errors.name ? "border-red-500" : ""}`}
+          />
+          {errors.name && (
+            <span className="text-red-500 text-sm">{errors.name}</span>
+          )}
+        </div>
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">اسم المؤلف</span>
+          <Input
+            value={form.authorName}
+            onChange={(e) => setForm({ ...form, authorName: e.target.value })}
+            className={`bg-white ${errors.authorName ? "border-red-500" : ""}`}
+          />
+          {errors.authorName && (
+            <span className="text-red-500 text-sm">{errors.authorName}</span>
+          )}
+        </div>
+      </div>
 
-//     return (
-//         <form onSubmit={handleSubmit(handleFormSubmit)} className='flex flex-col gap-y-4 pb-5 px-10'>
-//             <div className='grid grid-cols-2 gap-x-10 gap-y-4'>
-//                 {/* Name */}
-//                 <div className='flex flex-col gap-2'>
-//                     <label className='text-lg font-semibold'>اسم المنهج</label>
-//                     <Controller
-//                         name="name"
-//                         control={control}
-//                         rules={{ required: 'اسم المنهج مطلوب' }}
-//                         render={({ field }) => (
-//                             <Input {...field} placeholder="اسم المنهج" />
-//                         )}
-//                     />
-//                     {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
-//                 </div>
+      <div className="flex gap-x-6">
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">
+            الفئة المستهدفة
+          </span>
+          <Select
+            key={form.targetAudience}
+            value={form.targetAudience}
+            onValueChange={(val) => setForm({ ...form, targetAudience: val })}
+          >
+            <SelectTrigger
+              dir="rtl"
+              className={`
+      w-full flex justify-between items-center text-right
+      bg-white border rounded-md cursor-pointer
+      ${errors.targetAudience ? "border-red-500" : ""}
+    `}
+            >
+              <SelectValue placeholder="اختر الفئة المستهدفة" />
+            </SelectTrigger>
 
-//                 {/* Author Name */}
-//                 <div className='flex flex-col gap-2'>
-//                     <label className='text-lg font-semibold'>اسم الكاتب</label>
-//                     <Controller
-//                         name="authorName"
-//                         control={control}
-//                         rules={{ required: 'اسم الكاتب مطلوب' }}
-//                         render={({ field }) => (
-//                             <Input {...field} placeholder="اسم الكاتب" />
-//                         )}
-//                     />
-//                     {errors.authorName && <span className="text-red-500 text-sm">{errors.authorName.message}</span>}
-//                 </div>
+            <SelectContent
+              dir="rtl"
+              className="text-right bg-white shadow-md rounded-md"
+            >
+              {TARGET_AUDIENCE_OPTIONS.map((opt) => (
+                <SelectItem
+                  key={opt.value}
+                  value={opt.value}
+                  className="
+          cursor-pointer
+          transition-colors
+          duration-150
+          data-highlighted:bg-(--light-green)
+        "
+                >
+                  {opt.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-//                 {/* Target Audience */}
-//                 <div className='flex flex-col gap-2'>
-//                     <label className='text-lg font-semibold'>الفئة المستهدفة</label>
-//                     <Controller
-//                         name="targetAudience"
-//                         control={control}
-//                         rules={{ required: 'الفئة المستهدفة مطلوبة' }}
-//                         render={({ field }) => (
-//                             <Input {...field} placeholder="الفئة المستهدفة" />
-//                         )}
-//                     />
-//                     {errors.targetAudience && <span className="text-red-500 text-sm">{errors.targetAudience.message}</span>}
-//                 </div>
+          {errors.targetAudience && (
+            <span className="text-red-500 text-sm">
+              {errors.targetAudience}
+            </span>
+          )}
+        </div>
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">عدد الدروس</span>
+          <Input
+            type="number"
+            value={form.numberOfLessons ?? ""}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                numberOfLessons: Number(e.target.value),
+              })
+            }
+            className={`bg-white ${
+              errors.numberOfLessons ? "border-red-500" : ""
+            }`}
+          />
+          {errors.numberOfLessons && (
+            <span className="text-red-500 text-sm">
+              {errors.numberOfLessons}
+            </span>
+          )}
+        </div>
+      </div>
 
-//                 {/* Number of Lessons */}
-//                 <div className='flex flex-col gap-2'>
-//                     <label className='text-lg font-semibold'>عدد الدروس</label>
-//                     <Controller
-//                         name="numberOfLessons"
-//                         control={control}
-//                         rules={{ required: 'عدد الدروس مطلوب' }}
-//                         render={({ field }) => (
-//                             <Input {...field} type="number" placeholder="عدد الدروس" />
-//                         )}
-//                     />
-//                     {errors.numberOfLessons && <span className="text-red-500 text-sm">{errors.numberOfLessons.message}</span>}
-//                 </div>
+      <label>
+        <span className="text-xl font-semibold mb-2 block">أهداف المنهج</span>
+        <Textarea
+          placeholder="اكتب أهداف المنهج هنا، كل هدف في سطر جديد"
+          className="w-full resize-none"
+          rows={5}
+          value={form.goals}
+          onChange={(e) => setForm({ ...form, goals: e.target.value })}
+        />
+        {errors.goals && (
+          <span className="text-red-500 text-sm">{errors.goals}</span>
+        )}
+      </label>
 
-//                 {/* Goals */}
-//                 <div className='flex flex-col gap-2 col-span-2'>
-//                     <label className='text-lg font-semibold'>الأهداف</label>
-//                     <Controller
-//                         name="goals"
-//                         control={control}
-//                         rules={{ required: 'الأهداف مطلوبة' }}
-//                         render={({ field }) => (
-//                             <Input {...field} placeholder="الأهداف" />
-//                         )}
-//                     />
-//                     {errors.goals && <span className="text-red-500 text-sm">{errors.goals.message}</span>}
-//                 </div>
+      {/* الملفات */}
+      <div className="flex gap-x-6">
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">
+            صورة غلاف المنهج
+          </span>
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              if (!file.type.startsWith("image/")) {
+                alert("يرجى اختيار ملف صورة فقط");
+                return;
+              }
 
-//                 {/* Image File */}
-//                 <div className='flex flex-col gap-2'>
-//                     <label className='text-lg font-semibold'>صورة الغلاف</label>
-//                     <Input 
-//                         type="file" 
-//                         accept="image/*"
-//                          {...register('imageFile')} // Register file input directly
-//                     />
-//                 </div>
+              setForm({ ...form, imageFile: file });
+            }}
+          />
+        </div>
+        <div className="w-1/2">
+          <span className="text-xl font-semibold mb-2 block">ملف PDF</span>
+          <Input
+            type="file"
+            accept=".pdf"
+            onChange={(e) => setForm({ ...form, pdfFile: e.target.files?.[0] })}
+          />
+        </div>
+      </div>
 
-//                  {/* PDF File */}
-//                  <div className='flex flex-col gap-2'>
-//                     <label className='text-lg font-semibold'>ملف المنهج (PDF)</label>
-//                     <Input 
-//                         type="file" 
-//                         accept=".pdf"
-//                         {...register('pdfFile')} // Register file input directly
-//                     />
-//                 </div>
-//             </div>
+      <CustomButton
+        type="submit"
+        disabled={isLoading}
+        className="w-full py-2 bg-[var(--primary)] text-white rounded-md hover:bg-[var(--light-green)] hover:text-[var(--primary)]"
+      >
+        {isLoading
+          ? "جاري الحفظ..."
+          : mode === "add"
+            ? "إضافة المنهج"
+            : "تحديث المنهج"}
+      </CustomButton>
+    </form>
+  );
+};
 
-//             <Button type="submit" className='self-center mt-6 w-1/4' disabled={isLoading}>
-//                 {isLoading ? 'جاري الحفظ...' : (mode === 'create' ? 'إضافة' : 'تحديث')}
-//             </Button>
-//         </form>
-//     );
-// };
-
-// export default ManhajForm;
-// //     e.preventDefault();
-
-// //     const formData = new FormData();
-// //     formData.append('name', form.name);
-// //     formData.append('authorName', form.authorName);
-// //     formData.append('targetAudionce', form.targetAudionce);
-// //     formData.append('numberOfLessons', form.numberOfLessons);
-// //     formData.append('goals', form.goals);
-
-// //     if (image) formData.append('image', image);
-// //     if (pdf) formData.append('pdf', pdf);
-
-// //     onSubmit(formData);
-// //   };
-
-// //   return (
-// //     <form onSubmit={handleSubmit} className='flex flex-col gap-y-6 px-10 pb-6'>
-// //       {/* name + author */}
-// //       <div className='flex gap-x-10'>
-// //         <label className='w-1/2'>
-// //           <span className='text-xl font-semibold mb-2 block'>اسم المنهج</span>
-// //           <Input
-// //             required
-// //             value={form.name}
-// //             onChange={e => handleChange('name', e.target.value)}
-// //           />
-// //         </label>
-
-// //         <label className='w-1/2'>
-// //           <span className='text-xl font-semibold mb-2 block'>اسم الكاتب</span>
-// //           <Input
-// //             required
-// //             value={form.authorName}
-// //             onChange={e => handleChange('authorName', e.target.value)}
-// //           />
-// //         </label>
-// //       </div>
-
-// //       {/* target + lessons */}
-// //       <div className='flex gap-x-10'>
-// //         <label className='w-1/2'>
-// //           <span className='text-xl font-semibold mb-2 block'>الفئة المستهدفة</span>
-// //           <Input
-// //             required
-// //             value={form.targetAudionce}
-// //             onChange={e => handleChange('targetAudionce', e.target.value)}
-// //           />
-// //         </label>
-
-// //         <label className='w-1/2'>
-// //           <span className='text-xl font-semibold mb-2 block'>عدد الدروس</span>
-// //           <Input
-// //             required
-// //             type='number'
-// //             value={form.numberOfLessons}
-// //             onChange={e => handleChange('numberOfLessons', e.target.value)}
-// //           />
-// //         </label>
-// //       </div>
-
-// //       {/* goals + image */}
-// //       <div className='flex gap-x-10'>
-// //         <label className='w-1/2'>
-// //           <span className='text-xl font-semibold mb-2 block'>الأهداف</span>
-// //           <Input
-// //             required
-// //             value={form.goals}
-// //             onChange={e => handleChange('goals', e.target.value)}
-// //           />
-// //         </label>
-
-// //         <label className='w-1/2'>
-// //           <span className='text-xl font-semibold mb-2 block'>ملف الصورة</span>
-// //           <Input
-// //             type='file'
-// //             accept='image/*'
-// //             onChange={e => setImage(e.target.files?.[0] ?? null)}
-// //           />
-// //         </label>
-// //       </div>
-
-// //       {/* pdf */}
-// //       <div className='w-1/2'>
-// //         <span className='text-xl font-semibold mb-2 block'>ملف PDF</span>
-// //         <Input
-// //           type='file'
-// //           accept='application/pdf'
-// //           onChange={e => setPdf(e.target.files?.[0] ?? null)}
-// //         />
-// //       </div>
-
-// //       {/* submit */}
-// //       <div className='flex justify-center pt-4'>
-// //         <CustomButton type='submit'>
-// //           {submitText}
-// //         </CustomButton>
-// //       </div>
-// //     </form>
-// //   );
-// // }
-
-// // export default ManhajForm;
-
-
-
-
-
-// import { useState } from 'react';
-// import { Input } from '@/Components/ShadCn/input';
-// import CustomButton from '@/Components/CustomButton';
-
-// type ManhajFormValues = {
-//   name: string;
-//   authorName: string;
-//   targetAudionce: string;
-//   numberOfLessons: string;
-//   goals: string;
-// };
-
-// type ManhajFormProps = {
-//   onSubmit: (data: FormData) => void;
-//   submitText: string;
-//   mode: 'add' | 'edit';
-//   defaultValues?: {
-//     name: string;
-//     authorName: string;
-//     targetAudionce: string;
-//     numberOfLessons: number;
-//     goals: string;
-//   };
-// };
-
-// function ManhajForm({ onSubmit, submitText, defaultValues }: ManhajFormProps) {
-//   const [form, setForm] = useState<ManhajFormValues>({
-//     name: defaultValues?.name ?? '',
-//     authorName: defaultValues?.authorName ?? '',
-//     targetAudionce: defaultValues?.targetAudionce ?? '',
-//     numberOfLessons: defaultValues?.numberOfLessons?.toString() ?? '',
-//     goals: defaultValues?.goals ?? '',
-//   });
-
-//   const [image, setImage] = useState<File | null>(null);
-//   const [pdf, setPdf] = useState<File | null>(null);
-
-//   const handleChange = (key: keyof ManhajFormValues, value: string) => {
-//     setForm(prev => ({ ...prev, [key]: value }));
-//   };
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-
-//     const formData = new FormData();
-//     formData.append('name', form.name);
-//     formData.append('authorName', form.authorName);
-//     formData.append('targetAudionce', form.targetAudionce);
-//     formData.append('numberOfLessons', form.numberOfLessons);
-//     formData.append('goals', form.goals);
-
-//     // رفع الملفات إذا موجودة
-//     if (image) formData.append('image', image); // سيرفر يستقبل الملف ويخزن مساره
-//     if (pdf) formData.append('pdf', pdf);       // اختياري
-
-//     onSubmit(formData); // ترسل الفورم للباك
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit} className="flex flex-col gap-y-6 px-10 pb-6">
-//       {/* name + author */}
-//       <div className="flex gap-x-10">
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">اسم المنهج</span>
-//           <Input
-//             required
-//             value={form.name}
-//             onChange={e => handleChange('name', e.target.value)}
-//           />
-//         </label>
-
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">اسم الكاتب</span>
-//           <Input
-//             required
-//             value={form.authorName}
-//             onChange={e => handleChange('authorName', e.target.value)}
-//           />
-//         </label>
-//       </div>
-
-//       {/* target + lessons */}
-//       <div className="flex gap-x-10">
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">الفئة المستهدفة</span>
-//           <Input
-//             required
-//             value={form.targetAudionce}
-//             onChange={e => handleChange('targetAudionce', e.target.value)}
-//           />
-//         </label>
-
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">عدد الدروس</span>
-//           <Input
-//             required
-//             type="number"
-//             value={form.numberOfLessons}
-//             onChange={e => handleChange('numberOfLessons', e.target.value)}
-//           />
-//         </label>
-//       </div>
-
-//       {/* goals + image */}
-//       <div className="flex gap-x-10">
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">الأهداف</span>
-//           <Input
-//             required
-//             value={form.goals}
-//             onChange={e => handleChange('goals', e.target.value)}
-//           />
-//         </label>
-
-//         <label className="w-1/2">
-//           <span className="text-xl font-semibold mb-2 block">ملف الصورة</span>
-//           <Input
-//             type="file"
-//             accept="image/*"
-//             onChange={e => setImage(e.target.files?.[0] ?? null)}
-//             required
-//           />
-//         </label>
-//       </div>
-
-//       {/* pdf */}
-//       <div className="w-1/2">
-//         <span className="text-xl font-semibold mb-2 block">ملف PDF</span>
-//         <Input
-//           type="file"
-//           accept="application/pdf"
-//           onChange={e => setPdf(e.target.files?.[0] ?? null)}
-//         />
-//       </div>
-
-//       {/* submit */}
-//       <div className="flex justify-center pt-4">
-//         <CustomButton type="submit">{submitText}</CustomButton>
-//       </div>
-//     </form>
-//   );
-// }
-
-// export default ManhajForm;
+export default ManhajForm;

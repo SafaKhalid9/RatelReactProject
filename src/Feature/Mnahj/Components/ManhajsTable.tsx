@@ -1,56 +1,57 @@
-// import React from 'react';
-// import {
-//     Table,
-//     TableBody,
-//     TableCell,
-//     TableHead,
-//     TableHeader,
-//     TableRow,
-// } from '@/Components/ShadCn/table';
-// import { ManhajListItem } from '../Types/manhaj.types';
-// import PopoverManhajTableAction from './PopoverManhajTableAction';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ShadCn/table";
+import type { ManhajApiItem } from "../Types/manhaj.types";
+import ManhajActionsPopover from "../Components/PopoverManhajTableAction";
 
-// interface ManhajsTableProps {
-//     manhajs: ManhajListItem[];
-// }
+const ManhajsTable = ({ list }: { list: ManhajApiItem[] }) => {
+  return (
+    <div className="rounded-md border bg-white">
+      <Table>
+        <TableHeader className="bg-[#CB997E]">
+          <TableRow>
+            <TableHead className="text-center text-white">اسم المنهج</TableHead>
+            <TableHead className="text-center text-white">اسم المؤلف</TableHead>
+            <TableHead className="text-center text-white">
+              الفئة المستهدفة
+            </TableHead>
+            <TableHead className="text-center text-white">عدد الدروس</TableHead>
+            <TableHead className="w-[50px]" />
+          </TableRow>
+        </TableHeader>
 
-// const ManhajsTable: React.FC<ManhajsTableProps> = ({ manhajs }) => {
-//     return (
-//         <div className="rounded-md border">
-//             <Table>
-//                 <TableHeader className="bg-[#CB997E]">
-//                     <TableRow>
-//                         <TableHead className="text-start text-white">اسم المنهج</TableHead>
-//                         <TableHead className="text-start text-white">الكاتب</TableHead>
-//                          <TableHead className="text-start text-white">الفئة المستهدفة</TableHead>
-//                         <TableHead className="text-start text-white">عدد الدروس</TableHead>
-//                         <TableHead className="w-[100px]"></TableHead>
-//                     </TableRow>
-//                 </TableHeader>
-//                 <TableBody>
-//                     {manhajs.length === 0 ? (
-//                         <TableRow>
-//                             <TableCell colSpan={5} className="h-24 text-center">
-//                                 لا يوجد مناهج
-//                             </TableCell>
-//                         </TableRow>
-//                     ) : (
-//                         manhajs.map((manhaj) => (
-//                             <TableRow key={manhaj.id} className="font-semibold bg-white even:bg-slate-50">
-//                                 <TableCell>{manhaj.name}</TableCell>
-//                                 <TableCell>{manhaj.authorName}</TableCell>
-//                                 <TableCell>{manhaj.targetAudience}</TableCell>
-//                                 <TableCell>{manhaj.numberOfLessons}</TableCell>
-//                                 <TableCell>
-//                                     <PopoverManhajTableAction id={manhaj.id} />
-//                                 </TableCell>
-//                             </TableRow>
-//                         ))
-//                     )}
-//                 </TableBody>
-//             </Table>
-//         </div>
-//     );
-// };
-
-// export default ManhajsTable;
+        <TableBody>
+          {list.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={5} className="text-center py-4">
+                لا توجد بيانات
+              </TableCell>
+            </TableRow>
+          ) : (
+            list.map((m) => (
+              <TableRow key={m.manhajId} className="font-semibold bg-white">
+                <TableCell className="text-center">{m.name}</TableCell>
+                <TableCell className="text-center">{m.authorName}</TableCell>
+                <TableCell className="text-center">
+                  {m.targetAudionce}
+                </TableCell>
+                <TableCell className="text-center">
+                  {m.numberOfLessons ?? "-"}
+                </TableCell>
+                <TableCell className="text-center">
+                  <ManhajActionsPopover id={m.manhajId} />
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+export default ManhajsTable;

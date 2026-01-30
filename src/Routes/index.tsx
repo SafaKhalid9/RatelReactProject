@@ -4,9 +4,10 @@ import DashboardError from "@/Components/DashboardError";
 // import EditUser from "@/Feature/Users/Pages/EditUser";
 // import ViewUser from "@/Feature/Users/Pages/ViewUser";
 
-// import AllManhajs from "@/Feature/Mnahj/Pages/AllManhajs";
-// import AddNewManhaj from "@/Feature/Mnahj/Pages/AddNewManhaj";
-// import EditManhaj from "@/Feature/Mnahj/Pages/EditManhaj";
+import AllManhajs from "@/Feature/Mnahj/Pages/AllManhajs";
+import AddNewManhaj from "@/Feature/Mnahj/Pages/AddNewManhaj";
+import EditManhaj from "@/Feature/Mnahj/Pages/EditManhaj";
+import ViewManhaj from "@/Feature/Mnahj/Pages/ViewManhaj";
 
 // import HalaqasList from "@/Feature/Halaqas/Pages/HalaqasList";
 // import AddHalaqa from "@/Feature/Halaqas/Pages/AddHalaqa";
@@ -67,17 +68,16 @@ const AllRoutes = () => {
             {/* <Route path="users" element={<AllUsers />} />
             <Route path="users/add-new-user" element={<AddNewUser />} />
             <Route path="users/view/:id" element={<ViewUser />} />
-            <Route path="users/edit/:id" element={<EditUser />} />
-
+            <Route path="users/edit/:id" element={<EditUser />} /> */}
             <Route path="manhajs" element={<AllManhajs />} />
             <Route path="manhajs/add-new-manhaj" element={<AddNewManhaj />} />
             <Route path="manhajs/edit/:id" element={<EditManhaj />} />
+            <Route path="manhajs/view/:id" element={<ViewManhaj />} />
 
-            <Route path="halaqas" element={<HalaqasList />} />
+            {/* <Route path="halaqas" element={<HalaqasList />} />
             <Route path="halaqas/add" element={<AddHalaqa />} />
             <Route path="halaqas/view/:id" element={<ViewHalaqa />} />
             <Route path="halaqas/edit/:id" element={<EditHalaqa />} /> */}
-
             {/* <Route
               path="memorization-paths"
               element={<AllMemorizationPaths />}
@@ -104,7 +104,6 @@ const AllRoutes = () => {
             <Route path="exams/add" element={<AddExam />} />
             <Route path="exams/view/:id" element={<ViewExam />} />
             <Route path="exams/edit/:id" element={<EditExam />} /> */}
-
             {/* <Route
               path="appreciation-grades"
               element={<AppreciationGradesList />}
@@ -121,7 +120,6 @@ const AllRoutes = () => {
               path="appreciation-grades/edit/:id"
               element={<EditAppreciationGrade />}
             /> */}
-
             <Route path="error" element={<DashboardError />} />
           </Route>
         </Route>

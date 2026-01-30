@@ -1,180 +1,57 @@
-// import React from 'react';
-// import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-// import ManhajForm from '../Components/ManhajForm';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import { useManhaj, useUpdateManhaj } from '../Services/manhaj.service';
-// import { toast } from 'sonner';
-// import { ManhajFormData } from '../Types/manhaj.types';
+import { useParams, useNavigate } from "react-router-dom";
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import ManhajForm from "../Components/ManhajForm";
+import {
+  toFormData,
+  useManhajDetails,
+  useUpdateManhaj,
+} from "../Services/manhaj.service";
+import type { ManhajFormData } from "../Types/manhaj.types";
 
-// const EditManhaj = () => {
-//     const { id } = useParams<{ id: string }>();
-//     const navigate = useNavigate();
-//     const { data: manhaj, isLoading: isManhajLoading } = useManhaj(id!);
-//     const updateManhajMutation = useUpdateManhaj();
+const EditManhaj = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
-//     const handleSubmit = async (data: ManhajFormData) => {
-//         if (!id) return;
-//         try {
-//             await updateManhajMutation.mutateAsync({ id, data });
-//             toast.success('تم تحديث المنهج بنجاح');
-//             navigate('/dashboard/manhajs');
-//         } catch (error) {
-//             toast.error('حدث خطأ أثناء تحديث المنهج');
-//             console.error(error);
-//         }
-//     };
+  const manhajId = Number(id);
 
-//     if (isManhajLoading) return <div>جاري التحميل...</div>;
+  const { data, isLoading } = useManhajDetails(manhajId);
+  const { mutate, isPending } = useUpdateManhaj();
 
-//     return (
-//         <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white shadow-sm'>
-//             <CustomFormTitle title='تعديل منهج' />
-//             <div className="mt-6">
-//                  {/* 
-//                    Note: manhaj from API might have fields that match ManhajFormData partially 
-//                    Assuming useManhaj returns Manhaj interface which is compatible with defaultValues partial ManhajFormData
-//                 */}
-//                 <ManhajForm 
-//                     defaultValues={manhaj as any} // Cast if needed, or better map it 
-//                     onSubmit={handleSubmit} 
-//                     isLoading={updateManhajMutation.isPending}
-//                     mode="edit"
-//                 />
-//             </div>
-//         </div>
-//     );
-// };
+  if (isLoading) return <div className="p-10">جاري التحميل...</div>;
+  if (!data) return <div className="p-10 text-red-500">غير موجود</div>;
 
-// export default EditManhaj;
+  const defaultValues: ManhajFormData = {
+    name: data.name,
+    authorName: data.authorName,
+    targetAudience: data.targetAudience,
+    numberOfLessons: Number(data.numberOfLessons || 0),
+    goals: data.goals,
+  };
 
-// // const EditManhaj = () => {
-// //   const { id } = useParams<{ id: string }>();
-// //   const manhajId = Number(id);
+  const submit = (form: ManhajFormData) => {
+    const formData = toFormData(form);
 
-// //   const [defaultValues, setDefaultValues] = useState<any>(null);
+    mutate(
+      { id: manhajId, data: formData },
+      {
+        onSuccess: () => navigate("/dashboard/manhajs"),
+      },
+    );
+  };
 
-// //   // جلب بيانات المنهج عند تحميل الصفحة
-// //   useEffect(() => {
-// //     const fetchManhaj = async () => {
-// //       try {
-// //         const res = await axios.get(`${BASE_URL}/manhajs/${manhajId}`);
-// //         setDefaultValues({
-// //           name: res.data.name,
-// //           authorName: res.data.authorName,
-// //           targetAudionce: res.data.targetAudionce,
-// //           numberOfLessons: res.data.numberOfLessons,
-// //           goals: res.data.goals,
-// //         });
-// //       } catch (error) {
-// //         console.error(error);
-// //         alert('حدث خطأ أثناء جلب بيانات المنهج');
-// //       }
-// //     };
+  return (
+    <div className="bg-white shadow-sm rounded-[15px] border-t-10 border-t-secondary mt-[7%]">
+      <div dir="rtl">
+        <CustomFormTitle title="تعديل المنهج" />
+        <ManhajForm
+          mode="edit"
+          defaultValues={defaultValues}
+          onSubmit={submit}
+          isLoading={isPending}
+        />
+      </div>
+    </div>
+  );
+};
 
-// //     if (manhajId) fetchManhaj();
-// //   }, [manhajId]);
-
-// //   const handleEditManhaj = async (formData: FormData) => {
-// //     try {
-// //       await axios.put(`${BASE_URL}/manhajs/${manhajId}`, formData, {
-// //         headers: { 'Content-Type': 'multipart/form-data' },
-// //       });
-// //       alert('تم تعديل المنهج بنجاح ✅');
-// //     } catch (error) {
-// //       console.error(error);
-// //       alert('حدث خطأ أثناء التعديل ❌');
-// //     }
-// //   };
-
-// //   if (!defaultValues) return <div>جاري التحميل...</div>;
-
-// //   return (
-// //     <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white pb-5'>
-// //       <CustomFormTitle title='تعديل منهج' />
-
-// //       <ManhajForm
-// //         submitText="تعديل"
-// //         mode="edit"
-// //         defaultValues={defaultValues}
-// //         onSubmit={handleEditManhaj}
-// //       />
-// //     </div>
-// //   );
-// // };
-
-// // export default EditManhaj;
-
-
-
-
-
-// import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-// import ManhajForm from '../Components/ManhajForm';
-// import axios from 'axios';
-// import { BASE_URL } from '@/Constant/route';
-// import { useParams } from 'react-router-dom';
-// import { useEffect, useState } from 'react';
-
-// type Manhaj = {
-//   name: string;
-//   authorName: string;
-//   targetAudionce: string;
-//   numberOfLessons: number;
-//   goals: string;
-// };
-
-// const EditManhaj = () => {
-//   const { id } = useParams<{ id: string }>();
-//   const manhajId = Number(id);
-
-//   const [defaultValues, setDefaultValues] = useState<Manhaj | null>(null);
-
-//   useEffect(() => {
-//     const fetchManhaj = async () => {
-//       try {
-//         const res = await axios.get(`${BASE_URL}/manhajs/${manhajId}`);
-//         setDefaultValues({
-//           name: res.data.name,
-//           authorName: res.data.authorName,
-//           targetAudionce: res.data.targetAudionce,
-//           numberOfLessons: res.data.numberOfLessons,
-//           goals: res.data.goals,
-//         });
-//       } catch (error) {
-//         console.error(error);
-//         alert('حدث خطأ أثناء جلب بيانات المنهج');
-//       }
-//     };
-
-//     if (manhajId) fetchManhaj();
-//   }, [manhajId]);
-
-//   const handleEditManhaj = async (formData: FormData) => {
-//     try {
-//       await axios.put(`${BASE_URL}/manhajs/${manhajId}`, formData, {
-//         headers: { 'Content-Type': 'multipart/form-data' },
-//       });
-//       alert('تم تعديل المنهج بنجاح ✅');
-//     } catch (error) {
-//       console.error(error);
-//       alert('حدث خطأ أثناء التعديل ❌');
-//     }
-//   };
-
-//   if (!defaultValues) return <div>جاري التحميل...</div>;
-
-//   return (
-//     <div className='border-t-15 border-[#CB997E] rounded-2xl bg-white pb-5'>
-//       <CustomFormTitle title='تعديل منهج' />
-
-//       <ManhajForm
-//         submitText="تعديل"
-//         mode="edit"
-//         defaultValues={defaultValues}
-//         onSubmit={handleEditManhaj}
-//       />
-//     </div>
-//   );
-// };
-
-// export default EditManhaj;
+export default EditManhaj;
