@@ -42,6 +42,8 @@ import Users from "@/Feature/users/pages";
 import AddUser from "@/Feature/users/pages/addUser";
 import UserDetails from "@/Feature/users/pages/userDetails";
 import UpdateUser from "@/Feature/users/pages/updateUser";
+import Exams from "@/Feature/exams/pages";
+import ViewExam from "@/Feature/exams/pages/viewExam";
 
 function HomeRedirectWrapper() {
   const { user, loading } = useAuth();
@@ -72,6 +74,8 @@ const AllRoutes = () => {
             <Route path="users/add" element={<AddUser />} />
             <Route path="users/edit/:id" element={<UpdateUser />} />
             <Route path="users/view/:id" element={<UserDetails />} />
+            <Route path="exams" element={<Exams />} />
+            <Route path="exams/view/:id" element={<ViewExam />} />
             {/* <Route path="users" element={<AllUsers />} />
             <Route path="users/add-new-user" element={<AddNewUser />} />
             <Route path="users/view/:id" element={<ViewUser />} />

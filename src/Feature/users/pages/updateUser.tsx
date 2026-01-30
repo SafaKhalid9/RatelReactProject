@@ -63,7 +63,7 @@ const formSchema = z
     experience: z.string().optional(),
     address: z.string().min(1, "العنوان مطلوب"),
     courses: z.string().optional(),
-    email: z.string().email("البريد الإلكتروني غير صحيح"),
+    email: z.email("البريد الإلكتروني غير صحيح"),
     maritalStatus: z.string().min(1, "الحالة الاجتماعية مطلوبة"),
     password: z.string().optional(),
     confirmPassword: z.string().optional(),

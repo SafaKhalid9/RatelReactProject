@@ -8,7 +8,10 @@ import { AxiosError } from "axios";
 export const useUpdateUser = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async (payload: { id: string; data: UserFormType }) => {
+    mutationFn: async (payload: {
+      id: string;
+      data: Partial<UserFormType>;
+    }) => {
       const { id, data } = payload;
       return await apiClient.put(`/users/${id}`, data);
     },
