@@ -30,7 +30,7 @@ export default function ConfirmDeleteDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         dir="rtl"
-        className="bg-white text-[var(--primary)] border-none shadow-xl text-right"
+        className="bg-white text-(--primary) border-none shadow-xl text-right"
       >
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-right">
@@ -42,12 +42,22 @@ export default function ConfirmDeleteDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className="flex flex-row-reverse gap-2 mt-4 justify-start">
+        {/* <DialogFooter className="flex flex-row-reverse gap-2 mt-4 justify-start"> */}
+        <DialogFooter
+          className="
+    flex
+    flex-row-reverse
+    gap-2
+    mt-4
+    justify-start
+    sm:justify-start
+  "
+        >
           <Button
             variant="destructive"
             onClick={onConfirm}
             disabled={isLoading}
-            className="bg-red-600 w-20 hover:bg-red-700 text-white"
+            className="bg-red-600 w-20 hover:bg-red-700 text-white cursor-pointer"
           >
             {isLoading ? "جارٍ الحذف..." : "حذف"}
           </Button>
@@ -55,14 +65,20 @@ export default function ConfirmDeleteDialog({
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
-            className="border-[var(--primary)] text-[var(--primary)] w-20"
+            className="border-(--primary) text-(--primary) w-20 hover:text-white hover:border-(--light-green) hover:bg-(--primary) cursor-pointer"
           >
             إلغاء
           </Button>
 
-          <DialogClose asChild>
+          {/* <DialogClose asChild>
             <button className="absolute left-4 top-4 cursor-pointer">✕</button>
-          </DialogClose>
+          </DialogClose> */}
+          <button
+            onClick={() => onOpenChange(false)}
+            className="absolute left-4 top-4 cursor-pointer"
+          >
+            ✕
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

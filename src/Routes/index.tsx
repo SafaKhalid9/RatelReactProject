@@ -9,10 +9,10 @@ import AddNewManhaj from "@/Feature/Mnahj/Pages/AddNewManhaj";
 import EditManhaj from "@/Feature/Mnahj/Pages/EditManhaj";
 import ViewManhaj from "@/Feature/Mnahj/Pages/ViewManhaj";
 
-// import HalaqasList from "@/Feature/Halaqas/Pages/HalaqasList";
-// import AddHalaqa from "@/Feature/Halaqas/Pages/AddHalaqa";
-// import ViewHalaqa from "@/Feature/Halaqas/Pages/ViewHalaqa";
-// import EditHalaqa from "@/Feature/Halaqas/Pages/EditHalaqa";
+import HalaqasList from "@/Feature/Halagas/Pages/HalaqasList";
+import AddHalaqa from "@/Feature/Halagas/Pages/AddHalaqa";
+import ViewHalaqa from "@/Feature/Halagas/Pages/ViewHalaqa";
+import EditHalaqa from "@/Feature/Halagas/Pages/EditHalaqa";
 
 // // import AllMemorizationPaths from "@/Feature/MemorizationPaths/Pages/AllMemorizationPaths";
 // import AddNewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
@@ -90,6 +90,8 @@ const AllRoutes = () => {
             <Route path="halaqas/add" element={<AddHalaqa />} />
             <Route path="halaqas/view/:id" element={<ViewHalaqa />} />
             <Route path="halaqas/edit/:id" element={<EditHalaqa />} /> */}
+            <Route path="halaqas/edit/:id" element={<EditHalaqa />} />
+
             {/* <Route
               path="memorization-paths"
               element={<AllMemorizationPaths />}

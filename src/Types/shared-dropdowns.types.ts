@@ -11,6 +11,7 @@ export interface Teacher {
 }
 
 export interface Manhaj {
-  id: number;
+  manhajId: number;
+  // id: number;
   name: string;
 }
