@@ -7,16 +7,14 @@
 
 // export default CustomButton;
 
-
-
-import type {ReactNode, ButtonHTMLAttributes} from 'react';
-import {Button} from './ShadCn/button';
+import type { ReactNode, ButtonHTMLAttributes } from "react";
+import { Button } from "./ShadCn/button";
 
 type CustomButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
 };
 
-const CustomButton = ({children, className, ...props}: CustomButtonProps) => {
+const CustomButton = ({ children, className, ...props }: CustomButtonProps) => {
   return (
     <Button
       {...props}
