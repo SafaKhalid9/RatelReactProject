@@ -38,6 +38,10 @@ import LoginPage from "../Pages/LoginPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider, useAuth } from "@/Contexts/AuthContext";
+import Users from "@/Feature/users/pages";
+import AddUser from "@/Feature/users/pages/addUser";
+import UserDetails from "@/Feature/users/pages/userDetails";
+import UpdateUser from "@/Feature/users/pages/updateUser";
 
 function HomeRedirectWrapper() {
   const { user, loading } = useAuth();
@@ -64,6 +68,10 @@ const AllRoutes = () => {
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>
           <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="users" element={<Users />} />
+            <Route path="users/add" element={<AddUser />} />
+            <Route path="users/edit/:id" element={<UpdateUser />} />
+            <Route path="users/view/:id" element={<UserDetails />} />
             {/* <Route path="users" element={<AllUsers />} />
             <Route path="users/add-new-user" element={<AddNewUser />} />
             <Route path="users/view/:id" element={<ViewUser />} />
