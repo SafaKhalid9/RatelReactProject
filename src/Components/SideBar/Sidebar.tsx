@@ -21,7 +21,7 @@ const Sidebar = () => {
   const { logout } = useAuth();
 
   const topMenu: ISideBarItem[] = [
-    { text: "الأحصائيات", icon: BarChardImage, path: "/dashboard" },
+    { text: "الأحصائيات", icon: BarChardImage, path: "/dashboard/statistics" },
     { text: "إدارة الحلقات", icon: KoranImage, path: "/dashboard/halaqas" },
     { text: "إدارة المستخدمين", icon: UsersImage, path: "/dashboard/users" },
     {

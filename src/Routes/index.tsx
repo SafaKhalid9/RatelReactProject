@@ -34,6 +34,8 @@ import EditHalaqa from "@/Feature/Halagas/Pages/EditHalaqa";
 // import EditAppreciationGrade from "@/Feature/AppreciationGrades/Pages/EditAppreciationGrade";
 // import ViewAppreciationGrade from "@/Feature/AppreciationGrades/Pages/ViewAppreciationGrade";
 
+import Statistics from "@/Feature/Statistics/StatisticsPage";
+
 import Dashboard from "@/Pages/Dashboard";
 import LoginPage from "../Pages/LoginPage";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -71,6 +73,9 @@ const AllRoutes = () => {
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>
           <Route path="/dashboard" element={<Dashboard />}>
+            {/* <Route index path="statistics" element={<Statistics />} /> */}
+            <Route index element={<Navigate to="statistics" replace />} />
+            <Route path="statistics" element={<Statistics />} />
             <Route path="users" element={<Users />} />
             <Route path="users/add" element={<AddUser />} />
             <Route path="users/edit/:id" element={<UpdateUser />} />
@@ -86,10 +91,10 @@ const AllRoutes = () => {
             <Route path="manhajs/edit/:id" element={<EditManhaj />} />
             <Route path="manhajs/view/:id" element={<ViewManhaj />} />
 
-            {/* <Route path="halaqas" element={<HalaqasList />} />
+            <Route path="halaqas" element={<HalaqasList />} />
             <Route path="halaqas/add" element={<AddHalaqa />} />
             <Route path="halaqas/view/:id" element={<ViewHalaqa />} />
-            <Route path="halaqas/edit/:id" element={<EditHalaqa />} /> */}
+            <Route path="halaqas/edit/:id" element={<EditHalaqa />} />
             <Route path="halaqas/edit/:id" element={<EditHalaqa />} />
 
             {/* <Route
