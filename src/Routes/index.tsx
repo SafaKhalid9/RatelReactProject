@@ -20,7 +20,7 @@ import DashboardError from "@/Components/DashboardError";
 
 import AllStudents from "@/Feature/Students/Pages/StudentsList";
 import AddStudent from "@/Feature/Students/Pages/AddStudent";
-// import EditStudent from "@/Feature/Students/Pages/EditStudent";
+import EditStudent from "@/Feature/Students/Pages/EditStudent";
 import StudentInfo  from "@/Feature/Students/Pages/ViewStudent";
 
 // import ExamsList from "@/Feature/Exams/Pages/ExamsList";
@@ -100,9 +100,9 @@ const AllRoutes = () => {
             <Route path="students" element={<AllStudents />} />
             <Route path="students/add" element={<AddStudent />} />
             <Route path="students/view/:id" element={<StudentInfo />} />
-            {/*<Route path="students/edit/:id" element={<EditStudent />} />
+            <Route path="students/edit/:id" element={<EditStudent />} /> 
 
-            <Route path="exams" element={<ExamsList />} />
+            {/*<Route path="exams" element={<ExamsList />} />
             <Route path="exams/add" element={<AddExam />} />
             <Route path="exams/view/:id" element={<ViewExam />} />
             <Route path="exams/edit/:id" element={<EditExam />} /> */}

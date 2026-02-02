@@ -1,84 +1,9 @@
-// import { useParams} from 'react-router-dom';
-// import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-// import { useStudentDetails } from '../Services/student.service';
-// // import CustomButton from '@/Components/CustomButton';
-// import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ShadCn/card';
-// import { Badge } from '@/Components/ShadCn/badge';
-
-// const ViewStudent = () => {
-//   const { id } = useParams<{ id: string }>();
-//   const studentId = Number(id);
-  
-//   const { data: student, isLoading, isError } = useStudentDetails(studentId);
-
-//   if (isLoading) return <div className="p-10 text-center">جاري التحميل...</div>;
-//   if (isError || !student) return <div className="p-10 text-center text-red-500">حدث خطأ أو الطالبة غير موجودة</div>;
-
-//   return (
-//     <div className='flex flex-col gap-5 p-5 bg-background h-full'>
-//       <CustomFormTitle title='ملف الطالبة' />
-      
-//       <Card>
-//         <CardHeader className="bg-slate-50 dark:bg-slate-900">
-//             <div className="flex justify-between items-center">
-//                 <CardTitle className="text-2xl">{student.name}</CardTitle>
-//                 <Badge variant="outline">{student.studyPeriod}</Badge>
-//             </div>
-//         </CardHeader>
-//         <CardContent className="space-y-6 pt-6">
-//             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-//                 <div>
-//                     <h3 className="font-semibold text-gray-500 text-sm">ولي الأمر</h3>
-//                     <p className="text-lg font-medium">{student.parentName}</p>
-//                 </div>
-//                 <div>
-//                     <h3 className="font-semibold text-gray-500 text-sm">تاريخ الميلاد</h3>
-//                     <p className="text-lg font-medium">{new Date(student.birthDate).toLocaleDateString('ar-EG')}</p>
-//                 </div>
-//                 <div>
-//                     <h3 className="font-semibold text-gray-500 text-sm">رقم الجوال</h3>
-//                     <p className="text-lg font-medium">{student.phoneNumber}</p>
-//                 </div>
-                
-//                  <div>
-//                     <h3 className="font-semibold text-gray-500 text-sm">العنوان</h3>
-//                     <p className="text-lg font-medium">{student.address}</p>
-//                 </div>
-//                  <div>
-//                     <h3 className="font-semibold text-gray-500 text-sm">نسبة الانتظام</h3>
-//                     <p className="text-lg font-medium text-green-600">{student.attendanceRate}%</p>
-//                 </div>
-//                  <div>
-//                     <h3 className="font-semibold text-gray-500 text-sm">تقييم الحفظ والمراجعة</h3>
-//                     <p className="text-lg font-medium text-blue-600">{student.memorizationAndReviewRating}/10</p>
-//                 </div>
-//             </div>
-
-//             {/* <div className="pt-5 flex gap-4 border-t mt-4">
-//                 <Link to={`/dashboard/students/edit/${studentId}`}>
-//                     <CustomButton title="تعديل البيانات" className="w-32" onClick={() => {}} />
-//                 </Link>
-//                 <Link to="/dashboard/students">
-//                     <CustomButton title="عودة للقائمة" className="w-32 bg-gray-500 hover:bg-gray-600" onClick={() => {}} />
-//                 </Link>
-//             </div> */}
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// };
-
-// export default ViewStudent;
-
-
-
-
-
 import { useParams } from "react-router-dom";
 import { useStudentDetails } from "../Services/student.service";
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
 
 const StudentInfo = () => {
-  const { id } = useParams<{ id: string }>(); // id من الراوت
+  const { id } = useParams<{ id: string }>(); 
   const studentId = parseInt(id || "0");
 
   const { data: student, isLoading, error } = useStudentDetails(studentId);
@@ -88,17 +13,37 @@ const StudentInfo = () => {
   if (!student) return <div>لا توجد بيانات</div>;
 
   return (
-    <div className="bg-white p-4 rounded-md shadow-md">
-      <h2 className="text-xl font-bold">{student.name}</h2>
-      <p>تاريخ الميلاد: {new Date(student.birthDate).toLocaleDateString()}</p>
-      <p>الهاتف: {student.phoneNumber}</p>
-      <p>العنوان: {student.address}</p>
-      <p>المرحلة الدراسية: {student.currentEducationalLevel}</p>
-      <p>المؤهل: {student.educationalQualification}</p>
-      <p>الحلقة: {student.halaqaName}</p>
-      <p>ولي الأمر: {student.parentName}</p>
+  <div className="bg-white shadow-sm rounded-[15px] border-t-[10px] border-t-[var(--secondary)] p-6 flex flex-col items-center">
+
+    <CustomFormTitle title="تفاصيل الطالب" />
+    <img
+      src="../../../../studentProfile.png"
+      alt="student"
+      className="w-34 h-34 rounded-full object-cover"
+    />
+    <h2 className="text-xl font-bold mt-3">{student.name}</h2>
+    <div className="mt-6 space-y-2 text-center text-gray-800">
+
+      <h3>تاريخ الميلاد: {new Date(student.birthDate).toLocaleDateString()}</h3>
+
+      <h3>الهاتف: {student.phoneNumber}</h3>
+
+      <h3>العنوان: {student.address}</h3>
+
+      <h3>بداية الحفظ: {student.beginOfMemorize}</h3>
+
+      <h3>المرحلة الدراسية: {student.currentEducationalLevel}</h3>
+
+      <h3>المؤهل: {student.educationalQualification}</h3>
+
+      <h3>الحلقة: {student.halaqaName}</h3>
+
+      <h3>ولي الأمر: {student.parentName}</h3>
+
     </div>
-  );
+  </div>
+);
+
 };
 
 export default StudentInfo;

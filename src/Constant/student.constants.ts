@@ -116,6 +116,7 @@ export const QURAN_SURAS = [
 ];
 
 export const EDUCATIONAL_LEVELS = [
+  "لا أدرس",
   "ابتدائي",
   "متوسط",
   "ثانوي",
@@ -124,7 +125,7 @@ export const EDUCATIONAL_LEVELS = [
 ];
 
 export const EDUCATIONAL_QUALIFICATIONS = [
-  "بدون",
+  "لايوجد مؤهل علمي",
   "ثانوي",
   "دبلوم",
   "بكالوريوس",

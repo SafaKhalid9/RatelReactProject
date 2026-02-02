@@ -1,58 +1,25 @@
-// import { useNavigate } from 'react-router-dom';
-// import CustomFormTitle from '@/Components/Dashboard/CustomFormTitle';
-// import StudentForm from '../Components/StudentForm';
-// import { useAddStudent } from '../Services/student.service';
-// import { StudentFormData } from '../Types/student.types';
-
-// const AddStudent = () => {
-//   const navigate = useNavigate();
-//   const { mutateAsync: addStudent, isPending } = useAddStudent();
-
-//   const handleSubmit = async (data: StudentFormData) => {
-//     try {
-//         await addStudent(data);
-//         navigate('/dashboard/students');
-//     } catch (error) {
-//         console.error("Failed to add student", error);
-//     }
-//   };
-
-//   return (
-//     <div className='flex flex-col gap-5 p-5 bg-background h-full'>
-//       <CustomFormTitle text='إضافة طالبة جديدة' />
-//       <div className="bg-white p-5 rounded-lg shadow-sm">
-//         <StudentForm 
-//             mode="add" 
-//             onSubmit={handleSubmit} 
-//             isLoading={isPending}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AddStudent;
-
-
-
-
-
-
-//======================================
-
 import { useNavigate } from "react-router-dom";
 import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
 import StudentForm from "../Components/StudentForm";
-import { useAddStudent } from "../Services/student.service";
+import { useAddStudent, useHalaqas, useParents } from "../Services/student.service";
+import { useQueryClient } from "@tanstack/react-query";
 import type { StudentFormData } from "../Types/student.types";
 
 const AddStudent = () => {
+  const queryClient = useQueryClient(); 
+
+  const { data: halaqas = [] } = useHalaqas();
+  const { data: parents = [] } = useParents();
+
   const navigate = useNavigate();
   const { mutateAsync: addStudent, isPending } = useAddStudent();
 
   const handleSubmit = async (data: StudentFormData) => {
     try {
       await addStudent(data);
+      queryClient.invalidateQueries({ queryKey: ["students"] });
+      queryClient.invalidateQueries({ queryKey: ["parents"] });
+
       navigate("/dashboard/students");
     } catch (error) {
       console.error("Failed to add student", error);
@@ -61,19 +28,16 @@ const AddStudent = () => {
 
   return (
     <div className="bg-white shadow-sm rounded-[15px] border-t-[10px] border-t-[var(--secondary)]">
-    {/* //<div className="bg-white shadow-sm rounded-[15px] border-t-[10px] border-t-[var(--secondary)] w-full max-w-[1200px] mx-auto"> */}
-      <div className="p-6" dir="rtl">
-        <CustomFormTitle title="إضافة طالبة جديدة" />
-
-        <StudentForm
-          mode="add"
-          onSubmit={handleSubmit}
-          isLoading={isPending}
-        />
-      </div>
+      <CustomFormTitle title="إضافة طالب جديد" />
+      <StudentForm
+        mode="add"
+        onSubmit={handleSubmit}
+        isLoading={isPending}
+        halaqaList={halaqas}
+        parentsList={parents}
+      />
     </div>
   );
 };
 
 export default AddStudent;
-
