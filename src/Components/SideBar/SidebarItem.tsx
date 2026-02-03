@@ -12,7 +12,7 @@ const SidebarItem = ({ item }: { item: ISideBarItem }) => {
         `
     cursor-pointer w-full rounded-lg flex gap-x-2 items-center ps-3 py-3
     border-b transition-colors duration-300
-    ${isActive ? "bg-primary text-white" : "hover:bg-primary"}
+    ${isActive ? "bg-(--light-green) text-white" : "hover:bg-(--light-green)"}
     `
       }
     >

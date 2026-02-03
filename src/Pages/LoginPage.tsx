@@ -59,9 +59,18 @@ export default function LoginPage() {
   `;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-(--background-page) rtl font-['Cairo']">
-      <div className="bg-(--light-green) px-12 py-10 rounded-[12px] shadow-[0_0_15px_rgba(0,0,0,0.15)] w-[40%] max-w-[90%]">
-        <h2 className="flex justify-center items-center text-2xl text-(--primary) mb-6">
+    <div className="min-h-screen flex items-center justify-center bg-(--background-page) rtl font-['Cairo'] relative px-4">
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      <div
+        className="bg-(--light-green) px-6 sm:px-12 py-8 sm:py-10 rounded-[12px] shadow-[0_0_15px_rgba(0,0,0,0.15)] 
+                      w-full max-w-[95%] sm:w-[80%] md:w-[60%] lg:w-[40%]"
+      >
+        <h2 className="flex justify-center items-center text-xl sm:text-2xl text-(--primary) mb-6">
           تسجيل الدخول <FaLock className="mr-2" />
         </h2>
 
@@ -90,6 +99,7 @@ export default function LoginPage() {
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
           )}
+
           <div className="relative">
             <FaLock className={iconClasses} />
             <input
@@ -109,16 +119,15 @@ export default function LoginPage() {
               onClick={() => setShowPassword((prev) => !prev)}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-(--primary) focus:outline-none cursor-pointer"
             >
-              {" "}
-              {showPassword ? <FaEyeSlash /> : <FaEye />}{" "}
-            </button>{" "}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
           {errors.password && (
             <p className="text-red-500 text-sm mt-1">{errors.password}</p>
           )}
 
           <div className="flex items-center">
-            <label className="inline-flex items-center gap-2 font-bold text-[1.1rem] text-(--primary)">
+            <label className="inline-flex items-center gap-2 font-bold text-[1rem] sm:text-[1.1rem] text-(--primary)">
               <input
                 type="checkbox"
                 checked={rememberMe}
@@ -132,7 +141,7 @@ export default function LoginPage() {
             type="submit"
             disabled={isLoading}
             className={`
-              w-full bg-(--primary) text-(--white-color) py-2.5 rounded-md text-[16px]
+              w-full bg-(--primary) text-(--white-color) py-2.5 rounded-md text-[15px] sm:text-[16px]
               transition-all duration-300
               hover:bg-secondary hover:text-(--black-color)
               hover:shadow-lg hover:scale-[1.02]
@@ -144,7 +153,7 @@ export default function LoginPage() {
 
           <a
             href="/forgot-password"
-            className="block text-center text-[14px] text-(--primary) hover:text-secondary hover:underline mt-2"
+            className="block text-center text-[13px] sm:text-[14px] text-(--primary) hover:text-secondary hover:underline mt-2"
           >
             نسيت كلمة المرور؟
           </a>
