@@ -4,6 +4,8 @@ import DashboardError from "@/Components/DashboardError";
 // import EditUser from "@/Feature/Users/Pages/EditUser";
 // import ViewUser from "@/Feature/Users/Pages/ViewUser";
 
+import TeacherAttendanceList from "@/Feature/teacher-attendance/pages/teacher-attendance";
+
 import AllManhajs from "@/Feature/Mnahj/Pages/AllManhajs";
 import AddNewManhaj from "@/Feature/Mnahj/Pages/AddNewManhaj";
 import EditManhaj from "@/Feature/Mnahj/Pages/EditManhaj";
@@ -73,7 +75,9 @@ const AllRoutes = () => {
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>
           <Route path="/dashboard" element={<Dashboard />}>
+            
             {/* <Route index path="statistics" element={<Statistics />} /> */}
+            <Route path="teacher-attendance" element={<TeacherAttendanceList />} />
             <Route index element={<Navigate to="statistics" replace />} />
             <Route path="statistics" element={<Statistics />} />
             <Route path="users" element={<Users />} />

@@ -21,11 +21,16 @@ const Sidebar = () => {
   const { logout } = useAuth();
 
   const topMenu: ISideBarItem[] = [
+    {
+      text: "تحضير المعلمين",
+      icon: UsersImage,
+      path: "/dashboard/teacher-attendance",
+    },
     { text: "الأحصائيات", icon: BarChardImage, path: "/dashboard/statistics" },
     { text: "إدارة الحلقات", icon: KoranImage, path: "/dashboard/halaqas" },
     { text: "إدارة المستخدمين", icon: UsersImage, path: "/dashboard/users" },
     {
-      text: "إدارة الطالبات",
+      text: "إدارة الطلاب",
       icon: StudentsImage,
       path: "/dashboard/students",
     },
