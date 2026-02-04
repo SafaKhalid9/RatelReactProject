@@ -16,15 +16,14 @@ import AddHalaqa from "@/Feature/Halagas/Pages/AddHalaqa";
 import ViewHalaqa from "@/Feature/Halagas/Pages/ViewHalaqa";
 import EditHalaqa from "@/Feature/Halagas/Pages/EditHalaqa";
 
-// // import AllMemorizationPaths from "@/Feature/MemorizationPaths/Pages/AllMemorizationPaths";
-// import AddNewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
-// import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
-// import ViewMemorizationPath from "@/Feature/MemorizationPaths/Pages/ViewMemorizationPath";
+import AllMemorizationPaths from "@/Feature/MemorizationPaths/Pages/AllMemorizationPaths";
+import AddNewMemorizationPath from "@/Feature/MemorizationPaths/Pages/AddNewMemorizationPath";
+import EditMemorizationPath from "@/Feature/MemorizationPaths/Pages/EditMemorizationPath";
 
-// import StudentsList from "@/Feature/Students/Pages/StudentsList";
-// import AddStudent from "@/Feature/Students/Pages/AddStudent";
-// import EditStudent from "@/Feature/Students/Pages/EditStudent";
-// import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
+import StudentsList from "@/Feature/Students/Pages/StudentsList";
+import AddStudent from "@/Feature/Students/Pages/AddStudent";
+import EditStudent from "@/Feature/Students/Pages/EditStudent";
+import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
 
 // import ExamsList from "@/Feature/Exams/Pages/ExamsList";
 // import AddExam from "@/Feature/Exams/Pages/AddExam";
@@ -101,11 +100,11 @@ const AllRoutes = () => {
             <Route path="halaqas/edit/:id" element={<EditHalaqa />} />
             <Route path="halaqas/edit/:id" element={<EditHalaqa />} />
 
-            {/* <Route
+            <Route
               path="memorization-paths"
               element={<AllMemorizationPaths />}
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="memorization-paths/add"
               element={<AddNewMemorizationPath />}
             />
@@ -113,17 +112,13 @@ const AllRoutes = () => {
               path="memorization-paths/edit/:id"
               element={<EditMemorizationPath />}
             />
-            <Route
-              path="memorization-paths/view/:id"
-              element={<ViewMemorizationPath />}
-            />
 
             <Route path="students" element={<StudentsList />} />
             <Route path="students/add" element={<AddStudent />} />
             <Route path="students/view/:id" element={<ViewStudent />} />
             <Route path="students/edit/:id" element={<EditStudent />} />
 
-            <Route path="exams" element={<ExamsList />} />
+            {/* <Route path="exams" element={<ExamsList />} />
             <Route path="exams/add" element={<AddExam />} />
             <Route path="exams/view/:id" element={<ViewExam />} />
             <Route path="exams/edit/:id" element={<EditExam />} /> */}
