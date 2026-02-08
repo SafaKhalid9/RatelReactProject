@@ -7,7 +7,7 @@ import AppPagination from "@/Components/Dashboard/CustomPagination";
 
 const StudentsList = () => {
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(7);
   const [search, setSearch] = useState("");
 
   const { data, isLoading, isError } = useStudents({
@@ -56,8 +56,3 @@ const StudentsList = () => {
   );
 };
 export default StudentsList;
-
-
-
-
-

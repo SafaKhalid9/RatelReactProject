@@ -59,7 +59,7 @@ export default function LoginPage() {
   `;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-(--background-page) rtl font-['Cairo'] relative px-4">
+    <section className="min-h-screen flex items-center justify-center bg-(--background-page) rtl font-['Cairo'] relative px-4">
       {isLoading && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -67,9 +67,15 @@ export default function LoginPage() {
       )}
 
       <div
-        className="bg-(--light-green) px-6 sm:px-12 py-8 sm:py-10 rounded-[12px] shadow-[0_0_15px_rgba(0,0,0,0.15)] 
+        className="relative bg-(--light-green) px-6 sm:px-12 py-8 sm:py-10 rounded-[12px] shadow-[0_0_15px_rgba(0,0,0,0.15)] 
                       w-full max-w-[95%] sm:w-[80%] md:w-[60%] lg:w-[40%]"
       >
+        <button
+          onClick={() => navigate("/home")}
+          className="absolute left-4 top-4 text-(--primary) text-xl font-bold cursor-pointer"
+        >
+          ✕
+        </button>
         <h2 className="flex justify-center items-center text-xl sm:text-2xl text-(--primary) mb-6">
           تسجيل الدخول <FaLock className="mr-2" />
         </h2>
@@ -159,6 +165,6 @@ export default function LoginPage() {
           </a>
         </form>
       </div>
-    </div>
+    </section>
   );
 }

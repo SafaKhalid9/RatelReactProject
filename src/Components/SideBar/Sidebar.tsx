@@ -25,7 +25,7 @@ const Sidebar = () => {
     { text: "إدارة الحلقات", icon: KoranImage, path: "/dashboard/halaqas" },
     { text: "إدارة المستخدمين", icon: UsersImage, path: "/dashboard/users" },
     {
-      text: "إدارة الطالبات",
+      text: "إدارة الطلاب",
       icon: StudentsImage,
       path: "/dashboard/students",
     },
@@ -51,7 +51,7 @@ const Sidebar = () => {
     {
       text: "تسجيل الخروج",
       icon: logoutIcon,
-      path: "/logout",
+      path: "/",
       onClick: () => {
         logout();
         navigate("/", { replace: true });
@@ -61,7 +61,7 @@ const Sidebar = () => {
 
   return (
     <aside className="min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-4">
-      <img className="w-28 mx-auto mb-8" src={LogoImage} alt="logo" />
+      <img className="w-25 mx-auto mb-8 mt-4" src={LogoImage} alt="logo" />
 
       <div className="flex flex-col gap-y-2 w-full">
         {topMenu.map((item, index) => (

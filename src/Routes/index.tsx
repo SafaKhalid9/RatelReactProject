@@ -34,6 +34,7 @@ import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
 // import ViewAppreciationGrade from "@/Feature/AppreciationGrades/Pages/ViewAppreciationGrade";
 
 import Statistics from "@/Feature/Statistics/StatisticsPage";
+import HomePage from "@/Pages/ClientsPage";
 
 import Dashboard from "@/Pages/Dashboard";
 import LoginPage from "../Pages/LoginPage";
@@ -60,7 +61,7 @@ function HomeRedirectWrapper() {
     return <Navigate to="/dashboard" replace />;
   }
 
-  return <LoginPage />;
+  return <HomePage />;
 }
 
 const AllRoutes = () => {
@@ -68,6 +69,7 @@ const AllRoutes = () => {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<HomeRedirectWrapper />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>

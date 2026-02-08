@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://ratil.tryasp.net/api",
+  baseURL: "https://ratel.runasp.net/api",
 });
 api.interceptors.request.use((config) => {
   const token =
