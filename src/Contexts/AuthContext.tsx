@@ -48,8 +48,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // rememberMe: boolean
   ): Promise<boolean> => {
     try {
+      // const res = await api.post(
+      //   "https://ratil.tryasp.net/api/auth/login",
+      //   { email, password },
+      //   { headers: { "Content-Type": "application/json" } },
+      // );
       const res = await api.post(
-        "https://ratil.tryasp.net/api/auth/login",
+        "/auth/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } },
       );

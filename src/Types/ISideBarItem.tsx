@@ -7,6 +7,14 @@ export interface ISideBarItem {
   path: string;
   onClick?: () => void;
 }
+
+export interface NewsItem {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  tag: string;
+}
 export type TSettingItem = {
   text: string;
   icon: ForwardRefExoticComponent<

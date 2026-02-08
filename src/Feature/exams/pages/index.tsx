@@ -12,7 +12,7 @@ export default function Exams() {
   const [search, setSearch] = useState("");
   const { data, isLoading } = useGetExams({
     page: currentPage,
-    pageSize: 10,
+    pageSize: 7,
     name: search,
   });
   const totalPages = data?.data.pagination.totalPages || 1;
