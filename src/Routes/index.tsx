@@ -36,6 +36,7 @@ import ViewStudent from "@/Feature/Students/Pages/ViewStudent";
 // import ViewAppreciationGrade from "@/Feature/AppreciationGrades/Pages/ViewAppreciationGrade";
 
 import Statistics from "@/Feature/Statistics/StatisticsPage";
+import HomePage from "@/Pages/ClientsPage";
 
 import Dashboard from "@/Pages/Dashboard";
 import LoginPage from "../Pages/LoginPage";
@@ -48,6 +49,11 @@ import UserDetails from "@/Feature/users/pages/userDetails";
 import UpdateUser from "@/Feature/users/pages/updateUser";
 import Exams from "@/Feature/exams/pages";
 import ViewExam from "@/Feature/exams/pages/viewExam";
+import AddExam from "@/Feature/exams/pages/AddExam";
+import EditExam from "@/Feature/exams/pages/EditExam";
+import AppreciationGrades from "@/Feature/appreciationGrades/pages";
+import AddAppreciationGrade from "@/Feature/appreciationGrades/pages/AddAppreciationGrade";
+import EditAppreciationGrade from "@/Feature/appreciationGrades/pages/EditAppreciationGrade";
 
 function HomeRedirectWrapper() {
   const { user, loading } = useAuth();
@@ -62,7 +68,7 @@ function HomeRedirectWrapper() {
     return <Navigate to="/dashboard" replace />;
   }
 
-  return <LoginPage />;
+  return <HomePage />;
 }
 
 const AllRoutes = () => {
@@ -70,6 +76,7 @@ const AllRoutes = () => {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<HomeRedirectWrapper />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>
@@ -84,6 +91,8 @@ const AllRoutes = () => {
             <Route path="users/edit/:id" element={<UpdateUser />} />
             <Route path="users/view/:id" element={<UserDetails />} />
             <Route path="exams" element={<Exams />} />
+            <Route path="exams/add" element={<AddExam />} />
+            <Route path="exams/edit/:id" element={<EditExam />} />
             <Route path="exams/view/:id" element={<ViewExam />} />
             {/* <Route path="users" element={<AllUsers />} />
             <Route path="users/add-new-user" element={<AddNewUser />} />
@@ -118,26 +127,10 @@ const AllRoutes = () => {
             <Route path="students/view/:id" element={<ViewStudent />} />
             <Route path="students/edit/:id" element={<EditStudent />} />
 
-            {/* <Route path="exams" element={<ExamsList />} />
-            <Route path="exams/add" element={<AddExam />} />
-            <Route path="exams/view/:id" element={<ViewExam />} />
-            <Route path="exams/edit/:id" element={<EditExam />} /> */}
-            {/* <Route
-              path="appreciation-grades"
-              element={<AppreciationGradesList />}
-            />
-            <Route
-              path="appreciation-grades/add"
-              element={<AddAppreciationGrade />}
-            />
-            <Route
-              path="appreciation-grades/view/:id"
-              element={<ViewAppreciationGrade />}
-            />
-            <Route
-              path="appreciation-grades/edit/:id"
-              element={<EditAppreciationGrade />}
-            /> */}
+            <Route path="appreciation-grades" element={<AppreciationGrades />} />
+            <Route path="appreciation-grades/add" element={<AddAppreciationGrade />} />
+            <Route path="appreciation-grades/edit/:id" element={<EditAppreciationGrade />} />
+            
             <Route path="error" element={<DashboardError />} />
           </Route>
         </Route>

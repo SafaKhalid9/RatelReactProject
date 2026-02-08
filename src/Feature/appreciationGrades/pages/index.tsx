@@ -1,20 +1,18 @@
 import { DefaultDataTable } from "@/Components/ShadCn/data-table";
-import { useGetUsers } from "../services/useGetUsers";
+import { useGetAppreciationGrades } from "../services/useGetAppreciationGrades";
 import { columns } from "./columns";
-import { useState } from "react";
 import { Button } from "@/Components/ShadCn/button";
 import { PlusIcon } from "lucide-react";
-import { Input } from "@/Components/ShadCn/input";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
-export default function Users() {
+export default function AppreciationGrades() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const { data, isLoading } = useGetUsers({
+  const { data, isLoading } = useGetAppreciationGrades({
     page: currentPage,
-    pageSize: 7,
-    name: search,
+    pageSize: 10,
   });
+
   const totalPages = data?.data.pagination.totalPages || 1;
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
@@ -23,31 +21,26 @@ export default function Users() {
   return (
     <div>
       <h1 className="text-3xl font-bold text-center mt-10 mb-8">
-        قائمة المستخدمين
+        قائمة درجات التقدير
       </h1>
       <div className="flex items-center justify-between gap-5 mb-5">
-        <Link to="/dashboard/users/add">
+        <Link to="/dashboard/appreciation-grades/add">
           <Button
             variant="outline"
             className="flex items-center gap-2 cursor-pointer bg-[#6B705C] hover:bg-[#6B705C]/80 text-white rounded font-bold hover:text-white "
           >
             <PlusIcon />
-            اضافة مستخدم جديد
+            اضافة تقدير جديد
           </Button>
         </Link>
-        <Input
-          placeholder="بحث"
-          className="bg-white border-none"
-          onChange={(e) => setSearch(e.target.value)}
-        />
       </div>
       <DefaultDataTable
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
         columns={columns}
         data={data?.data.data || []}
         isLoading={isLoading}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
       />
     </div>
   );

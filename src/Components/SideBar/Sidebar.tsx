@@ -12,9 +12,16 @@ import {
 } from "@/assets";
 
 import SidebarItem from "./SidebarItem";
-import type { ISideBarItem } from "@/Types/ISideBarItem";
-import { useNavigate } from "react-router-dom";
+import type { ISideBarItem, TSettingItem } from "@/Types/ISideBarItem";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/Contexts/AuthContext";
+import { User2 } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ShadCn/accordion";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -46,7 +53,13 @@ const Sidebar = () => {
       path: "/dashboard/exams",
     },
   ];
-
+  const setting: TSettingItem[] = [
+    {
+      text: "درجات التقدير",
+      icon: User2,
+      path: "/dashboard/appreciation-grades",
+    },
+  ];
   const bottomMenu: ISideBarItem[] = [
     {
       text: "الصفحة الرئيسية",
@@ -56,7 +69,7 @@ const Sidebar = () => {
     {
       text: "تسجيل الخروج",
       icon: logoutIcon,
-      path: "/logout",
+      path: "/",
       onClick: () => {
         logout();
         navigate("/", { replace: true });
@@ -66,17 +79,34 @@ const Sidebar = () => {
 
   return (
     <aside className="min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-4">
-      <img className="w-28 mx-auto mb-8" src={LogoImage} alt="logo" />
+      <img className="w-25 mx-auto mb-8 mt-4" src={LogoImage} alt="logo" />
 
-      <div className="flex flex-col gap-y-2 w-full">
+      <div className="flex-1 overflow-y-auto flex flex-col gap-y-2 w-full">
         {topMenu.map((item, index) => (
           <SidebarItem key={index} item={item} />
         ))}
+
+        <Accordion type="single" collapsible>
+          <AccordionItem value="settings" className="border-none">
+            <AccordionTrigger className="py-3">الاعدادات</AccordionTrigger>
+
+            <AccordionContent className="pt-2 pb-2 space-y-2">
+              {setting.map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.path}
+                  className="flex items-center gap-x-2 pr-6"
+                >
+                  <item.icon size={18} />
+                  <p>{item.text}</p>
+                </Link>
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
 
-      <div className="flex-1" />
-
-      <div className="flex flex-col gap-y-2 w-full">
+      <div className="flex flex-col gap-y-2 w-full shrink-0 pt-2">
         {bottomMenu.map((item, index) => (
           <SidebarItem key={index} item={item} />
         ))}

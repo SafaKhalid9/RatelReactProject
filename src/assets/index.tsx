@@ -1,4 +1,4 @@
-export { default as LogoImage } from "/logo.png";
+export { default as LogoImage } from "/logo1.svg";
 export { default as BarChardImage } from "/bar-chart.png";
 export { default as KoranImage } from "/koran.png";
 export { default as UsersImage } from "/users.png";
