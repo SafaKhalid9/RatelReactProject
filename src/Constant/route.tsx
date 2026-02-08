@@ -22,5 +22,8 @@ export const STUDENTS = "students";
 // exams
 export const EXAMS = "exams";
 
+// appreciation grades
+export const APPRECIATION_GRADES = "appreciation-grades";
+
 if (!import.meta.env.VITE_BACKEND_BASE_URL)
   throw new Error("VITE_BACKEND_BASE_URL Not Found In .Env");

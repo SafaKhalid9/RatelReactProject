@@ -1,3 +1,6 @@
+import type { LucideProps } from "lucide-react";
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
+
 export interface ISideBarItem {
   text: string;
   icon: string;
@@ -12,3 +15,10 @@ export interface NewsItem {
   image: string;
   tag: string;
 }
+export type TSettingItem = {
+  text: string;
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
+  path: string;
+};
