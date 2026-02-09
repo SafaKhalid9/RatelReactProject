@@ -16,7 +16,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <img src={logo} alt="Logo" className="w-28 mb-4" />
+          <img src={logo} alt="Logo" className="w-34" />
           <p className="text-start text-sm opacity-80 leading-relaxed max-w-xl">
             مركز رتل لتحفيظ القرآن الكريم، منارة علمية تربوية تسعى إلى تعليم
             كتاب الله وتربية النفوس على هديه.

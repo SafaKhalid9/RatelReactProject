@@ -15,7 +15,7 @@ const AddManhaj = () => {
   };
 
   return (
-    <div className="bg-white shadow-sm rounded-[15px] border-t-10 border-t-secondary mt-[7%]">
+    <div className="bg-white shadow-sm rounded-[15px] border-t-10 border-t-secondary mt-[2%]">
       <div dir="rtl">
         <CustomFormTitle title="إضافة منهج جديد" />
         <ManhajForm mode="add" onSubmit={submit} isLoading={isPending} />

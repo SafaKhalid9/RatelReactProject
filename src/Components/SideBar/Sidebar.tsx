@@ -126,7 +126,6 @@ import {
   ActivitiesImage,
   BarChardImage,
   KoranImage,
-  LogoImage,
   PathImage,
   StudentsImage,
   ThreeBookImage,
@@ -172,9 +171,12 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="min-w-64 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-3 shadow-sm overflow-hidden">
-      
-      <img className="w-14 mx-auto mb-2 mt-1 shrink-0" src={LogoImage} alt="logo" />
+    <aside className="min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-4">
+      <img
+        className="w-25 mx-auto"
+        src="../../../public/logo1.svg"
+        alt="logo"
+      />
 
       <div className="flex-1 flex flex-col w-full no-scrollbar overflow-y-auto">
         {topMenu.map((item, index) => (

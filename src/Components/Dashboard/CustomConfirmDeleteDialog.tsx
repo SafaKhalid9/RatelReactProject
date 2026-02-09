@@ -31,6 +31,17 @@ export default function ConfirmDeleteDialog({
         dir="rtl"
         className="bg-white text-(--primary) border-none shadow-xl text-right"
       >
+        <style>{`
+          [data-radix-dialog-close] {
+            display: none !important;
+          }
+        `}</style>
+        <button
+          onClick={() => onOpenChange(false)}
+          className="absolute left-4 top-4 cursor-pointer text-lg font-bold"
+        >
+          ✕
+        </button>
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-right">
             {title}
@@ -69,15 +80,12 @@ export default function ConfirmDeleteDialog({
             إلغاء
           </Button>
 
-          {/* <DialogClose asChild>
-            <button className="absolute left-4 top-4 cursor-pointer">✕</button>
-          </DialogClose> */}
-          <button
+          {/* <button
             onClick={() => onOpenChange(false)}
             className="absolute left-4 top-4 cursor-pointer"
           >
-            ✕
-          </button>
+            ✕ */}
+          {/* </button> */}
         </DialogFooter>
       </DialogContent>
     </Dialog>
