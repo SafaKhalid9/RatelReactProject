@@ -2,10 +2,14 @@ import { DefaultDataTable } from "@/Components/ShadCn/data-table";
 import { useGetExams } from "../services/useGetExams";
 import { columns } from "./columns";
 import { useState } from "react";
-import { Button } from "@/Components/ShadCn/button";
-import { PlusIcon } from "lucide-react";
-import { Input } from "@/Components/ShadCn/input";
-import { Link } from "react-router-dom";
+// import { Button } from "@/Components/ShadCn/button";
+// import { PlusIcon } from "lucide-react";
+// import { Input } from "@/Components/ShadCn/input";
+// import { Link } from "react-router-dom";
+
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import CustomAddButtonAndSearch from "@/Components/Dashboard/CustomAddButtonAndSearch";
+
 
 export default function Exams() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,34 +25,62 @@ export default function Exams() {
     setCurrentPage(page);
   };
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-center mt-10 mb-8">
-        قائمة الاختبارات
-      </h1>
-      <div className="flex items-center justify-between gap-5 mb-5">
-        <Link to="/dashboard/exams/add">
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 cursor-pointer bg-[#6B705C] hover:bg-[#6B705C]/80 text-white rounded font-bold hover:text-white "
-          >
-            <PlusIcon />
-            اضافة اختبار جديد
-          </Button>
-        </Link>
-        <Input
-          placeholder="بحث"
-          className="bg-white border-none"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-      <DefaultDataTable
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-        columns={columns}
-        data={data?.data.data || []}
-        isLoading={isLoading}
+        <div className="flex flex-col gap-5 p-5 bg-background h-full">
+      <CustomFormTitle title="قائمة الاختبارات" />
+
+      <CustomAddButtonAndSearch
+        path="/dashboard/exams/add"
+        textButton="إضافة اختبار جديد"
+        searchValue={search}
+        onSearchChange={(e) => {
+          setSearch(e.target.value);
+          // setPage(1);
+        }}
       />
+
+      {isLoading ? (
+        <div className="text-center py-10">جاري التحميل...</div>
+      ) : (
+        <>
+          <DefaultDataTable
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            columns={columns}
+            data={data?.data.data || []}
+            isLoading={isLoading}
+          />
+        </>
+      )}
     </div>
+    // <div>
+    //   <h1 className="text-3xl font-bold text-center mt-10 mb-8">
+    //     قائمة الاختبارات
+    //   </h1>
+    //   <div className="flex items-center justify-between gap-5 mb-5">
+    //     <Link to="/dashboard/exams/add">
+    //       <Button
+    //         variant="outline"
+    //         className="flex items-center gap-2 cursor-pointer bg-[#6B705C] hover:bg-[#6B705C]/80 text-white rounded font-bold hover:text-white "
+    //       >
+    //         <PlusIcon />
+    //         اضافة اختبار جديد
+    //       </Button>
+    //     </Link>
+    //     <Input
+    //       placeholder="بحث"
+    //       className="bg-white border-none"
+    //       onChange={(e) => setSearch(e.target.value)}
+    //     />
+    //   </div>
+    //   <DefaultDataTable
+    //     currentPage={currentPage}
+    //     totalPages={totalPages}
+    //     onPageChange={handlePageChange}
+    //     columns={columns}
+    //     data={data?.data.data || []}
+    //     isLoading={isLoading}
+    //   />
+    // </div>
   );
 }
