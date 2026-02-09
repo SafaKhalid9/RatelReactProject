@@ -43,17 +43,17 @@ import LoginPage from "../Pages/LoginPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider, useAuth } from "@/Contexts/AuthContext";
-import Users from "@/Feature/users/pages";
-import AddUser from "@/Feature/users/pages/addUser";
-import UserDetails from "@/Feature/users/pages/userDetails";
-import UpdateUser from "@/Feature/users/pages/updateUser";
-import Exams from "@/Feature/exams/pages";
-import ViewExam from "@/Feature/exams/pages/viewExam";
-import AddExam from "@/Feature/exams/pages/AddExam";
-import EditExam from "@/Feature/exams/pages/EditExam";
-import AppreciationGrades from "@/Feature/appreciationGrades/pages";
-import AddAppreciationGrade from "@/Feature/appreciationGrades/pages/AddAppreciationGrade";
-import EditAppreciationGrade from "@/Feature/appreciationGrades/pages/EditAppreciationGrade";
+// import Users from "@/Feature/users/pages";
+// import AddUser from "@/Feature/users/pages/addUser";
+// import UserDetails from "@/Feature/users/pages/userDetails";
+// import UpdateUser from "@/Feature/users/pages/updateUser";
+// import Exams from "@/Feature/exams/pages";
+// import ViewExam from "@/Feature/exams/pages/viewExam";
+// import AddExam from "@/Feature/exams/pages/AddExam";
+// import EditExam from "@/Feature/exams/pages/EditExam";
+// import AppreciationGrades from "@/Feature/appreciationGrades/pages";
+// import AddAppreciationGrade from "@/Feature/appreciationGrades/pages/AddAppreciationGrade";
+// import EditAppreciationGrade from "@/Feature/appreciationGrades/pages/EditAppreciationGrade";
 
 function HomeRedirectWrapper() {
   const { user, loading } = useAuth();
@@ -81,23 +81,21 @@ const AllRoutes = () => {
 
         <Route element={<ProtectedRoute allowedRoles={["أداري"]} />}>
           <Route path="/dashboard" element={<Dashboard />}>
-            
             {/* <Route index path="statistics" element={<Statistics />} /> */}
-            <Route path="teacher-attendance" element={<TeacherAttendanceList />} />
+            <Route
+              path="teacher-attendance"
+              element={<TeacherAttendanceList />}
+            />
             <Route index element={<Navigate to="statistics" replace />} />
             <Route path="statistics" element={<Statistics />} />
-            <Route path="users" element={<Users />} />
+            {/* <Route path="users" element={<Users />} />
             <Route path="users/add" element={<AddUser />} />
             <Route path="users/edit/:id" element={<UpdateUser />} />
             <Route path="users/view/:id" element={<UserDetails />} />
             <Route path="exams" element={<Exams />} />
             <Route path="exams/add" element={<AddExam />} />
             <Route path="exams/edit/:id" element={<EditExam />} />
-            <Route path="exams/view/:id" element={<ViewExam />} />
-            {/* <Route path="users" element={<AllUsers />} />
-            <Route path="users/add-new-user" element={<AddNewUser />} />
-            <Route path="users/view/:id" element={<ViewUser />} />
-            <Route path="users/edit/:id" element={<EditUser />} /> */}
+            <Route path="exams/view/:id" element={<ViewExam />} /> */}
             <Route path="manhajs" element={<AllManhajs />} />
             <Route path="manhajs/add-new-manhaj" element={<AddNewManhaj />} />
             <Route path="manhajs/edit/:id" element={<EditManhaj />} />
@@ -126,11 +124,11 @@ const AllRoutes = () => {
             <Route path="students/add" element={<AddStudent />} />
             <Route path="students/view/:id" element={<ViewStudent />} />
             <Route path="students/edit/:id" element={<EditStudent />} />
-
+            {/* 
             <Route path="appreciation-grades" element={<AppreciationGrades />} />
             <Route path="appreciation-grades/add" element={<AddAppreciationGrade />} />
             <Route path="appreciation-grades/edit/:id" element={<EditAppreciationGrade />} />
-            
+             */}
             <Route path="error" element={<DashboardError />} />
           </Route>
         </Route>
