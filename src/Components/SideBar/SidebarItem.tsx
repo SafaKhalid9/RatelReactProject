@@ -10,7 +10,7 @@ const SidebarItem = ({ item }: { item: ISideBarItem }) => {
       onClick={onClick}
       className={({ isActive }) =>
         `
-    cursor-pointer w-full rounded-lg flex gap-x-2 items-center ps-3 py-3
+    cursor-pointer w-full rounded-lg flex gap-x-2 items-center ps-3 py-[.6rem]
     border-b transition-colors duration-300
     ${isActive ? "bg-(--light-green) text-white" : "hover:bg-(--light-green)"}
     `

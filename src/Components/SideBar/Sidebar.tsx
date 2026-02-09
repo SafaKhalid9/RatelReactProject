@@ -117,11 +117,6 @@
 
 // export default Sidebar;
 
-
-
-
-
-
 import {
   ActivitiesImage,
   BarChardImage,
@@ -140,21 +135,36 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/Contexts/AuthContext";
 // import { User2 } from "lucide-react";
 
-
 const Sidebar = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
   const topMenu: ISideBarItem[] = [
-    { text: "تحضير المعلمين", icon: UsersImage, path: "/dashboard/teacher-attendance" },
     { text: "الأحصائيات", icon: BarChardImage, path: "/dashboard/statistics" },
     { text: "إدارة الحلقات", icon: KoranImage, path: "/dashboard/halaqas" },
     { text: "إدارة المستخدمين", icon: UsersImage, path: "/dashboard/users" },
     { text: "إدارة الطلاب", icon: StudentsImage, path: "/dashboard/students" },
-    { text: "إدارة المسارات", icon: PathImage, path: "/dashboard/memorization-paths" },
+    {
+      text: "إدارة المسارات",
+      icon: PathImage,
+      path: "/dashboard/memorization-paths",
+    },
     { text: "إدارة المناهج", icon: ThreeBookImage, path: "/dashboard/manhajs" },
-    { text: "إدارة الاختبارات", icon: ActivitiesImage, path: "/dashboard/exams" },
-    { text: "درجات التقدير", icon: ActivitiesImage, path: "/dashboard/appreciation-grades" },
+    {
+      text: "إدارة الاختبارات",
+      icon: ActivitiesImage,
+      path: "/dashboard/exams",
+    },
+    {
+      text: "تحضير المعلمين",
+      icon: UsersImage,
+      path: "/dashboard/teacher-attendance",
+    },
+    {
+      text: "درجات التقدير",
+      icon: ActivitiesImage,
+      path: "/dashboard/appreciation-grades",
+    },
   ];
 
   const bottomMenu: ISideBarItem[] = [
@@ -172,6 +182,7 @@ const Sidebar = () => {
 
   return (
     <aside className="min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-4">
+      {/* <div></div> */}
       <img
         className="w-25 mx-auto"
         src="../../../public/logo1.svg"
