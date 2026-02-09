@@ -5,6 +5,7 @@ import { Button } from "@/Components/ShadCn/button";
 import { PlusIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
 
 export default function AppreciationGrades() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,13 +21,14 @@ export default function AppreciationGrades() {
   };
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mt-10 mb-8">
+      {/* <h1 className="text-3xl font-bold text-center mt-10 mb-8">
         قائمة درجات التقدير
-      </h1>
+      </h1> */}
+      <CustomFormTitle title="قائمة الاختبارات" />
       <div className="flex items-center justify-between gap-5 mb-5">
         <Link to="/dashboard/appreciation-grades/add">
           <Button
-            variant="outline"
+            // variant="outline"
             className="flex items-center gap-2 cursor-pointer bg-[#6B705C] hover:bg-[#6B705C]/80 text-white rounded font-bold hover:text-white "
           >
             <PlusIcon />
