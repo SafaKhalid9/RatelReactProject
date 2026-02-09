@@ -28,7 +28,7 @@ type StudentFormErrors = Partial<
   Record<keyof StudentFormData | "newParentName" | "newParentPhone", string>
 >;
 interface ApiErrorResponse {
-  errors: Record<string, string[]>; 
+  errors: Record<string, string[]>;
 }
 
 interface AxiosErrorWithData {
@@ -61,12 +61,12 @@ const StudentForm = ({
   const [errors, setErrors] = useState<StudentFormErrors>({});
   const [serverErrors, setServerErrors] = useState<StudentFormErrors>({});
 
-useEffect(() => {
-  if (!defaultValues) return;
-  if (!parentsList.length) return;
+  useEffect(() => {
+    if (!defaultValues) return;
+    if (!parentsList.length) return;
 
-  setForm(prev => ({ ...prev, ...defaultValues }));
-}, [defaultValues, parentsList]);
+    setForm((prev) => ({ ...prev, ...defaultValues }));
+  }, [defaultValues, parentsList]);
 
   const validate = () => {
     const newErrors: StudentFormErrors = {};
@@ -77,26 +77,31 @@ useEffect(() => {
 
     if (!form.phoneNumber) newErrors.phoneNumber = "رقم الهاتف مطلوب";
     else if (!/^7\d{8}$/.test(form.phoneNumber))
-      newErrors.phoneNumber = "رقم الهاتف غير صالح، يجب أن يبدأ بـ 7 ويليه 8 أرقام";
+      newErrors.phoneNumber =
+        "رقم الهاتف غير صالح، يجب أن يبدأ بـ 7 ويليه 8 أرقام";
 
     if (!form.birthDate) newErrors.birthDate = "تاريخ الميلاد مطلوب";
     if (!form.address) newErrors.address = "العنوان مطلوب";
-    if (!form.beginOfMemorize) newErrors.beginOfMemorize = "حقل بداية الحفظ مطلوب";
-    if (!form.currentEducationalLevel) newErrors.currentEducationalLevel = "المرحلة الدراسية مطلوبة";
-    if (!form.educationalQualification) newErrors.educationalQualification = "المؤهل العلمي مطلوب";
+    if (!form.beginOfMemorize)
+      newErrors.beginOfMemorize = "حقل بداية الحفظ مطلوب";
+    if (!form.currentEducationalLevel)
+      newErrors.currentEducationalLevel = "المرحلة الدراسية مطلوبة";
+    if (!form.educationalQualification)
+      newErrors.educationalQualification = "المؤهل العلمي مطلوب";
     if (form.halaqaId === 0) newErrors.halaqaId = "اختر الحلقة";
 
     if (form.addNewParent) {
-      if (!form.newParent?.name) newErrors.newParentName = "اسم ولي الأمر مطلوب";
+      if (!form.newParent?.name)
+        newErrors.newParentName = "اسم ولي الأمر مطلوب";
       if (!form.newParent?.phoneNumber) {
         newErrors.newParentPhone = "هاتف ولي الأمر مطلوب";
-      } 
-      else if (!/^3\d{5}$/.test(form.newParent.phoneNumber)) {
-        newErrors.newParentPhone = "رقم هاتف ولي الأمر غير صالح، يجب أن يبدأ بـ 3 ويليه 5 أرقام";
+      } else if (!/^3\d{5}$/.test(form.newParent.phoneNumber)) {
+        newErrors.newParentPhone =
+          "رقم هاتف ولي الأمر غير صالح، يجب أن يبدأ بـ 3 ويليه 5 أرقام";
       }
-
     } else {
-      if (!form.parentId) newErrors.parentId = "اختر ولي أمر من القائمة أو أضف جديد";
+      if (!form.parentId)
+        newErrors.parentId = "اختر ولي أمر من القائمة أو أضف جديد";
     }
 
     setErrors(newErrors);
@@ -104,46 +109,42 @@ useEffect(() => {
   };
 
   const handleSubmit = async (e: FormEvent) => {
-  e.preventDefault();
-  setServerErrors({}); 
-  if (!validate()) return;
+    e.preventDefault();
+    setServerErrors({});
+    if (!validate()) return;
 
-  try {
-    await onSubmit(form);
-  } catch (error: unknown) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "response" in error
-    ) {
-      const axiosError = error as AxiosErrorWithData;
-      const apiErrors = axiosError.response?.data?.errors;
-      if (apiErrors) {
-        const mappedErrors: StudentFormErrors = {};
+    try {
+      await onSubmit(form);
+    } catch (error: unknown) {
+      if (typeof error === "object" && error !== null && "response" in error) {
+        const axiosError = error as AxiosErrorWithData;
+        const apiErrors = axiosError.response?.data?.errors;
+        if (apiErrors) {
+          const mappedErrors: StudentFormErrors = {};
 
-        Object.keys(apiErrors).forEach((key) => {
-          const msgArray = apiErrors[key];
-          if (msgArray && msgArray.length > 0) {
-            switch (key) {
-              case "Name":
-                mappedErrors.name = "الاسم يجب أن يكون بين 7 و 25 حرفًا";
-                break;
-              case "PhoneNumber":
-                mappedErrors.phoneNumber =
-                  "رقم الهاتف غير صالح، يجب أن يبدأ بـ 7 ويليه 8 أرقام";
-                break;
-              default:
-                mappedErrors[key as keyof StudentFormData] =
-                  msgArray.join(", ");
+          Object.keys(apiErrors).forEach((key) => {
+            const msgArray = apiErrors[key];
+            if (msgArray && msgArray.length > 0) {
+              switch (key) {
+                case "Name":
+                  mappedErrors.name = "الاسم يجب أن يكون بين 7 و 25 حرفًا";
+                  break;
+                case "PhoneNumber":
+                  mappedErrors.phoneNumber =
+                    "رقم الهاتف غير صالح، يجب أن يبدأ بـ 7 ويليه 8 أرقام";
+                  break;
+                default:
+                  mappedErrors[key as keyof StudentFormData] =
+                    msgArray.join(", ");
+              }
             }
-          }
-        });
+          });
 
-        setServerErrors(mappedErrors);
+          setServerErrors(mappedErrors);
+        }
       }
     }
-  }
-};
+  };
 
   const allErrors = { ...errors, ...serverErrors };
 
@@ -167,7 +168,9 @@ useEffect(() => {
         </label>
 
         <label className="w-1/2">
-          <span className="text-xl font-semibold mb-2 block">تاريخ الميلاد</span>
+          <span className="text-xl font-semibold mb-2 block">
+            تاريخ الميلاد
+          </span>
           <Input
             type="date"
             value={form.birthDate}
@@ -188,7 +191,9 @@ useEffect(() => {
             className={`w-full bg-white ${allErrors.phoneNumber ? "border-red-500" : ""}`}
           />
           {allErrors.phoneNumber && (
-            <span className="text-red-500 text-sm">{allErrors.phoneNumber}</span>
+            <span className="text-red-500 text-sm">
+              {allErrors.phoneNumber}
+            </span>
           )}
         </label>
         <label className="w-1/2">
@@ -209,32 +214,43 @@ useEffect(() => {
           <Select
             key={form.beginOfMemorize}
             value={form.beginOfMemorize}
-            onValueChange={(val) =>
-              setForm({ ...form, beginOfMemorize: val })
-            }
+            onValueChange={(val) => setForm({ ...form, beginOfMemorize: val })}
           >
             <SelectTrigger
               dir="rtl"
               className=" w-full flex flex-row justify-between items-center text-right bg-white border rounded-md cursor-pointer"
             >
-            <SelectValue  className="text-right flex-1" placeholder="اختر السورة" />
+              <SelectValue
+                className="text-right flex-1"
+                placeholder="اختر السورة"
+              />
             </SelectTrigger>
             <SelectContent
               dir="rtl"
               className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto"
             >
-            {QURAN_SURAS.map((sura) => (
-             <SelectItem className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]" key={sura} value={sura}>{sura}</SelectItem>
-           ))}
+              {QURAN_SURAS.map((sura) => (
+                <SelectItem
+                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                  key={sura}
+                  value={sura}
+                >
+                  {sura}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           {errors.beginOfMemorize && (
-            <span className="text-red-500 text-sm">{errors.beginOfMemorize}</span>
+            <span className="text-red-500 text-sm">
+              {errors.beginOfMemorize}
+            </span>
           )}
         </div>
 
         <div className="w-1/2">
-          <span className="text-xl font-semibold mb-2 block">المرحلة الدراسية</span>
+          <span className="text-xl font-semibold mb-2 block">
+            المرحلة الدراسية
+          </span>
           <Select
             key={form.currentEducationalLevel}
             value={form.currentEducationalLevel}
@@ -246,25 +262,38 @@ useEffect(() => {
               dir="rtl"
               className=" w-full flex flex-row justify-between items-center text-right bg-white border rounded-md cursor-pointer"
             >
-            <SelectValue className="text-right flex-1" placeholder="اختر مرحلة" />
+              <SelectValue
+                className="text-right flex-1"
+                placeholder="اختر مرحلة"
+              />
             </SelectTrigger>
             <SelectContent
               dir="rtl"
               className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto"
             >
               {EDUCATIONAL_LEVELS.map((level) => (
-              <SelectItem className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]" key={level} value={level}>{level}</SelectItem>
+                <SelectItem
+                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                  key={level}
+                  value={level}
+                >
+                  {level}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
           {errors.currentEducationalLevel && (
-            <span className="text-red-500 text-sm">{errors.currentEducationalLevel}</span>
+            <span className="text-red-500 text-sm">
+              {errors.currentEducationalLevel}
+            </span>
           )}
         </div>
       </div>
       <div className="flex justify-between gap-x-6">
         <div className="w-1/2">
-          <span className="text-xl font-semibold mb-2 block">المؤهل العلمي</span>
+          <span className="text-xl font-semibold mb-2 block">
+            المؤهل العلمي
+          </span>
           <Select
             key={form.educationalQualification}
             value={form.educationalQualification}
@@ -276,19 +305,30 @@ useEffect(() => {
               dir="rtl"
               className=" w-full flex flex-row justify-between items-center text-right bg-white border rounded-md cursor-pointer"
             >
-            <SelectValue className="text-right flex-1" placeholder="اختر المؤهل" />
+              <SelectValue
+                className="text-right flex-1"
+                placeholder="اختر المؤهل"
+              />
             </SelectTrigger>
             <SelectContent
               dir="rtl"
               className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto"
             >
-            {EDUCATIONAL_QUALIFICATIONS.map((q) => (
-            <SelectItem className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]" key={q} value={q}>{q}</SelectItem>
-            ))}
+              {EDUCATIONAL_QUALIFICATIONS.map((q) => (
+                <SelectItem
+                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                  key={q}
+                  value={q}
+                >
+                  {q}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           {errors.educationalQualification && (
-            <span className="text-red-500 text-sm">{errors.educationalQualification}</span>
+            <span className="text-red-500 text-sm">
+              {errors.educationalQualification}
+            </span>
           )}
         </div>
 
@@ -297,24 +337,32 @@ useEffect(() => {
           <Select
             key={form.halaqaId}
             value={form.halaqaId === 0 ? "" : form.halaqaId.toString()}
-            onValueChange={(val) => setForm({ ...form, halaqaId: parseInt(val) })}
+            onValueChange={(val) =>
+              setForm({ ...form, halaqaId: parseInt(val) })
+            }
           >
             <SelectTrigger
               dir="rtl"
               className=" w-full flex flex-row justify-between items-center text-right bg-white border rounded-md cursor-pointer"
             >
-            <SelectValue className="text-right flex-1" placeholder="اختر الحلقة" />
+              <SelectValue
+                className="text-right flex-1"
+                placeholder="اختر الحلقة"
+              />
             </SelectTrigger>
             <SelectContent
               dir="rtl"
               className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto"
             >
-             {halaqaList?.map(h => (
-                <SelectItem className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]" key={h.id} value={String(h.id)}>
+              {halaqaList?.map((h) => (
+                <SelectItem
+                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                  key={h.id}
+                  value={String(h.id)}
+                >
                   {h.name}
                 </SelectItem>
               ))}
-
             </SelectContent>
           </Select>
 
@@ -328,27 +376,38 @@ useEffect(() => {
         {!form.addNewParent && (
           <Select
             value={form.parentId?.toString() || ""}
-            onValueChange={(val) => setForm({ ...form, parentId: parseInt(val) })}
+            onValueChange={(val) =>
+              setForm({ ...form, parentId: parseInt(val) })
+            }
           >
             <SelectTrigger
               dir="rtl"
               className=" w-full flex flex-row justify-between items-center text-right bg-white border rounded-md cursor-pointer"
             >
-            <SelectValue className="text-right flex-1" placeholder="اختر ولي الأمر" />
+              <SelectValue
+                className="text-right flex-1"
+                placeholder="اختر ولي الأمر"
+              />
             </SelectTrigger>
             <SelectContent
               dir="rtl"
-              className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto">
+              className="text-right bg-white shadow-md rounded-md max-h-60 overflow-y-auto"
+            >
               {parentsList.map((p) => (
-                <SelectItem className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]" key={p.id} value={p.id.toString()}>
+                <SelectItem
+                  className="cursor-pointer data-[highlighted]:bg-[var(--light-green)] data-[highlighted]:text-[var(--primary)]"
+                  key={p.id}
+                  value={p.id.toString()}
+                >
                   {p.name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-
         )}
-        {errors.parentId && <span className="text-red-500 text-sm">{errors.parentId}</span>}
+        {errors.parentId && (
+          <span className="text-red-500 text-sm">{errors.parentId}</span>
+        )}
 
         <label className="flex items-center gap-x-2 cursor-pointer mt-1">
           <input
@@ -359,7 +418,9 @@ useEffect(() => {
                 ...form,
                 addNewParent: e.target.checked,
                 parentId: undefined,
-                newParent: e.target.checked ? { name: "", phoneNumber: "" } : undefined,
+                newParent: e.target.checked
+                  ? { name: "", phoneNumber: "" }
+                  : undefined,
               })
             }
             className="w-4 h-4 accent-[var(--primary)]"
@@ -373,7 +434,10 @@ useEffect(() => {
               placeholder="اسم ولي الأمر"
               value={form.newParent.name}
               onChange={(e) =>
-                setForm({ ...form, newParent: { ...form.newParent!, name: e.target.value } })
+                setForm({
+                  ...form,
+                  newParent: { ...form.newParent!, name: e.target.value },
+                })
               }
               className={`bg-white w-1/2 ${errors.newParentName ? "border-red-500" : ""}`}
             />
@@ -381,22 +445,48 @@ useEffect(() => {
               placeholder="هاتف ولي الأمر"
               value={form.newParent.phoneNumber}
               onChange={(e) =>
-                setForm({ ...form, newParent: { ...form.newParent!, phoneNumber: e.target.value } })
+                setForm({
+                  ...form,
+                  newParent: {
+                    ...form.newParent!,
+                    phoneNumber: e.target.value,
+                  },
+                })
               }
               className={`bg-white w-1/2 ${errors.newParentPhone ? "border-red-500" : ""}`}
             />
           </div>
         )}
-        {errors.newParentName && <span className="text-red-500 text-sm">{errors.newParentName}</span>}
-        {errors.newParentPhone && <span className="text-red-500 text-sm">{errors.newParentPhone}</span>}
+        {errors.newParentName && (
+          <span className="text-red-500 text-sm">{errors.newParentName}</span>
+        )}
+        {errors.newParentPhone && (
+          <span className="text-red-500 text-sm">{errors.newParentPhone}</span>
+        )}
       </div>
-      
-      <div className="pt-4">
+      <div className="flex justify-center gap-4 mt-6">
         <CustomButton
           type="submit"
-          className="w-full py-2 bg-[var(--primary)] text-white rounded-md hover:text-[var(--primary)] hover:bg-[var(--light-green)]"
+          className="
+      w-45 py-5 rounded-2xl transition-all duration-300
+          bg-(--primary) text-white cursor-pointer hover:bg-(--light-green) hover:text-(--primary) hover:border-2 hover:border-(--primary) hover:shadow-lg hover:scale-[1.02]      
+    "
         >
           {mode === "add" ? "إضافة الطالب" : "تحديث بيانات الطالب"}
+        </CustomButton>
+        <CustomButton
+          type="button"
+          onClick={() => window.history.back()}
+          className="
+      w-45 py-5 rounded-2xl
+      bg-secondary text-white
+      hover:bg-(--light-brown)
+      hover:border-2 hover:border-secondary
+      hover:text-(--primary)
+      transition-all duration-300
+    "
+        >
+          إلغاء
         </CustomButton>
       </div>
     </form>

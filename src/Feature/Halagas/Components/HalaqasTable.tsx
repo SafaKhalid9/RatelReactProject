@@ -31,7 +31,7 @@ const HalaqasTable = ({ data, teachersMap }: Props) => {
             <TableHead className="text-center text-white">الأسم</TableHead>
             <TableHead className="text-center text-white">المعلم</TableHead>
             <TableHead className="text-center text-white">الفترة</TableHead>
-            <TableHead className="text-center text-white">الحالة</TableHead>
+            <TableHead className="text-center text-white">المستوى</TableHead>
             <TableHead className="text-center text-white">عدد الطلاب</TableHead>
             <TableHead className="text-center text-white">
               نسبة الحضور

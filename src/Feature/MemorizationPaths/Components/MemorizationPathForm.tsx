@@ -263,13 +263,47 @@ const MemorizationPathForm = ({
         </div>
       </div>
 
-      <CustomButton
+      {/* <CustomButton
         type="submit"
         disabled={isLoading}
         className="w-full py-2 bg-[var(--primary)] text-white rounded-md hover:bg-[var(--light-green)] hover:text-[var(--primary)]"
       >
         {mode === "add" ? "إضافة المسار" : "تحديث المسار"}
-      </CustomButton>
+      </CustomButton> */}
+      <div className="flex justify-center gap-4 mt-6">
+        <CustomButton
+          type="submit"
+          disabled={isLoading}
+          className={`
+      w-45 py-5 rounded-2xl transition-all duration-300
+      ${
+        isLoading
+          ? "bg-(--light-green) text-(--primary) cursor-not-allowed"
+          : "bg-(--primary) text-white cursor-pointer hover:bg-(--light-green) hover:text-(--primary) hover:border-2 hover:border-(--primary) hover:shadow-lg hover:scale-[1.02]"
+      }
+    `}
+        >
+          {isLoading
+            ? "جاري الحفظ..."
+            : mode === "add"
+              ? "إضافة المسار"
+              : "تحديث المسار"}
+        </CustomButton>
+        <CustomButton
+          type="button"
+          onClick={() => window.history.back()}
+          className="
+      w-45 py-5 rounded-2xl
+      bg-secondary text-white
+      hover:bg-(--light-brown)
+      hover:border-2 hover:border-secondary
+      hover:text-(--primary)
+      transition-all duration-300
+    "
+        >
+          إلغاء
+        </CustomButton>
+      </div>
     </form>
   );
 };

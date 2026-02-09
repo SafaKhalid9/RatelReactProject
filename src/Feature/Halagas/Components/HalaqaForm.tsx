@@ -183,7 +183,7 @@ const HalaqaForm = ({ mode, defaultValues, onSubmit, isLoading }: Props) => {
       </div>
       <div className="flex justify-between gap-x-6">
         <div className="w-1/2">
-          <span className="text-xl font-semibold mb-2 block">الحالة</span>
+          <span className="text-xl font-semibold mb-2 block">المستوى</span>
           <Select
             key={formData.status}
             value={formData.status}
@@ -205,7 +205,7 @@ const HalaqaForm = ({ mode, defaultValues, onSubmit, isLoading }: Props) => {
           cursor-pointer
         "
             >
-              <SelectValue placeholder="اختر الحالة" />
+              <SelectValue placeholder="اختر المستوى" />
             </SelectTrigger>
             <SelectContent
               dir="rtl"
@@ -346,7 +346,7 @@ const HalaqaForm = ({ mode, defaultValues, onSubmit, isLoading }: Props) => {
           </div>
         </div>
       </div>
-      <CustomButton
+      {/* <CustomButton
         type="submit"
         disabled={isLoading}
         className={`
@@ -363,7 +363,43 @@ const HalaqaForm = ({ mode, defaultValues, onSubmit, isLoading }: Props) => {
           : mode === "add"
             ? "إضافة الحلقة"
             : "تحديث الحلقة"}
-      </CustomButton>
+      </CustomButton> */}
+      <div className="flex justify-center gap-4 mt-6">
+        {/* زر الإضافة / التحديث */}
+        <CustomButton
+          type="submit"
+          disabled={isLoading}
+          className={`
+      w-45 py-5 rounded-2xl transition-all duration-300
+      ${
+        isLoading
+          ? "bg-(--light-green) text-(--primary) cursor-not-allowed"
+          : "bg-(--primary) text-white cursor-pointer hover:bg-(--light-green) hover:text-(--primary) hover:border-2 hover:border-(--primary) hover:shadow-lg hover:scale-[1.02]"
+      }
+    `}
+        >
+          {isLoading
+            ? "جاري الحفظ..."
+            : mode === "add"
+              ? "إضافة الحلقة"
+              : "تحديث الحلقة"}
+        </CustomButton>
+        {/* زر الإلغاء */}
+        <CustomButton
+          type="button"
+          onClick={() => window.history.back()}
+          className="
+      w-45 py-5 rounded-2xl
+      bg-secondary text-white
+      hover:bg-(--light-brown)
+      hover:border-2 hover:border-secondary
+      hover:text-(--primary)
+      transition-all duration-300
+    "
+        >
+          إلغاء
+        </CustomButton>
+      </div>
     </form>
   );
 };
