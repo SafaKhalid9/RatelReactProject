@@ -1,123 +1,3 @@
-// import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
-// import DisplayFilters from "@/Components/Dashboard/CustomDateAndSearch";
-// import TeacherAttendanceTable from "../components/TeacherAttendanceTable"; 
-
-// const TeacherAttendanceList = () => {
-//   return (
-//     <div className="flex flex-col gap-6 p-5" dir="rtl">
-//       <div className="flex justify-center">
-//         <CustomFormTitle title="تحضير المعلمين" />
-//       </div>
-
-//       <DisplayFilters 
-//       />
-
-//       <div className="mt-4">
-//         <TeacherAttendanceTable />
-//       </div>
-
-//       <div className="flex justify-center mt-4 opacity-50 pointer-events-none">
-//         <div className="flex gap-2">
-//           <button className="px-3 py-1 border rounded">السابق</button>
-//           <button className="px-3 py-1 bg-gray-100 border rounded">1</button>
-//           <button className="px-3 py-1 border rounded">التالي</button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default TeacherAttendanceList;
-
-
-
-
-
-
-
-
-
-// import { useState } from "react";
-// import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
-// import DisplayFilters from "@/Components/Dashboard/CustomDateAndSearch";
-// import TeacherAttendanceTable from "../components/TeacherAttendanceTable"; 
-// import { useTeacherAttendance, useUpdateAttendance } from "../services/teacherAttendance.service";
-// import type { TeacherAttendanceItem } from "../types/teacherAttendance.types";
-// import AppPagination from "@/Components/Dashboard/CustomPagination"; // التأكد من المسار الصحيح
-
-// const TeacherAttendanceList = () => {
-//   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-//   const [search, setSearch] = useState("");
-//   const [page, setPage] = useState(1);
-//   const [pageSize] = useState(10);
-
-//   // 1. جلب البيانات
-//   const { data, isLoading, isError } = useTeacherAttendance({
-//     date,
-//     page,
-//     pageSize,
-//     search: search || undefined,
-//   });
-
-//   // 2. هوك التحديث
-//   const { mutate: updateStatus, isPending } = useUpdateAttendance();
-
-//   const handleStatusChange = (item: TeacherAttendanceItem, newStatus: string) => {
-//     updateStatus({
-//       teacherId: item.teacherId,
-//       halaqaId: item.halaqaId,
-//       status: newStatus,
-//       date: date,
-//     });
-//   };
-
-//   if (isError) return (
-//     <div className="text-center text-red-500 py-10 font-bold">حدث خطأ أثناء تحميل بيانات التحضير</div>
-//   );
-
-//   return (
-//     <div className="flex flex-col gap-5 p-5 bg-background h-full" dir="rtl">
-//       <CustomFormTitle title="تحضير المعلمين" />
-
-//       {/* الفلاتر (التاريخ والبحث) */}
-//       <DisplayFilters 
-//         dateValue={date}
-//         onDateChange={(e) => { setDate(e.target.value); setPage(1); }}
-//         searchValue={search}
-//         onSearchChange={(e) => { setSearch(e.target.value); setPage(1); }}
-//       />
-
-//       <div className="mt-2">
-//         {isLoading ? (
-//           <div className="text-center py-20">جاري التحميل...</div>
-//         ) : (
-//           <>
-//             <TeacherAttendanceTable 
-//               data={data?.data || []} 
-//               onStatusChange={handleStatusChange}
-//               isUpdating={isPending}
-//             />
-
-//             {/* الباجينيشن بنفس نمط الطلاب */}
-//             <AppPagination
-//               page={page}
-//               setPage={setPage}
-//               disableNext={page >= (data?.pagination?.totalPages ?? 1)}
-//             />
-//           </>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default TeacherAttendanceList;
-
-
-
-
-
-
 import { useState, useEffect } from "react";
 import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
 import DisplayFilters from "@/Components/Dashboard/CustomDateAndSearch";
@@ -133,7 +13,6 @@ const TeacherAttendanceList = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [localData, setLocalData] = useState<TeacherAttendanceItem[]>([]);
-  // const [localData, setLocalData] = useState<any[]>([]);
 
   const { data, isLoading, isError } = useTeacherAttendance({
     date,
@@ -144,8 +23,6 @@ const TeacherAttendanceList = () => {
   });
 
   const { mutate: saveAttendance, isPending: isSaving } = useAddUpdateAttendance();
-
-  // تحديث البيانات المحلية عند تحميل بيانات جديدة من السيرفر
   useEffect(() => {
     if (data?.data) {
       setLocalData(data.data);
@@ -178,13 +55,7 @@ const TeacherAttendanceList = () => {
 
   return (
     <div className="flex flex-col gap-5 p-5 bg-background h-full" dir="rtl">
-      <div className="flex justify-between items-center">
-        <CustomFormTitle title="تحضير المعلمين" />
-        <Button onClick={handleSave} disabled={isSaving || localData.length === 0}>
-          {isSaving ? "جاري الحفظ..." : "حفظ الكل"}
-        </Button>
-      </div>
-
+      <CustomFormTitle title="تحضير المعلمين" />
       <DisplayFilters 
         dateValue={date}
         onDateChange={(e) => { setDate(e.target.value); setPage(1); }}
@@ -204,6 +75,25 @@ const TeacherAttendanceList = () => {
               onStatusChange={(item, status) => handleStatusChange(item.teacherId, item.halaqaId, status)}
               isUpdating={isSaving}
             />
+           <div className="flex justify-center items-center my-8">
+              <div className="bg-[#6B705C] p-1 rounded-full shadow-md">
+                <Button 
+                  onClick={handleSave} 
+                  disabled={isSaving || localData.length === 0}
+                  size="lg" 
+                  className="min-w-[180px] h-10 rounded-full font-bold text-lg text-white bg-[#6B705C] hover:bg-[#5a5e4d] border-none shadow-none transition-all active:scale-95"
+                >
+                  {isSaving ? (
+                    <span className="flex items-center gap-3">
+                      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      جاري الحفظ...
+                    </span>
+                  ) : (
+                    "حفظ التحضير"
+                  )}
+                </Button>
+              </div>
+            </div>
             <AppPagination page={page} setPage={setPage} disableNext={page >= (data?.pagination?.totalPages ?? 1)} />
           </>
         )}
