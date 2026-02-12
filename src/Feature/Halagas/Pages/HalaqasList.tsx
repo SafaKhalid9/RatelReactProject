@@ -21,11 +21,11 @@ const HalaqasList = () => {
   return (
     <div className="flex flex-col gap-6 p-5">
       <div className="flex justify-center">
-        <CustomFormTitle title="إدارة الحلقات" />
+        <CustomFormTitle title="قائمة الحلقات" />
       </div>
       <CustomAddButtonAndSearch
         path="/dashboard/halaqas/add"
-        textButton="إضافة حلقة"
+        textButton="إضافة حلقة جديدة"
         searchValue={nameSearch}
         onSearchChange={(e) => {
           setNameSearch(e.target.value);

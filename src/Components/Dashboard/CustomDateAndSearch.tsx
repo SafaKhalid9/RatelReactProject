@@ -38,7 +38,7 @@ export const DisplayFilters = ({
         </Select>
       </div>
 
-      <div className="w-64 mr-50">
+      <div className="w-64 mr-90">
         <label className="text-gray-700 mb-1 block font-bold">بحث عن معلم:</label>
         <Input className="bg-white" placeholder="بحث..." value={searchValue} onChange={onSearchChange} />
       </div>

@@ -54,6 +54,7 @@ const StudentForm = ({
   mode,
   defaultValues,
   onSubmit,
+  isLoading,
   parentsList = [],
   halaqaList = [],
 }: StudentFormProps) => {
@@ -83,12 +84,12 @@ const StudentForm = ({
     if (!form.birthDate) newErrors.birthDate = "تاريخ الميلاد مطلوب";
     if (!form.address) newErrors.address = "العنوان مطلوب";
     if (!form.beginOfMemorize)
-      newErrors.beginOfMemorize = "حقل بداية الحفظ مطلوب";
+      newErrors.beginOfMemorize = "بداية الحفظ مطلوب";
     if (!form.currentEducationalLevel)
       newErrors.currentEducationalLevel = "المرحلة الدراسية مطلوبة";
     if (!form.educationalQualification)
       newErrors.educationalQualification = "المؤهل العلمي مطلوب";
-    if (form.halaqaId === 0) newErrors.halaqaId = "اختر الحلقة";
+    if (form.halaqaId === 0) newErrors.halaqaId = "الحلقة مطلوبة";
 
     if (form.addNewParent) {
       if (!form.newParent?.name)
@@ -464,27 +465,62 @@ const StudentForm = ({
           <span className="text-red-500 text-sm">{errors.newParentPhone}</span>
         )}
       </div>
-      <div className="flex justify-center gap-4 mt-6">
+      {/* <div className="flex justify-center gap-4 mt-6">
         <CustomButton
           type="submit"
           className="
-      w-45 py-5 rounded-2xl transition-all duration-300
-          bg-(--primary) text-white cursor-pointer hover:bg-(--light-green) hover:text-(--primary) hover:border-2 hover:border-(--primary) hover:shadow-lg hover:scale-[1.02]      
-    "
+            w-34 py-6 font-bold text-lg rounded-3xl transition-all duration-300
+            bg-(--primary) text-white cursor-pointer 
+            hover:bg-(--light-green) hover:text-(--primary) 
+            hover:border-2 hover:border-(--primary) 
+            hover:shadow-lg hover:scale-[1.05]
+          "
         >
-          {mode === "add" ? "إضافة الطالب" : "تحديث بيانات الطالب"}
+          {mode === "add" ? "إضافة" : "تحديث"}
         </CustomButton>
         <CustomButton
           type="button"
           onClick={() => window.history.back()}
           className="
-      w-45 py-5 rounded-2xl
-      bg-secondary text-white
-      hover:bg-(--light-brown)
-      hover:border-2 hover:border-secondary
-      hover:text-(--primary)
-      transition-all duration-300
-    "
+            w-34 py-6 font-bold text-lg rounded-3xl transition-all duration-300
+            bg-secondary text-white cursor-pointer
+            hover:bg-(--light-brown) 
+            hover:border-2 hover:border-secondary 
+            hover:text-(--primary)
+            hover:shadow-lg hover:scale-[1.05]
+          "
+        >
+          إلغاء
+        </CustomButton>
+      </div> */}
+      <div className="flex justify-center gap-4 mt-6">
+        <CustomButton
+          type="submit"
+          disabled={isLoading}
+          className={`
+            w-34 py-6 font-bold text-lg rounded-3xl transition-all duration-300
+            ${
+              isLoading
+                ? "bg-(--light-green) text-(--primary) cursor-not-allowed opacity-80"
+                : "bg-(--primary) text-white cursor-pointer hover:bg-(--light-green) hover:text-(--primary) hover:border-2 hover:border-(--primary) hover:shadow-lg hover:scale-[1.05]"
+            }
+          `}
+        >
+          {isLoading 
+            ? "جاري..." 
+            : mode === "add" 
+              ? "إضافة" 
+              : "تحديث"}
+        </CustomButton>
+        <CustomButton
+          type="button"
+          disabled={isLoading} 
+          onClick={() => window.history.back()}
+          className={`
+            w-34 py-6 font-bold text-lg rounded-3xl transition-all duration-300
+            bg-secondary text-white 
+            ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-(--light-brown) hover:border-2 hover:border-secondary hover:text-(--primary) hover:scale-[1.05]"}
+          `}
         >
           إلغاء
         </CustomButton>

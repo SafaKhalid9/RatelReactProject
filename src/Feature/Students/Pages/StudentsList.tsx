@@ -27,7 +27,7 @@ const StudentsList = () => {
 
   return (
     <div className="flex flex-col gap-5 p-5 bg-background h-full">
-      <CustomFormTitle title="إدارة الطلاب" />
+      <CustomFormTitle title="قائمة الطلاب" />
 
       <CustomAddButtonAndSearch
         path="/dashboard/students/add"
