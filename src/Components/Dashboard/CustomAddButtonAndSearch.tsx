@@ -19,7 +19,7 @@ const CustomAddButtonAndSearch = ({
   return (
     <div className="flex justify-between gap-4 p-4 rounded-lg">
       <Link to={path} className="w-1/4">
-        <CustomButton className="flex items-center gap-2 text-white">
+        <CustomButton className="flex items-center gap-2 text-white font-bold">
           <Plus />
           {textButton}
         </CustomButton>

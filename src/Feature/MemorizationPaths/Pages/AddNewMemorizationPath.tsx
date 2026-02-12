@@ -22,8 +22,8 @@ const AddNewMemorizationPath = () => {
   };
 
   return (
-    <div className="border-t-[15px] border-[#CB997E] rounded-2xl bg-white mt-[10%] h-[70%]">
-      <div className="mt-[8%]">
+    <div className="border-t-[15px] border-[#CB997E] rounded-2xl bg-white mt-[8%] h-[65%]">
+      <div className="mt-[4%]">
         <CustomFormTitle title="إضافة مسار جديد" />
         <MemorizationPathForm
           mode="add"

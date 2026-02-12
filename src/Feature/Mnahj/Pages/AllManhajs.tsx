@@ -29,12 +29,12 @@ const ManhajsList = () => {
   return (
     <div className="flex flex-col gap-6 p-5">
       <div className="flex justify-center">
-        <CustomFormTitle title="إدارة المناهج" />
+        <CustomFormTitle title="قائمة المناهج" />
       </div>
 
       <CustomAddButtonAndSearch
         path="/dashboard/manhajs/add-new-manhaj"
-        textButton="إضافة منهج"
+        textButton="إضافة منهج جديد"
         searchValue={nameSearch}
         onSearchChange={(e) => {
           setNameSearch(e.target.value);
