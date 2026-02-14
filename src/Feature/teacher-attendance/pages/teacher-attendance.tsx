@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
 import DisplayFilters from "@/Components/Dashboard/CustomDateAndSearch";
 import TeacherAttendanceTable from "../components/TeacherAttendanceTable"; 
@@ -19,17 +19,35 @@ const TeacherAttendanceList = () => {
     shiftType: shift,
     page,
     pageSize: 10,
-    search: search || undefined,
+    search: search,
   });
 
   const { mutate: saveAttendance, isPending: isSaving } = useAddUpdateAttendance();
+
   useEffect(() => {
     if (data?.data) {
       setLocalData(data.data);
     }
   }, [data]);
 
+  const availability = useMemo(() => {
+    const now = new Date();
+    const today = now.toISOString().split("T")[0];
+    const currentHour = now.getHours();
+
+    if (date !== today) return { allowed: false, reason: "لا يمكن التحضير لغير تاريخ اليوم" };
+    
+    if (shift === "Morning" && currentHour >= 12) 
+      return { allowed: false, reason: "انتهى وقت التحضير للفترة الصباحية" };
+    
+    if (shift === "Evening" && currentHour < 12) 
+      return { allowed: false, reason: "لم يبدأ وقت التحضير للفترة المسائية بعد" };
+
+    return { allowed: true, reason: "" };
+  }, [date, shift]);
+
   const handleStatusChange = (teacherId: number, halaqaId: number, newStatus: string) => {
+    if (!availability.allowed) return;
     setLocalData(prev => 
       prev.map(item => 
         (item.teacherId === teacherId && item.halaqaId === halaqaId) 
@@ -40,18 +58,28 @@ const TeacherAttendanceList = () => {
   };
 
   const handleSave = () => {
-    saveAttendance({
-      date,
-      shiftType: shift,
-      items: localData.map(item => ({
+    if (!availability.allowed) {
+      alert(availability.reason);
+      return;
+    }
+
+    const itemsToSave = localData
+      .filter(item => item.attendanceStatus !== null)
+      .map(item => ({
         teacherId: item.teacherId,
         halaqaId: item.halaqaId,
-        attendanceStatus: item.attendanceStatus || "Present"
-      }))
-    });
+        attendanceStatus: item.attendanceStatus
+      }));
+
+    if (itemsToSave.length === 0) {
+      alert("يرجى اختيار حالة التحضير لمعلم واحد على الأقل");
+      return;
+    }
+
+    saveAttendance({ date, shiftType: shift, items: itemsToSave });
   };
 
-  if (isError) return <div className="text-center text-red-500 py-10 font-bold">حدث خطأ أثناء تحميل البيانات</div>;
+  if (isError) return <div className="text-center text-red-500 py-10">حدث خطأ في الاتصال بالسيرفر</div>;
 
   return (
     <div className="flex flex-col gap-5 p-5 bg-background h-full" dir="rtl">
@@ -62,37 +90,34 @@ const TeacherAttendanceList = () => {
         shiftValue={shift}
         onShiftChange={(val) => { setShift(val); setPage(1); }}
         searchValue={search}
-        onSearchChange={(e) => { setSearch(e.target.value); setPage(1); }}
+        onSearchChange={(e) => setSearch(e.target.value)}
       />
 
       <div className="mt-2">
+        {!availability.allowed && (
+          <div className="bg-amber-50 border border-amber-200 text-amber-700 p-3 rounded-lg mb-4 text-center font-bold">
+            ⚠️ {availability.reason}
+          </div>
+        )}
+
         {isLoading ? (
-          <div className="text-center py-20">جاري التحميل...</div>
+          <div className="text-center py-20 animate-pulse">جاري جلب قائمة المعلمين...</div>
         ) : (
           <>
             <TeacherAttendanceTable 
               data={localData} 
               onStatusChange={(item, status) => handleStatusChange(item.teacherId, item.halaqaId, status)}
               isUpdating={isSaving}
+              readonly={!availability.allowed}
             />
-           <div className="flex justify-center items-center my-8">
-              <div className="bg-[#6B705C] p-1 rounded-full shadow-md">
-                <Button 
+            <div className="flex justify-center items-center my-8">
+               <Button 
                   onClick={handleSave} 
-                  disabled={isSaving || localData.length === 0}
-                  size="lg" 
-                  className="min-w-[180px] h-10 rounded-full font-bold text-lg text-white bg-[#6B705C] hover:bg-[#5a5e4d] border-none shadow-none transition-all active:scale-95"
+                  disabled={isSaving || localData.length === 0 || !availability.allowed}
+                  className="min-w-[200px] h-12 rounded-full text-white font-bold text-lg bg-[#6B705C] hover:bg-[#5a5e4d]"
                 >
-                  {isSaving ? (
-                    <span className="flex items-center gap-3">
-                      <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                      جاري الحفظ...
-                    </span>
-                  ) : (
-                    "حفظ التحضير"
-                  )}
+                  {isSaving ? "جاري الحفظ..." : availability.allowed ? "حفظ التحضير" : "حفظ غير متاح"}
                 </Button>
-              </div>
             </div>
             <AppPagination page={page} setPage={setPage} disableNext={page >= (data?.pagination?.totalPages ?? 1)} />
           </>
