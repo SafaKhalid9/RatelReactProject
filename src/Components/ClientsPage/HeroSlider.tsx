@@ -1,11 +1,20 @@
+import { motion } from "framer-motion";
+
 export default function HeroSection() {
   return (
     <section className="bg-[#ddbea933] py-16 px-6 rtl font-['Cairo']">
       <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center justify-evenly">
-        <div className=" text-right ">
+        <motion.div
+          initial={{ opacity: 0, x: -80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+          className="text-right"
+        >
           <h1 className="text-4xl md:text-5xl font-bold text-(--primary) mb-4 leading-snug">
             مرحباً بك في مركز رتل
           </h1>
+
           <h2 className="text-4xl md:text-3xl font-semibold text-secondary mb-4 leading-snug">
             حيث يلتقي جمال الحفظ بعمق الفهم
           </h2>
@@ -14,6 +23,7 @@ export default function HeroSection() {
             منصة متخصصة لحفظ و تلاوة القرآن الكريم وتعليم أحكامه، لنمنحك تجربة
             روحانية وتعليمية متكاملة.
           </p>
+
           <a
             href="/login"
             className="inline-block px-6 py-3 rounded font-semibold 
@@ -23,14 +33,25 @@ export default function HeroSection() {
           >
             تسجيل الدخول
           </a>
-        </div>
-        <div className=" flex justify-center">
-          <img
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 80 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+          className="flex justify-center"
+        >
+          <motion.img
             src="/heroImage.png"
             alt="Quran on Rehal"
             className="w-full max-w-md rounded-xl"
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

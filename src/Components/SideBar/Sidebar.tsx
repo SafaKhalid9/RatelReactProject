@@ -127,6 +127,10 @@ import {
   UsersImage,
   home,
   logoutIcon,
+  Mistaks,
+  Grade,
+  TeacherParationIcon,
+  LogoImage,
 } from "@/assets";
 
 import SidebarItem from "./SidebarItem";
@@ -157,12 +161,17 @@ const Sidebar = () => {
     },
     {
       text: "تحضير المعلمين",
-      icon: UsersImage,
+      icon: TeacherParationIcon,
       path: "/dashboard/teacher-attendance",
     },
     {
       text: "درجات التقدير",
-      icon: ActivitiesImage,
+      icon: Grade,
+      path: "/dashboard/appreciation-grades",
+    },
+    {
+      text: "الأخطاء",
+      icon: Mistaks,
       path: "/dashboard/appreciation-grades",
     },
   ];
@@ -181,13 +190,9 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-4">
-      {/* <div></div> */}
-      <img
-        className="w-25 mx-auto"
-        src="../../../public/logo1.svg"
-        alt="logo"
-      />
+    // <aside className="min-w-60 flex flex-col items-center bg-white h-screen rounded-tr-[20px] rounded-br-[20px] py-2 px-4">
+    <aside className="w-60 flex flex-col items-center bg-white py-2 px-4">
+      <img className="w-20 mx-auto my-6" src={LogoImage} alt="logo" />
 
       <div className="flex-1 flex flex-col w-full no-scrollbar overflow-y-auto">
         {topMenu.map((item, index) => (

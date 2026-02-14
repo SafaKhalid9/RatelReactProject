@@ -1,10 +1,13 @@
-export { default as LogoImage } from "/logo1.svg";
+export { default as LogoImage } from "/logo1.png";
 export { default as BarChardImage } from "/bar-chart.png";
 export { default as KoranImage } from "/koran.png";
 export { default as UsersImage } from "/users.png";
 export { default as StudentsImage } from "/students.png";
+export { default as TeacherParationIcon } from "/TeacherParationIcon.png";
 export { default as PathImage } from "/path.png";
 export { default as ThreeBookImage } from "/books-stack-of-three.png";
 export { default as ActivitiesImage } from "/activities.png";
 export { default as home } from "/home.png";
 export { default as logoutIcon } from "/logout.png";
+export { default as Mistaks } from "/mistaks.png";
+export { default as Grade } from "/grade.png";
