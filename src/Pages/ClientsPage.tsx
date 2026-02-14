@@ -7,7 +7,7 @@ import Footer from "@/Components/ClientsPage/Footer";
 import { WhyUsSection } from "@/Components/ClientsPage/WhyUsSection";
 import { TestimonialsSection } from "@/Components/ClientsPage/TestimonialsSection";
 import { CTASection } from "@/Components/ClientsPage/CTASection";
-import { FAQSection } from "@/Components/ClientsPage/faqSection";
+// import { FAQSection } from "@/Components/ClientsPage/faqSection";
 
 export default function HomePage() {
   return (
@@ -20,7 +20,7 @@ export default function HomePage() {
       <NewsSection />
       <TestimonialsSection />
       <CTASection />
-      <FAQSection />
+      {/* <FAQSection /> */}
       <Footer />
     </div>
   );

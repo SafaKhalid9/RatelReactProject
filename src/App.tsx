@@ -1,4 +1,5 @@
 import { Toaster } from "./Components/ShadCn/sonner";
+import { TooltipProvider } from "./Components/ShadCn/tooltip";
 import AllRoutes from "./Routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 function App() {
@@ -8,8 +9,10 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AllRoutes />
-      <Toaster />
+      <TooltipProvider>
+        <AllRoutes />
+        <Toaster />
+      </TooltipProvider>
     </QueryClientProvider>
   );
 }

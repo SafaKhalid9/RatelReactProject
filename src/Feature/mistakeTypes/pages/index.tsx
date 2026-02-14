@@ -1,15 +1,15 @@
 import { DefaultDataTable } from "@/Components/ShadCn/data-table";
-import { useGetAppreciationGrades } from "../services/useGetAppreciationGrades";
 import { columns } from "./columns";
 import { Button } from "@/Components/ShadCn/button";
 import { PlusIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import CustomFormTitle from "@/Components/Dashboard/CustomFormTitle";
+import { useGetMistakeTypes } from "../services/useGetMistakeTypes";
 
-export default function AppreciationGrades() {
+export default function MistakeTypes() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useGetAppreciationGrades({
+  const { data, isLoading } = useGetMistakeTypes({
     page: currentPage,
     pageSize: 10,
   });
@@ -23,13 +23,13 @@ export default function AppreciationGrades() {
     <div>
       <CustomFormTitle title="قائمة الاختبارات" />
       <div className="flex items-center justify-between gap-5 mb-5">
-        <Link to="/dashboard/appreciation-grades/add">
+        <Link to="/dashboard/mistake-types/add">
           <Button
             // variant="outline"
             className="flex items-center gap-2 cursor-pointer bg-[#6B705C] hover:bg-[#6B705C]/80 text-white rounded font-bold hover:text-white "
           >
             <PlusIcon />
-            اضافة تقدير جديد
+            اضافة نوع خطأ جديد
           </Button>
         </Link>
       </div>
