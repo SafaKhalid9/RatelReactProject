@@ -29,7 +29,7 @@ export function FAQSection() {
       <div className="max-w-4xl mx-auto">
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <h2 className="text-5xl font-extrabold text-(--primary) mb-8 leading-snug relative inline-block">
-            الأسألة الشائعة
+            الأسئلة الشائعة
             <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-secondary rounded-full"></span>
           </h2>
         </div>
