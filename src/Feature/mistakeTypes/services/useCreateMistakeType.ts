@@ -1,19 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
-import type { UserFormType } from "../pages/addUser";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { AxiosError } from "axios";
 import api from "@/api/axios";
 
-export const useCreateUser = () => {
+export const useCreateMistakeType = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async (data: UserFormType) => {
-      return await api.post("/users", data);
+    mutationFn: async (data: { name: string; penaltyPerMistake: number }) => {
+      return await api.post("/mistake-types", data);
     },
     onSuccess: () => {
-      toast.success("تم إضافة المستخدم بنجاح");
-      navigate("/dashboard/users");
+      toast.success("تم إضافة نوع الخطأ بنجاح");
+      navigate("/dashboard/mistake-types");
     },
     onError: (error: AxiosError<{ errors: Record<string, string[]> }>) => {
       toast.error(JSON.stringify(error.response?.data.errors, null, 2));

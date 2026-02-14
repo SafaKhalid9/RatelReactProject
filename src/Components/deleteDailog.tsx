@@ -11,8 +11,8 @@ import { Button } from "@/Components/ShadCn/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import apiClient from "@/lib/axios";
 import { toast } from "sonner";
+import api from "@/api/axios";
 type Props = {
   id: string | number;
   url: string;
@@ -24,7 +24,7 @@ export default function DeleteDailog({ id, name, keys, url }: Props) {
   const queryClient = useQueryClient();
   const useDelete = useMutation({
     mutationFn: async () => {
-      await apiClient.delete(`${url}/${id}`);
+      await api.delete(`${url}/${id}`);
     },
     onSuccess: () => {
       toast.success(`تم حذف بنجاح`);

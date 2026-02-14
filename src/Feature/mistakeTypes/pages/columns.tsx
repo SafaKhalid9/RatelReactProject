@@ -1,5 +1,5 @@
 import { type ColumnDef } from "@tanstack/react-table";
-import type { UserType } from "../types/usersType";
+import { type MistakeType } from "../types/mistakeTypes.types";
 import { ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
@@ -12,36 +12,20 @@ import {
 import { Link } from "react-router-dom";
 import DeleteDailog from "@/Components/deleteDailog";
 
-export const columns: ColumnDef<UserType>[] = [
+export const columns: ColumnDef<MistakeType>[] = [
   {
-    accessorKey: "userName",
-    header: "اسم المستخدم",
+    accessorKey: "name",
+    header: "اسم الخطأ",
   },
   {
-    accessorKey: "isMojaz",
-    header: "مجاز؟",
-    cell: ({ row }) => {
-      const isMojaz = row.original.isMojaz;
-      return isMojaz ? "نعم" : "لا";
-    },
-  },
-  {
-    accessorKey: "roles",
-    header: "الدور",
-  },
-  {
-    accessorKey: "address",
-    header: "الموقع",
-  },
-  {
-    accessorKey: "phoneNumber",
-    header: "رقم الجوال",
+    accessorKey: "degree",
+    header: "الدرجة",
   },
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const user = row.original;
+      const mistakeType = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -58,25 +42,17 @@ export const columns: ColumnDef<UserType>[] = [
               <DropdownMenuItem asChild>
                 <Link
                   className="cursor-pointer"
-                  to={`/dashboard/users/view/${user.id}`}
+                  to={`/dashboard/mistake-types/edit/${mistakeType.id}`}
                 >
-                  عرض تفاصيل المستخدم
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link
-                  className="cursor-pointer"
-                  to={`/dashboard/users/edit/${user.id}`}
-                >
-                  تعديل معلومات المستخدم
+                  تعديل معلومات نوع الخطأ
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <DeleteDailog
-                  id={user.id}
-                  name="حذف المستخدم"
-                  keys={["users"]}
-                  url="/users"
+                  id={mistakeType.id}
+                  name="حذف نوع الخطأ"
+                  keys={["mistake-types"]}
+                  url="/mistake-types"
                 />
               </DropdownMenuItem>
             </DropdownMenuGroup>

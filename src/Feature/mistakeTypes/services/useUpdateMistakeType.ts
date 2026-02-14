@@ -1,26 +1,25 @@
 import { useMutation } from "@tanstack/react-query";
-import type { UserFormType } from "../pages/addUser";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { AxiosError } from "axios";
 import api from "@/api/axios";
 
-export const useUpdateUser = () => {
+export const useUpdateMistakeType = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: async (payload: {
-      id: string;
-      data: Partial<UserFormType>;
+      id: string | number;
+      data: { name: string; penaltyPerMistake: number };
     }) => {
       const { id, data } = payload;
-      return await api.put(`/users/${id}`, data);
+      return await api.put(`/mistake-types/${id}`, data);
     },
     onSuccess: () => {
-      toast.success("تم تعديل المستخدم بنجاح");
-      navigate("/dashboard/users");
+      toast.success("تم تعديل نوع الخطأ بنجاح");
+      navigate("/dashboard/mistake-types");
     },
     onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error.response?.data.message);
+      toast.error(error.response?.data.message || "حدث خطأ ما");
     },
   });
 };

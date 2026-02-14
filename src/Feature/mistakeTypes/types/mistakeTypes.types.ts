@@ -1,18 +1,25 @@
-export type AppreciationGrade = {
+export type MistakeType = {
   id: number;
-  appreciationId: number;
-  minimumScore: number;
-  maximumScore: number;
+  name: string;
+  degree: number;
 };
 
-export type AppreciationGradeResponse = {
+export type MistakeTypeResponse = {
   isSuccess: boolean;
   statusCode: number;
   message: string;
   data: {
-    data: AppreciationGrade[];
+    data: MistakeType[];
     pagination: Pagination;
   };
+  errors: any;
+};
+
+export type MistakeTypeDetailsResponse = {
+  isSuccess: boolean;
+  statusCode: number;
+  message: string;
+  data: MistakeType;
   errors: any;
 };
 

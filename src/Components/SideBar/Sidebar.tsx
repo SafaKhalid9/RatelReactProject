@@ -172,7 +172,7 @@ const Sidebar = () => {
     {
       text: "الأخطاء",
       icon: Mistaks,
-      path: "/dashboard/appreciation-grades",
+      path: "/dashboard/mistake-types",
     },
   ];
 
