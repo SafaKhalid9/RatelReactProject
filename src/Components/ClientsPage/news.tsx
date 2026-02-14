@@ -1,4 +1,5 @@
 import type { NewsItem } from "@/Types/ISideBarItem";
+import { motion } from "framer-motion";
 
 const newsData: NewsItem[] = [
   {
@@ -36,10 +37,18 @@ export default function NewsSection() {
         </h2>
       </div>
       <div className="max-w-6xl mx-auto my-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-        {newsData.map((item) => (
-          <div
+        {newsData.map((item, index) => (
+          <motion.div
             key={item.id}
-            className="bg-white border border-(--light-green) flex flex-col h-full shadow-sm rounded overflow-hidden "
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1.4,
+              delay: index * 0.35,
+              ease: "easeOut",
+            }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="bg-white border border-(--light-green) flex flex-col h-full shadow-sm rounded overflow-hidden"
           >
             <div className="relative h-54 border-b-8 border-secondary">
               <img
@@ -66,7 +75,7 @@ export default function NewsSection() {
                 اقرأ المزيد
               </button>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       <div className="flex justify-center mt-12">

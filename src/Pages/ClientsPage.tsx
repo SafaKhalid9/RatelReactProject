@@ -4,6 +4,10 @@ import HeroSection from "../Components/ClientsPage/HeroSlider";
 import NewsSection from "@/Components/ClientsPage/news";
 import AboutSection from "@/Components/ClientsPage/about";
 import Footer from "@/Components/ClientsPage/Footer";
+import { WhyUsSection } from "@/Components/ClientsPage/WhyUsSection";
+import { TestimonialsSection } from "@/Components/ClientsPage/TestimonialsSection";
+import { CTASection } from "@/Components/ClientsPage/CTASection";
+import { FAQSection } from "@/Components/ClientsPage/faqSection";
 
 export default function HomePage() {
   return (
@@ -11,8 +15,12 @@ export default function HomePage() {
       <Header />
       <HeroSection />
       <StatsCards />
-      <NewsSection />
       <AboutSection />
+      <WhyUsSection />
+      <NewsSection />
+      <TestimonialsSection />
+      <CTASection />
+      <FAQSection />
       <Footer />
     </div>
   );

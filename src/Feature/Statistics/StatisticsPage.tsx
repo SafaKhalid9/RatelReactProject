@@ -107,8 +107,8 @@ const COLORS = [
 
 const Statistics = () => {
   return (
-    <div className="p-6 space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="space-y-6">
+      <div className="mx-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <Card className="border-none rounded-2xl text-xl text-white font-bold bg-linear-to-t from-(--dark-green) to-(--light-brown) h-28 sm:h-32">
           <div className="flex items-center h-full px-4 sm:px-6">
             <img
@@ -182,10 +182,10 @@ const Statistics = () => {
         </Card>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="col-span-1 lg:col-span-2 bg-white border-none rounded-2xl py-3">
+        <Card className="col-span-1 lg:col-span-2 gap-4 bg-white border-none rounded-2xl py-3">
           <CardHeader>
             <CardTitle className="text-base font-semibold text-(--primary)">
-              نسبة الطالبات في كل قسم
+              نسبة الطلاب في كل قسم
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -228,13 +228,13 @@ const Statistics = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-white border-none rounded-2xl shadow-md p-3 col-span-1">
+        <Card className="bg-white border-none rounded-2xl shadow-md p-3 col-span-1 gap-4">
           <CardHeader>
             <CardTitle className="text-base font-semibold text-(--primary)">
               مجموع الحضور
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-2">
+          <CardContent>
             <div className="overflow-x-auto">
               <LineChart width={320} height={200} data={attendanceData}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -260,16 +260,16 @@ const Statistics = () => {
         </Card>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="col-span-1 bg-white rounded-2xl shadow-md h-53">
+        <div className="col-span-1 bg-white rounded-2xl shadow-md h-50">
           <div className="text-base font-semibold text-(--primary) py-2 px-4">
-            الطالبات الأكثر غياب
+            الطلاب الأكثر غياب
           </div>
-          <div className="h-40 overflow-x-auto">
+          <div className="h-37 overflow-x-auto">
             <Table className="min-w-[300px]">
               <TableHeader>
                 <TableRow>
                   <TableHead className="font-bold text-center">
-                    اسم الطالبة
+                    اسم الطالب
                   </TableHead>
                   <TableHead className="font-bold text-center">
                     اسم الحلقة
@@ -294,11 +294,11 @@ const Statistics = () => {
           </div>
         </div>
 
-        <div className="col-span-1 lg:col-span-2 bg-white rounded-2xl shadow-md h-53">
+        <div className="col-span-1 lg:col-span-2 bg-white rounded-2xl shadow-md h-50">
           <div className="text-base font-semibold text-(--primary) py-2 px-4">
             الحلقات المكتظة
           </div>
-          <div className="h-40 overflow-x-auto">
+          <div className="h-37 overflow-x-auto">
             <Table className="min-w-[600px]">
               <TableHeader>
                 <TableRow>
@@ -309,7 +309,7 @@ const Statistics = () => {
                     اسم المعلمة
                   </TableHead>
                   <TableHead className="font-bold text-center">
-                    عدد الطالبات
+                    عدد الطلاب
                   </TableHead>
                   <TableHead className="font-bold text-center">
                     الطاقة الاستيعابية

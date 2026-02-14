@@ -1,17 +1,20 @@
 import Footer from "@/Components/ClientsPage/Footer";
 import Sidebar from "@/Components/SideBar/Sidebar";
 import { Outlet } from "react-router";
-
 const Dashboard = () => {
   return (
     <>
-      <main className="bg-primary py-4 px-5 flex ">
+      <div className="h-screen flex bg-primary">
         <Sidebar />
-        <section className="px-5 w-full">
-          <Outlet />
-        </section>
-      </main>
-      <Footer />
+
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <main className="flex-1 overflow-y-auto px-5 py-4">
+            <Outlet />
+          </main>
+        </div>
+      </div>
+
+      {/* <Footer /> */}
     </>
   );
 };
