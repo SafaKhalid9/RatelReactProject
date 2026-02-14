@@ -18,12 +18,13 @@ export default function Header() {
       </div>
 
       <nav className="flex gap-4 text-(--font-title-label-color) items-center">
-        <Link
-          to="/home"
+
+        <a
+          href="#top"
           className="font-bold text-lg hover:text-(--dark-green) transition"
         >
           الرئيسية
-        </Link>
+        </a>
 
         <a
           href="#stats"
