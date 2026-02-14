@@ -1,54 +1,10 @@
-// export interface TeacherAttendanceItem {
-//   teacherAttendanceId: number;
-//   teacherName: string;
-//   halaqaName: string;
-//   teacherId: number;
-//   halaqaId: number;
-//   attendanceStatus: "حاضر" | "غائب" | "متأخر" | null;
-//   date: string;
-// }
-
-// export interface AttendanceListResponse {
-//   data: TeacherAttendanceItem[];
-//   pagination: {
-//     page: number;
-//     pageSize: number;
-//     totalItems: number;
-//     totalPages: number;
-//     currentPage: number;
-//   };
-// }
-
-// export interface TeacherAttendanceQueryParams {
-//   date: string;
-//   page?: number;
-//   pageSize?: number;
-//   search?: string;
-// }
-
-// // لعملية الإضافة أو التحديث (POST)
-// export interface AttendanceSubmissionData {
-//   teacherId: number;
-//   halaqaId: number;
-//   status: string;
-//   date: string;
-// }
-
-
-
-
-
-
-
-
-
 export interface TeacherAttendanceItem {
   teacherAttendanceId: number;
   teacherName: string;
   halaqaName: string;
   teacherId: number;
   halaqaId: number;
-  attendanceStatus: string; // سيأتي من الباك كـ "Present", "Absent", "Late"
+  attendanceStatus: string;
   date: string;
   shiftType: "Morning" | "Evening";
   mode: string;
@@ -58,11 +14,10 @@ export interface TeacherAttendanceItem {
 export interface AttendanceListResponse {
   data: TeacherAttendanceItem[];
   pagination: {
-    page: number;
-    pageSize: number;
-    totalItems: number;
-    totalPages: number;
-    currentPage: number;
+  totalPages: number;
+  page?: number;
+  pageSize?: number;
+  totalItems?: number;
   };
 }
 
@@ -74,7 +29,6 @@ export interface TeacherAttendanceQueryParams {
   search?: string;
 }
 
-// الهيكلية الجديدة لطلب الـ POST
 export interface AttendanceSubmissionData {
   date: string;
   shiftType: string;
